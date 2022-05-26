@@ -8,6 +8,7 @@ Nick Bell
 Eddie Greenlee
 Maximiliano De Santiago Galan
 Blake Barr
+Richard Woessner
 
 ## Introduction 
 You open a game but can't remember all the stupid keybinds for the game and have to do the clicks of shame 
@@ -194,6 +195,7 @@ The user has chosen a game and wishes to save the key binds
 - Frontend Developer: Blake Barr  
 - Integration Developer: Max
 - Room Database Developer: Eddie  
+- Testing: Richard
 
 ## Weekly Meeting
 
