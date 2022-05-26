@@ -93,11 +93,11 @@ Keybind 3: [blank]
 #### Scenario
 A user wants to move keybinds between groups
 
-###Dependancies
+### Dependancies
 
 There is atleast 1 or 2 groups
 
-###Assumptions
+### Assumptions
 
 None
 
