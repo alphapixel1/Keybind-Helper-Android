@@ -23,7 +23,6 @@ This app allows you to
 
 [Plant Diary Storyboard](https://projects.invisionapp.com/prototype/Plant-Diary-ck0bict0n005bqh01aaeu8tuu/play/c6560121)
 
-(https:![Keybind Veiwer Class](https://user-images.githubusercontent.com/23407049/170616672-c83835a2-006d-4fa4-bed5-97d8b30d9a11.png)
 
 ## Functional Requirements
 
@@ -170,7 +169,7 @@ The user has chosen a game and wishes to save the key binds
 
 ## Class Diagram
 
-![ClassDiagram](https://user-images.githubusercontent.com/2224876/82162015-54387780-986f-11ea-998f-a45fdf8c3bf1.png)
+![Keybind Veiwer Class](https://user-images.githubusercontent.com/23407049/170616672-c83835a2-006d-4fa4-bed5-97d8b30d9a11.png)
 
 ### Class Diagram Description
 
