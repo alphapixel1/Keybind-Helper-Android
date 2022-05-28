@@ -21,7 +21,8 @@ This app allows you to
 
 ## Storyboard
 
-[Plant Diary Storyboard](https://projects.invisionapp.com/prototype/Plant-Diary-ck0bict0n005bqh01aaeu8tuu/play/c6560121)
+Desktop Version that this is based on: https://github.com/AlphapixelCodes/-UWP-KeybindsHelper-V2 (Made by Nick)
+![storyboard](https://user-images.githubusercontent.com/23407049/170843137-029b53ec-f2e8-4615-b98c-01521ae39e33.png)
 
 
 ## Functional Requirements
