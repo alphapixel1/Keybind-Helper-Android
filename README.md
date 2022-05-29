@@ -11,13 +11,12 @@ Blake Barr
 Richard Woessner
 
 ## Introduction 
-You open a game but can't remember all the stupid keybinds for the game and have to do the clicks of shame 
-This app allows you to
+You open a game and can't remember all the keybinds and have to pause midgame to check the controls. This app allows you to
 -	Save Keybinds
 -	Put Keybinds into groups
--	Organzie the keybinds
--	Be aware of upcoming events for a plant: when to water, when growing season ends, etc.  
-
+-	Organize the keybinds
+-	Share your keybinds with friends
+This app allows you to access keybinds easier allowing you to get back into the game with less of the hassle.
 
 ## Storyboard
 
@@ -31,7 +30,7 @@ Desktop Version that this is based on: https://github.com/AlphapixelCodes/-UWP-K
 
 #### Scenario
 
-As a user interested in games, I want to be able to save my set keybinds so that I dont have to open settings and can look at it while playing the game
+As a user interested in games, I want to be able to save my set keybinds so that I don't have to open settings and can look at it while playing the game
 
 #### Dependencies
 
@@ -66,7 +65,7 @@ Game: Ready or Not
 
 A user wants to add a keybind to a group
 
-#### Dependencies
+#### Dependencies 
 
 None
 
@@ -94,9 +93,9 @@ Keybind 3: [blank]
 #### Scenario
 A user wants to move keybinds between groups
 
-### Dependancies
+### Dependencies
 
-There is atleast 1 or 2 groups
+There are at least 1 or 2 groups
 
 ### Assumptions
 
@@ -125,7 +124,7 @@ A user wants to edit keybinds
 
 ###Dependancies
 
-There is atleast 1 group
+There is at least 1 group
 
 ###Assumptions
 
