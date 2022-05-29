@@ -21,6 +21,7 @@ This app allows you to access keybinds easier allowing you to get back into the 
 ## Storyboard
 
 Desktop Version that this is based on: https://github.com/AlphapixelCodes/-UWP-KeybindsHelper-V2 (Made by Nick)
+Youtube video that better explains changes: https://www.youtube.com/watch?v=v0y9clhLiMw
 ![storyboard](https://user-images.githubusercontent.com/23407049/170843137-029b53ec-f2e8-4615-b98c-01521ae39e33.png)
 
 
@@ -168,7 +169,7 @@ The user has chosen a game and wishes to save the key binds
 *Then* The set of key binds are saved and can be viewed anytime
 
 ## Class Diagram
-
+We really don't know anything about Android Development yet and can't really make an accurate UML
 ![Keybind Veiwer Class](https://user-images.githubusercontent.com/23407049/170616672-c83835a2-006d-4fa4-bed5-97d8b30d9a11.png)
 
 ### Class Diagram Description
