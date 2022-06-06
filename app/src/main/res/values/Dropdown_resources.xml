@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="group_drop_down">
+        <item>Copy Group</item>
+        <item>Clear Keybinds</item>
+        <item>Delete Group</item>
+    </array>
+</resources>

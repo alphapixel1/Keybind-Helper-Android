@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.keybindhelper.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:name="com.example.keybindhelper.ui.projects.ProjectsFragment"
+        android:label="@string/Projects"
+        tools:layout="@layout/fragment_projects" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.keybindhelper.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:name="com.example.keybindhelper.ui.settings.SettingsFragment"
+        android:label="@string/Settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

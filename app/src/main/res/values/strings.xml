@@ -12,7 +12,22 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
 
+    <!--Navigation-->
     <string name="AppTittle">Keybind Helper</string>
     <string name="Projects">Projects</string>
     <string name="Settings">Settings</string>
+
+    <!--Group-->
+    <string name="AddGroup">Add Group</string>
+
+    <!--Edit Keybind Dialog-->
+    <string name="EditKeybind">Edit Keybind</string>
+
+
+    <string name="Name">Name</string>
+    <string name="EditKeybind1">Edit Keybind 1</string>
+    <string name="EditKeybind2">Edit Keybind 2</string>
+    <string name="EditKeybind3">Edit Keybind 3</string>
+
+    <string name="ClearButton">X</string>
 </resources>
