@@ -1,6 +1,5 @@
 package com.example.keybindhelper
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.widget.Button
@@ -48,18 +47,22 @@ class MainActivity : AppCompatActivity() {
         binding.root.addView(group)
         group.setLayoutParams(DrawerLayout.LayoutParams(DrawerLayout.LayoutParams.MATCH_PARENT, DrawerLayout.LayoutParams.WRAP_CONTENT))
         group.setBackgroundColor(Color.RED)*/
+        var kb=Keybind();
+        binding.root?.findViewById<Button>(R.id.editKeybindButton).setOnClickListener{
+            kb.ShowEditKeybindDailog(this);
+        }
 
         //group.minimumHeight=20;
         println("RUNNING HomeFragment.onCreate")
 
-        println(binding.root.findViewById<Button>(R.id.button2))
-        val button=binding.root?.findViewById<Button>(R.id.button2);
+        println(binding.root.findViewById<Button>(R.id.editKeybindButton))
+        val button=binding.root?.findViewById<Button>(R.id.editKeybindButton);
         println(button)
         if(button!=null)
             println(button.text)
-        binding.root?.findViewById<Button>(R.id.button2)?.setOnClickListener {
+     /*   binding.root?.findViewById<Button>(R.id.editKeybindButton)?.setOnClickListener {
             println("CLICKITY CLACK")
-        }
+        }*/
         //Nicks Popup code end
 
     }

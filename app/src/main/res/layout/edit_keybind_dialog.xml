@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#3C3A3A"
     android:foregroundTint="@color/black"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/textView2"
@@ -18,7 +20,7 @@
         android:textSize="30dp" />
 
     <EditText
-        android:id="@+id/editName"
+        android:id="@+id/EditKeybind_Name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
@@ -35,7 +37,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/EditKeybind1"
+            android:id="@+id/EditKeybind_KB1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -45,13 +47,110 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white_hint" />
 
-        <Button
-            android:id="@+id/button"
+        <ImageButton
+            android:id="@+id/EditKeybind_Clear1"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_weight="0"
-            android:foreground="@android:drawable/ic_input_delete"
-            android:foregroundTint="#ffffffff" />
+            android:backgroundTint="@android:color/transparent"
+            android:foreground="@android:drawable/ic_menu_close_clear_cancel" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_weight="0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/EditKeybind_KB2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/EditKeybind2"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white_hint" />
+
+        <ImageButton
+            android:id="@+id/EditKeybind_Clear2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="0"
+            android:backgroundTint="@android:color/transparent"
+            android:foreground="@android:drawable/ic_menu_close_clear_cancel" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_weight="0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/EditKeybind_KB3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/EditKeybind3"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white_hint" />
+
+        <ImageButton
+            android:id="@+id/EditKeybind_Clear3"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="0"
+            android:backgroundTint="@android:color/transparent"
+            android:foreground="@android:drawable/ic_menu_close_clear_cancel" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_weight="0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/EditKeybindCancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@android:string/cancel" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25" />
+
+        <Button
+            android:id="@+id/EditKeybindDoneButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Done" />
+
     </LinearLayout>
 
 </LinearLayout>
