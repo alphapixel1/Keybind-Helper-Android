@@ -7,11 +7,12 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 
-class Keybind {
-    var Name="";
-    var KB1="";
-    var KB2="";
-    var KB3="";
+data class Keybind(var Name : String, var KB1 : String, var KB2 : String, var KB3: String) {
+
+    override fun toString(): String {
+        return Name
+    }
+
     fun ShowEditKeybindDailog(context: Context){
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
