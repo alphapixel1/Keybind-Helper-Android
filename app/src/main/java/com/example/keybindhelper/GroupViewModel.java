@@ -94,10 +94,37 @@ public class GroupViewModel {
                 };
                 glp.Show();
             });
-
+            d.findViewById(R.id.group_move).setOnClickListener(v->{
+                d.cancel();
+                ArrowProvider ap=new ArrowProvider(context);
+                ap.directionClicked=isUp -> {
+                    int indx=GroupsStorage.Groups.indexOf(group);
+                    System.out.println(indx);
+                    LinearLayout parent=(LinearLayout) view.getParent();
+                    if(isUp){
+                        if(indx>0) {
+                            GroupsStorage.Groups.remove(group);
+                            GroupsStorage.Groups.add(indx - 1, group);
+                            parent.removeView(view);
+                            parent.addView(view, indx - 1);
+                        }
+                    }else{
+                        if(indx<GroupsStorage.Groups.size()-1){
+                            GroupsStorage.Groups.remove(group);
+                            GroupsStorage.Groups.add(indx + 1, group);
+                            parent.removeView(view);
+                            parent.addView(view, indx +  1);
+                        }
+                    }
+                };
+                ap.Show();
+            });
             d.show();
 
         });
+
+
+
         GroupNameButton.setText(group.getName());
 
 

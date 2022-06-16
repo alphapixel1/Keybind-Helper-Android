@@ -4,13 +4,19 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
+@Entity
 public class GroupsStorage {
     public static ArrayList<KeybindGroup> Groups=new ArrayList<>();
-
+    @PrimaryKey
+    public static int ProjectID;
+    @ColumnInfo(name="name")
+    public static String ProjectName;
     public static Boolean isGroupNameAvailable(String name){
         for (KeybindGroup g: Groups) {
             if(Objects.equals(g.getName(),name))
@@ -48,5 +54,20 @@ public class GroupsStorage {
 
         }
         return n+" "+i;
+    }
+
+    public static int GetAvailableGroupID() {
+        int i=0;
+        while (!isIDAvailable(i)){
+            i++;
+        }
+        return i;
+    }
+    private static Boolean isIDAvailable(int id){
+        for (KeybindGroup g:Groups) {
+            if(g.ID==id)
+                return false;
+        }
+        return true;
     }
 }

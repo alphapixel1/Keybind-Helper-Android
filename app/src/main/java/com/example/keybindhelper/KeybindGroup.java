@@ -1,23 +1,31 @@
 package com.example.keybindhelper;
 
 import android.content.Context;
-import android.os.Build;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import androidx.annotation.RequiresApi;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
-
+@Entity
 public class KeybindGroup {
     public ArrayList<Keybind> Keybinds=new ArrayList<>();
     private String Name;
     private  Context context;
+    @PrimaryKey
+    public int ID;
     public GroupViewModel model;
-
+    @ColumnInfo(name = "ProjectID")
+    public int GetProjectID(){
+        return GroupsStorage.ProjectID;
+    }
     public KeybindGroup(Context context){
         this.context=context;
         SetName(GroupsStorage.GetFirstGroupUnnamed("Unnamed Group"));
+        ID=GroupsStorage.GetAvailableGroupID();
         GroupsStorage.Groups.add(this);
         model =new GroupViewModel(context,this);
     }
@@ -26,6 +34,7 @@ public class KeybindGroup {
         if(model !=null)
             model.UpdateName(name);
     }
+    @ColumnInfo(name = "name")
     public String getName(){
         return Name;
     }

@@ -6,20 +6,38 @@ import android.content.Context;
 import android.os.Build;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Entity
 public class Keybind {
-    public  String name,kb1="",kb2="",kb3="";
+
+    @ColumnInfo(name="name")
+    public  String name;
+    @ColumnInfo(name="kb1")
+    public String kb1="";
+    @ColumnInfo(name="kb2")
+    public String kb2="";
+    @ColumnInfo(name="kb3")
+    public String kb3="";
     public KeybindGroup group;
+    @ColumnInfo(name="GroupID")
+    public int getGroupID(){
+        return group.ID;
+    }
+    @ColumnInfo(name = "ProjectID")
+    public int GetProjectID(){
+        return GroupsStorage.ProjectID;
+    }
     public KeybindViewModel model;
     private Context context;
 
@@ -124,17 +142,33 @@ public class Keybind {
             group.Keybinds.remove(this);
             d.cancel();
         });
-        d.findViewById(R.id.keybind_moveup).setOnClickListener(v->{
-            int i=group.Keybinds.indexOf(this);
-            if(i>0){
-                group.Keybinds.remove(this);
-                group.Keybinds.add(i-1,this);
-                LinearLayout l=((LinearLayout)model.view.getParent());
-                l.removeView(this.model.view);
-                l.addView(this.model.view,i-1);
-            }
+
+        d.findViewById(R.id.keybind_move).setOnClickListener(z->{
+            d.cancel();
+            ArrowProvider ap=new ArrowProvider(context);
+            ap.directionClicked=isUp -> {
+                int indx=group.Keybinds.indexOf(this);
+                System.out.println(indx);
+                LinearLayout parent=(LinearLayout) model.view.getParent();
+                if(isUp){
+                    if(indx>0) {
+                        group.Keybinds.remove(this);
+                        group.Keybinds.add(indx - 1, this);
+                        parent.removeView(model.view);
+                        parent.addView(model.view, indx - 1);
+                    }
+                }else{
+                    if(indx<group.Keybinds.size()-1){
+                        group.Keybinds.remove(this);
+                        group.Keybinds.add(indx + 1, this);
+                        parent.removeView(model.view);
+                        parent.addView(model.view, indx + 1);
+                    }
+                }
+            };
+            ap.Show();
         });
-        d.findViewById(R.id.keybind_movedown).setOnClickListener(v->{
+      /*  d.findViewById(R.id.keybind_movedown).setOnClickListener(v->{
             int i=group.Keybinds.indexOf(this);
             if(i<group.Keybinds.size()-1){
                 group.Keybinds.remove(this);
@@ -144,7 +178,7 @@ public class Keybind {
                 l.addView(this.model.view,i+1);
 
             }
-        });
+        });*/
         d.findViewById(R.id.keybind_sendtogroup).setOnClickListener(v->{
             d.cancel();
             List<KeybindGroup> gs=new ArrayList<>();
