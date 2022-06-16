@@ -1,8 +1,11 @@
 package com.example.keybindhelper
 
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.widget.Button
+import android.widget.LinearLayout
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -19,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -42,27 +46,25 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
 //Nicks Popup Code start
-        /*val group= GroupView(binding.root.context);
 
-        binding.root.addView(group)
-        group.setLayoutParams(DrawerLayout.LayoutParams(DrawerLayout.LayoutParams.MATCH_PARENT, DrawerLayout.LayoutParams.WRAP_CONTENT))
-        group.setBackgroundColor(Color.RED)*/
-        var kb=Keybind();
-        binding.root?.findViewById<Button>(R.id.editKeybindButton).setOnClickListener{
-            kb.ShowEditKeybindDailog(this);
+        val jim=findViewById<LinearLayout>(R.id.limbojimlayout)
+        findViewById<Button>(R.id.button6).setOnClickListener{
+            val g=KeybindGroup(jim.context)
+            jim.addView(g.model.view)
+        }
+        ///TRYING TO ADD GROUPVIEWMODEL
+        if(GroupsStorage.Groups.size==0) {
+            val group = KeybindGroup(jim.context)
+            jim.addView(group.model.view);
+        }else{
+            for (gs in GroupsStorage.Groups){
+                jim.addView(gs.RebuildView())
+            }
         }
 
-        //group.minimumHeight=20;
-        println("RUNNING HomeFragment.onCreate")
 
-        println(binding.root.findViewById<Button>(R.id.editKeybindButton))
-        val button=binding.root?.findViewById<Button>(R.id.editKeybindButton);
-        println(button)
-        if(button!=null)
-            println(button.text)
-     /*   binding.root?.findViewById<Button>(R.id.editKeybindButton)?.setOnClickListener {
-            println("CLICKITY CLACK")
-        }*/
+
+
         //Nicks Popup code end
 
     }

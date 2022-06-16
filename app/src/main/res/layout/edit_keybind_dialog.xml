@@ -19,16 +19,31 @@
         android:textColor="@color/white"
         android:textSize="30dp" />
 
-    <EditText
-        android:id="@+id/EditKeybind_Name"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="0"
-        android:ems="10"
-        android:hint="@string/Name"
-        android:inputType="text"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white_hint" />
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/EditKeybind_Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/Name"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white_hint" />
+
+        <ImageButton
+            android:id="@+id/editKeybind_Clear0"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="0"
+            android:backgroundTint="@android:color/transparent"
+            android:foreground="@android:drawable/ic_menu_close_clear_cancel" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -125,6 +140,16 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_weight="0" />
+
+    <TextView
+        android:id="@+id/keybind_error_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:text="Error Text"
+        android:textAlignment="center"
+        android:textColor="@color/error_text"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"

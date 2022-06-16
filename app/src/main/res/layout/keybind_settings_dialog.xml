@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/group_background"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/keybind_settings_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="300dp"
+            android:text="KeybindName"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/keybind_copy"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#07000000"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:paddingTop="5dp">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                app:srcCompat="?attr/actionModeCopyDrawable" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:clickable="false"
+                android:padding="0dp"
+                android:text="Copy"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/keybind_delete"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#07000000"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:paddingTop="5dp">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                app:srcCompat="@android:drawable/ic_menu_delete" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:clickable="false"
+                android:padding="0dp"
+                android:text="Delete"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/keybind_moveup"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#07000000"
+            android:orientation="horizontal"
+            android:paddingTop="5dp">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:clickable="false"
+                android:rotation="90"
+                app:srcCompat="?attr/actionModeCloseDrawable" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:clickable="false"
+                android:padding="0dp"
+                android:text="Move Up"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/keybind_movedown"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0"
+            android:background="#07000000"
+            android:orientation="horizontal"
+            android:paddingTop="5dp">
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:clickable="false"
+                android:rotation="270"
+                app:srcCompat="?attr/actionModeCloseDrawable" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:clickable="false"
+                android:padding="0dp"
+                android:text="Move Down"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/keybind_sendtogroup"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0"
+            android:background="#07000000"
+            android:orientation="horizontal"
+            android:paddingTop="5dp">
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:clickable="false"
+                android:rotation="0"
+                app:srcCompat="@android:drawable/ic_menu_send" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:clickable="false"
+                android:includeFontPadding="false"
+                android:padding="0dp"
+                android:paddingStart="0dp"
+                android:paddingLeft="0dp"
+                android:paddingTop="0dp"
+                android:paddingEnd="0dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="0dp"
+                android:text="Send To Group"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
