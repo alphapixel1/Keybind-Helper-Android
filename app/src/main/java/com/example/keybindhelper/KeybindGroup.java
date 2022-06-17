@@ -22,6 +22,9 @@ public class KeybindGroup {
     public int GetProjectID(){
         return GroupsStorage.ProjectID;
     }
+    @ColumnInfo(name="Index")
+    public int GetIndex(){return GroupsStorage.Groups.indexOf(this);}
+    
     public KeybindGroup(Context context){
         this.context=context;
         SetName(GroupsStorage.GetFirstGroupUnnamed("Unnamed Group"));

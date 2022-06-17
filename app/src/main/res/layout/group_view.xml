@@ -30,11 +30,6 @@
                     android:background="@android:drawable/editbox_dropdown_dark_frame"
                     android:orientation="horizontal">
 
-                    <Space
-                        android:layout_width="96dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0" />
-
                     <Button
                         android:id="@+id/group_name_button"
                         android:layout_width="wrap_content"

@@ -23,11 +23,11 @@ public class Keybind {
 
     @ColumnInfo(name="name")
     public  String name;
-    @ColumnInfo(name="kb1")
+    @ColumnInfo(name="Kb1")
     public String kb1="";
-    @ColumnInfo(name="kb2")
+    @ColumnInfo(name="Kb2")
     public String kb2="";
-    @ColumnInfo(name="kb3")
+    @ColumnInfo(name="Kb3")
     public String kb3="";
     public KeybindGroup group;
     @ColumnInfo(name="GroupID")
@@ -38,6 +38,8 @@ public class Keybind {
     public int GetProjectID(){
         return GroupsStorage.ProjectID;
     }
+    @ColumnInfo(name="Index")
+    public int GetIndex(){return group.Keybinds.indexOf(this);}
     public KeybindViewModel model;
     private Context context;
 
