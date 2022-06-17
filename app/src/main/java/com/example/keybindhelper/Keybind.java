@@ -36,7 +36,7 @@ public class Keybind {
     }
     @ColumnInfo(name = "ProjectID")
     public int GetProjectID(){
-        return GroupsStorage.ProjectID;
+        return Project.ProjectID;
     }
     @ColumnInfo(name="Index")
     public int GetIndex(){return group.Keybinds.indexOf(this);}
@@ -45,7 +45,7 @@ public class Keybind {
 
     public Keybind(Context context,KeybindGroup group){
         this.context = context;
-        name=GroupsStorage.GetFirstKeybindUnnamed();
+        name= Project.GetFirstKeybindUnnamed();
         this.group=group;
         model =new KeybindViewModel(context,this);
         model.Update();
@@ -184,7 +184,7 @@ public class Keybind {
         d.findViewById(R.id.keybind_sendtogroup).setOnClickListener(v->{
             d.cancel();
             List<KeybindGroup> gs=new ArrayList<>();
-            for (KeybindGroup g: GroupsStorage.Groups) {
+            for (KeybindGroup g: Project.Groups) {
                 if(g!=group)
                     gs.add(g);
             }
@@ -201,7 +201,7 @@ public class Keybind {
     public Keybind Clone(Boolean SameName){
         if(!SameName) {
             int i = 1;
-            while (!GroupsStorage.isKeybindNameAvailable(name + " (" + i + ")"))
+            while (!Project.isKeybindNameAvailable(name + " (" + i + ")"))
                 i++;
         return new Keybind(context,name+" ("+i+")",kb1,kb2,kb3,group);
         }

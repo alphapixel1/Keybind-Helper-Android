@@ -2,15 +2,12 @@ package com.example.keybindhelper;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.annotation.RequiresApi;
 
 import com.example.keybindhelper.PromptDialog.PromptDialog;
 import com.example.keybindhelper.PromptDialog.ValidatorResponse;
@@ -43,7 +40,7 @@ public class GroupViewModel {
                     "",
                     group.getName()
             );
-            pd.validation= text -> new ValidatorResponse(text.equals(group.getName()) || GroupsStorage.isGroupNameAvailable(text),
+            pd.validation= text -> new ValidatorResponse(text.equals(group.getName()) || Project.isGroupNameAvailable(text),
                     "Name Has Already Been Taken");
             pd.confirmedEvent= group::SetName;
             pd.ShowDialog();
@@ -63,7 +60,7 @@ public class GroupViewModel {
                 d.cancel();
             });
             d.findViewById(R.id.group_delete).setOnClickListener(v->{
-                GroupsStorage.Groups.remove(group);
+                Project.Groups.remove(group);
                 ((LinearLayout)view.getParent()).removeView(view);
                 d.cancel();
             });
@@ -73,13 +70,13 @@ public class GroupViewModel {
             });
             d.findViewById(R.id.group_copy).setOnClickListener(v->{
                 KeybindGroup g=group.Clone();
-                GroupsStorage.Groups.add(g);
+                Project.Groups.add(g);
                 ((LinearLayout)view.getParent()).addView(g.model.view);
                 d.cancel();
             });
             d.findViewById(R.id.group_dissolve).setOnClickListener(v->{
                 List<KeybindGroup> groups= new ArrayList<>();
-                for (KeybindGroup g:GroupsStorage.Groups) {
+                for (KeybindGroup g: Project.Groups) {
                     if(g!=group)
                         groups.add(g);
                 }
@@ -89,7 +86,7 @@ public class GroupViewModel {
                     for (Keybind kb:group.Keybinds.toArray(new Keybind[0])) {
                         newGroup.AddKeybind(kb);
                     }
-                    GroupsStorage.Groups.remove(group);
+                    Project.Groups.remove(group);
                     ((LinearLayout)view.getParent()).removeView(view);
                 };
                 glp.Show();
@@ -98,20 +95,20 @@ public class GroupViewModel {
                 d.cancel();
                 ArrowProvider ap=new ArrowProvider(context);
                 ap.directionClicked=isUp -> {
-                    int indx=GroupsStorage.Groups.indexOf(group);
+                    int indx= Project.Groups.indexOf(group);
                     System.out.println(indx);
                     LinearLayout parent=(LinearLayout) view.getParent();
                     if(isUp){
                         if(indx>0) {
-                            GroupsStorage.Groups.remove(group);
-                            GroupsStorage.Groups.add(indx - 1, group);
+                            Project.Groups.remove(group);
+                            Project.Groups.add(indx - 1, group);
                             parent.removeView(view);
                             parent.addView(view, indx - 1);
                         }
                     }else{
-                        if(indx<GroupsStorage.Groups.size()-1){
-                            GroupsStorage.Groups.remove(group);
-                            GroupsStorage.Groups.add(indx + 1, group);
+                        if(indx< Project.Groups.size()-1){
+                            Project.Groups.remove(group);
+                            Project.Groups.add(indx + 1, group);
                             parent.removeView(view);
                             parent.addView(view, indx +  1);
                         }

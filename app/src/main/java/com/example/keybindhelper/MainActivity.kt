@@ -53,11 +53,11 @@ class MainActivity : AppCompatActivity() {
             jim.addView(g.model.view)
         }
         ///TRYING TO ADD GROUPVIEWMODEL
-        if(GroupsStorage.Groups.size==0) {
+        if(Project.Groups.size==0) {
             val group = KeybindGroup(jim.context)
             jim.addView(group.model.view);
         }else{
-            for (gs in GroupsStorage.Groups){
+            for (gs in Project.Groups){
                 jim.addView(gs.RebuildView())
             }
         }

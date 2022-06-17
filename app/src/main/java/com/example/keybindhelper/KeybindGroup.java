@@ -20,16 +20,16 @@ public class KeybindGroup {
     public GroupViewModel model;
     @ColumnInfo(name = "ProjectID")
     public int GetProjectID(){
-        return GroupsStorage.ProjectID;
+        return Project.ProjectID;
     }
     @ColumnInfo(name="Index")
-    public int GetIndex(){return GroupsStorage.Groups.indexOf(this);}
-    
+    public int GetIndex(){return Project.Groups.indexOf(this);}
+
     public KeybindGroup(Context context){
         this.context=context;
-        SetName(GroupsStorage.GetFirstGroupUnnamed("Unnamed Group"));
-        ID=GroupsStorage.GetAvailableGroupID();
-        GroupsStorage.Groups.add(this);
+        SetName(Project.GetFirstGroupUnnamed("Unnamed Group"));
+        ID= Project.GetAvailableGroupID();
+        Project.Groups.add(this);
         model =new GroupViewModel(context,this);
     }
     public void SetName(String name){

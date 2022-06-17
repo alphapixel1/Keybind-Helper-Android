@@ -11,11 +11,11 @@ import androidx.room.PrimaryKey;
 import java.util.ArrayList;
 import java.util.Objects;
 @Entity
-public class GroupsStorage {
+public class Project {
     public static ArrayList<KeybindGroup> Groups=new ArrayList<>();
     @PrimaryKey
     public static int ProjectID;
-    @ColumnInfo(name="name")
+    @ColumnInfo(name="Name")
     public static String ProjectName;
     public static Boolean isGroupNameAvailable(String name){
         for (KeybindGroup g: Groups) {
