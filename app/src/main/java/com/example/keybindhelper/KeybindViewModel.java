@@ -31,7 +31,7 @@ public class KeybindViewModel {
             keybind.showEditDialog();
         });
 
-        main.setLongClickable(true);
+        main.setLongClickable(true);  //if keybind is held down, show option menu
         main.setOnLongClickListener(v -> {
             keybind.showContextMenu();
             return true;
@@ -43,12 +43,12 @@ public class KeybindViewModel {
         nameTV.setText(keybind.name);
 
         String[] kbs=new String[]{keybind.kb1,keybind.kb2,keybind.kb3};
-        TextView[] tvs=new TextView[]{kb1TV,kb2TV,kb3TV};
-        CardView[] cvs=new CardView[]{kb1CV,kb2CV,kb3CV};
+        TextView[] tvs=new TextView[]{kb1TV,kb2TV,kb3TV};  //update UI keybind text with input keybinds
+        CardView[] cvs=new CardView[]{kb1CV,kb2CV,kb3CV};  //update UI input keybind card with input keybinds
         for (int i=0;i<kbs.length;i++){
             String kb=kbs[i];
             tvs[i].setText(kb);
-           if(kb==""){
+           if(kb==""){ //Don't show empty keybind values
                cvs[i].setVisibility(View.GONE);
            }else{
                cvs[i].setVisibility(View.VISIBLE);

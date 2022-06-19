@@ -125,11 +125,7 @@ public class Keybind {
         });
 
         d.show();
-
-
-
-
-    }
+   }
 
     public void showContextMenu() {
         Dialog d=new Dialog(context);
@@ -198,11 +194,14 @@ public class Keybind {
         });
         d.show();
     }
+    //Create a copy of an existing keybind
     public Keybind Clone(Boolean SameName){
+        //increment i until the names arent matching
         if(!SameName) {
             int i = 1;
             while (!Project.isKeybindNameAvailable(name + " (" + i + ")"))
                 i++;
+            //return a copy of the keybind with (i) after the name
         return new Keybind(context,name+" ("+i+")",kb1,kb2,kb3,group);
         }
         return new Keybind(context,name,kb1,kb2,kb3,group);
