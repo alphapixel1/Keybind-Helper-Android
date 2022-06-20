@@ -120,14 +120,10 @@ public class GroupViewModel {
 
         });
 
-
-
         GroupNameButton.setText(group.getName());
-
-
-
     }
 
+    //if user has entered a name, set it as the group name
     public void UpdateName(String name) {
         if(GroupNameButton!=null)
             GroupNameButton.setText(name);

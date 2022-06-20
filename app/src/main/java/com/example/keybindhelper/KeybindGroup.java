@@ -30,6 +30,7 @@ public class KeybindGroup {
         SetName(Project.GetFirstGroupUnnamed("Unnamed Group"));
         ID= Project.GetAvailableGroupID();
         Project.Groups.add(this);
+
         model =new GroupViewModel(context,this);
     }
     public void SetName(String name){
@@ -37,6 +38,7 @@ public class KeybindGroup {
         if(model !=null)
             model.UpdateName(name);
     }
+    
     @ColumnInfo(name = "name")
     public String getName(){
         return Name;
@@ -48,6 +50,7 @@ public class KeybindGroup {
         model.AddKeybind(ret);
         return ret;
     }
+
     public Keybind AddKeybind(Keybind kb){
         if(kb.group!=null)
             kb.group.Keybinds.remove(kb);
@@ -59,6 +62,7 @@ public class KeybindGroup {
         return kb;
     }
 
+    //rebuilds view with new keybinds
     public View RebuildView(){
         model =new GroupViewModel(context,this);
         for (Keybind kb: Keybinds) {
@@ -68,7 +72,7 @@ public class KeybindGroup {
         return model.view;
     }
 
-
+    //create a copy of a KeybindGroup
     public KeybindGroup Clone() {
         KeybindGroup g=new KeybindGroup(context);
         for (Keybind kb:Keybinds) {

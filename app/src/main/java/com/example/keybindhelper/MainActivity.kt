@@ -61,12 +61,7 @@ class MainActivity : AppCompatActivity() {
                 jim.addView(gs.RebuildView())
             }
         }
-
-
-
-
         //Nicks Popup code end
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
