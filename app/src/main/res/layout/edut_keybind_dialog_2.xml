@@ -3,65 +3,84 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:minWidth="300dp"
-    android:layout_height="wrap_content"
-    android:background="@android:drawable/editbox_dropdown_dark_frame"
-    android:padding="15dp">
+    android:layout_height="match_parent"
+    android:minWidth="300dp">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/promptText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PromptText"
+            android:text="@string/EditKeybind"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="22sp" />
+            android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/PromptContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="4"
-            android:minLines="1"
-            android:text="Content"
-            android:textAlignment="center"
-            android:textColor="@color/white" />
-
-        <!--  <EditText
-            android:id="@+id/PromptInputBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:text="Text"
-            android:textColor="@color/white" />-->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:hint="Name"
+            app:endIconMode="clear_text">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_keybind_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Keybind 1"
             app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/PromptInputBox"
+                android:id="@+id/edit_keybind_kb1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/PromptErrorText"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:hint="Keybind 2"
+            app:endIconMode="clear_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_keybind_kb2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Keybind 3"
+            app:endIconMode="clear_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_keybind_kb3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/keybind_error_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Error text"
+            android:textAlignment="center"
             android:textColor="@color/error_text"
             android:visibility="gone" />
 
@@ -71,21 +90,18 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/promptCancelButton"
+                android:id="@+id/edit_keybind_cancel_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:text="Cancel" />
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".2" />
-
             <Button
-                android:id="@+id/PromptOkButton"
+                android:id="@+id/edit_keybind_done_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:text="Done" />
         </LinearLayout>

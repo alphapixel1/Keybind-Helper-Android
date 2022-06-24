@@ -1,8 +1,12 @@
 package com.example.keybindhelper
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
@@ -13,14 +17,24 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.keybindhelper.Room.CurrentProject
+import com.example.keybindhelper.Room.DatabaseManager
 import com.example.keybindhelper.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 
 
 class MainActivity : AppCompatActivity() {
 
+
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
+    val allActionMenuIds= setOf(R.id.action_add,R.id.action_delete_all_groups,R.id.action_show_hide_keybinds)
+    val keybindsFragmentActionMenuIds= setOf(R.id.action_add,R.id.action_delete_all_groups,R.id.action_show_hide_keybinds)
+    val projectsFragmentActionMenuIds= setOf(R.id.action_add)
+
+    var Menu:Menu?=null;
+    var onMenuInit:MenuInitialized?=null;
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,42 +55,54 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout)
+            R.id.nav_keybind, R.id.nav_gallery, R.id.nav_projects), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-//Nicks Popup Code start
+        DatabaseManager.init(binding.root.context);
+        CurrentProject.loadFirstProject()
 
-        val jim=findViewById<LinearLayout>(R.id.limbojimlayout)
-        findViewById<Button>(R.id.button6).setOnClickListener{
-            val g=KeybindGroup(jim.context)
-            jim.addView(g.model.view)
-        }
-        ///TRYING TO ADD GROUPVIEWMODEL
-        if(Project.Groups.size==0) {
-            val group = KeybindGroup(jim.context)
-            jim.addView(group.model.view);
-        }else{
-            for (gs in Project.Groups){
-                jim.addView(gs.RebuildView())
-            }
-        }
-
-
-
-
-        //Nicks Popup code end
 
     }
 
+    fun showMenuItems(items:Set<Int>){
+        allActionMenuIds.forEach{
+            this.Menu?.findItem(it)!!.isVisible = items.contains(it)
+        }
+    }
+    fun setAppBarTitle(s:String){
+        supportActionBar!!.title=s;
+    }
+
+
+    //todo this is probably not needed, res.menu.main.xml
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
+        this.Menu=menu;
+        onMenuInit?.menuHasInitialized();
+        makeMenuWhite(menu)
+
+        //menu.findItem(R.id.action_settings).isVisible = false
         return true
+    }
+
+    private fun makeMenuWhite(menu:Menu){
+        for (i in 0 until menu.size()) {
+            val item: MenuItem = menu.getItem(i)
+            val spanString = SpannableString(menu.getItem(i).title.toString())
+            spanString.setSpan(ForegroundColorSpan(Color.WHITE),0,spanString.length,0)//fix the color to white
+            item.title = spanString
+            if(item.hasSubMenu())
+                makeMenuWhite(item.subMenu)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+    interface MenuInitialized{
+        fun menuHasInitialized();
     }
 }

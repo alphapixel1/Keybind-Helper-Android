@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#000000"
         android:backgroundTint="@color/group_background"
         android:orientation="vertical"
         android:padding="20dp"
@@ -20,6 +21,7 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             android:textAlignment="center"
+            android:textColor="@color/icon_color"
             android:textSize="25dp" />
 
         <Space
@@ -33,11 +35,12 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="50dp"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0"
-                app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+                android:paddingRight="10dp"
+                app:srcCompat="@drawable/clear" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -46,6 +49,7 @@
                 android:layout_weight="0"
                 android:text="Clear Keybinds"
                 android:textAlignment="center"
+                android:textColor="@color/icon_color"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -56,11 +60,12 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="50dp"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0"
-                app:srcCompat="@android:drawable/ic_menu_delete" />
+                android:paddingRight="10dp"
+                app:srcCompat="@drawable/delete" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -69,6 +74,7 @@
                 android:layout_weight="0"
                 android:text="Delete Group"
                 android:textAlignment="center"
+                android:textColor="@color/icon_color"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -79,11 +85,12 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="50dp"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0"
-                app:srcCompat="@android:drawable/ic_menu_view" />
+                android:paddingRight="10dp"
+                app:srcCompat="@drawable/eye" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -92,6 +99,7 @@
                 android:layout_weight="0"
                 android:text="Show/Hide Keybinds"
                 android:textAlignment="center"
+                android:textColor="@color/icon_color"
                 android:textSize="20sp" />
 
         </LinearLayout>
@@ -103,11 +111,12 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="50dp"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0"
-                app:srcCompat="?attr/actionModeCopyDrawable" />
+                android:paddingRight="10dp"
+                app:srcCompat="@drawable/copy" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -116,6 +125,7 @@
                 android:layout_weight="0"
                 android:text="Copy Group"
                 android:textAlignment="center"
+                android:textColor="@color/icon_color"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -126,11 +136,12 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="50dp"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0"
-                app:srcCompat="@android:drawable/ic_menu_send" />
+                android:paddingRight="10dp"
+                app:srcCompat="@drawable/send" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -139,6 +150,7 @@
                 android:layout_weight="0"
                 android:text="Dissolve Into Group"
                 android:textAlignment="center"
+                android:textColor="@color/icon_color"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -150,11 +162,12 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="50dp"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0"
-                app:srcCompat="@android:drawable/stat_notify_sync" />
+                android:paddingRight="10dp"
+                app:srcCompat="@drawable/up_down_arrow" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -163,6 +176,7 @@
                 android:layout_weight="0"
                 android:text="Move Group"
                 android:textAlignment="center"
+                android:textColor="@color/icon_color"
                 android:textSize="20sp" />
         </LinearLayout>
 
