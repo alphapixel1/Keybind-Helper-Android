@@ -119,4 +119,11 @@ public class Group {
             for (Keybind k : keybinds)
                 k.viewHolder=null;
     }
+
+    public void moveKeybindUpDown(Keybind k, int Direction){
+        int index=keybinds.indexOf(k);
+        keybinds.remove(k);
+        keybinds.add(index+Direction,k);
+        UpdateKeybindIndexes();
+    }
 }

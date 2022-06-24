@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.keybindhelper.Dialogs.ArrowProvider;
 import com.example.keybindhelper.Dialogs.GroupListProvider;
 import com.example.keybindhelper.R;
-import com.example.keybindhelper.Room.CurrentProject;
 import com.example.keybindhelper.Room.Group;
 import com.example.keybindhelper.Room.Keybind;
 import com.google.android.material.textfield.TextInputEditText;
@@ -142,70 +141,6 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
                 k.updateDB();
             }
         });
-        /*
-        d.setContentView(R.layout.edit_keybind_dialog);
-
-        int[] clears= new int[]{R.id.editKeybind_Clear0,R.id.EditKeybind_Clear1,R.id.EditKeybind_Clear2,R.id.EditKeybind_Clear3};
-        //dialog text views
-        int[] texts= new int[]{R.id.EditKeybind_Name,R.id.EditKeybind_KB1,R.id.EditKeybind_KB2,R.id.EditKeybind_KB3};
-
-        //loading current text
-        ((EditText)d.findViewById(texts[0])).setText(k.name);
-        ((EditText)d.findViewById(texts[1])).setText(k.kb1);
-        ((EditText)d.findViewById(texts[2])).setText(k.kb2);
-        ((EditText)d.findViewById(texts[3])).setText(k.kb3);
-
-        //clear button clicks
-        for (int i=0;i<4;i++){
-            int id=texts[i];
-            (d.findViewById(clears[i])).setOnClickListener(v->{
-                ((TextView)d.findViewById(id)).setText("");
-            });
-        }
-        //cancel button
-        d.findViewById(R.id.EditKeybindCancelButton).setOnClickListener(v -> {
-            d.cancel();
-        });
-
-
-        d.findViewById(R.id.EditKeybindCancelButton).setOnLongClickListener(v -> {
-            System.out.println("fuck");
-
-            return true;
-        });
-
-        //done button
-        d.findViewById(R.id.EditKeybindDoneButton).setOnClickListener(v->{
-            String n=((EditText)d.findViewById(texts[0])).getText().toString();
-            TextView error=d.findViewById(R.id.keybind_error_text);
-            if(n.length()==0) {
-                error.setVisibility(View.VISIBLE);
-                error.setText("Name Cannot Be Empty");
-            }else{
-                k.name=n;
-
-                String kb1T=((EditText)d.findViewById(texts[1])).getText().toString();
-                String kb2T=((EditText)d.findViewById(texts[2])).getText().toString();
-                String kb3T=((EditText)d.findViewById(texts[3])).getText().toString();
-
-                List<String> kbs= Arrays.asList(kb1T,kb2T,kb3T);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    kbs=kbs.stream().filter(z->z.length()>0).collect(Collectors.toList());
-                    k.kb1=(kbs.size()>0)? kbs.get(0):"";
-                    k.kb2=(kbs.size()>1)? kbs.get(1):"";
-                    k.kb3=(kbs.size()>2)? kbs.get(2):"";
-                }else{
-                    k.kb1=kb1T;
-                    k.kb2=kb2T;
-                    k.kb3=kb3T;
-                }
-                d.cancel();
-                updateView(k,view);
-                k.updateDB();
-
-            }
-        });*/
-
         d.show();
     }
 
@@ -235,18 +170,14 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
                 int indx=k.group.keybinds.indexOf(k);
                 if(isUp){
                     if(indx>0) {
-                        k.group.keybinds.remove(k);
-                        k.group.keybinds.add(indx - 1, k);
+                        k.group.moveKeybindUpDown(k,-1);
                         notifyItemMoved(indx,indx-1);
-                        k.group.UpdateKeybindIndexes();
                         updateKeybindsBackground();
                     }
                 }else{
                     if(indx<k.group.keybinds.size()-1){
-                        k.group.keybinds.remove(k);
-                        k.group.keybinds.add(indx + 1, k);
+                        k.group.moveKeybindUpDown(k,1);
                         notifyItemMoved(indx,indx+1);
-                        k.group.UpdateKeybindIndexes();
                         updateKeybindsBackground();
                     }
                 }
@@ -271,8 +202,6 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
                 }catch (Exception e){
                     System.err.println(e);
                 }
-                //k.group.currentAdapter.notifyItemInserted(k.group.keybinds.indexOf(k));
-                //g.AddKeybind(this);
             };
             glp.Show();
         });
