@@ -1,33 +1,25 @@
 package com.example.keybindhelper.ui.Projects
 
-import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.keybindhelper.Dialogs.PromptDialog
 import com.example.keybindhelper.Dialogs.ValidatorResponse
 import com.example.keybindhelper.MainActivity
 import com.example.keybindhelper.R
-import com.example.keybindhelper.Room.Adapters.ProjectAdapter
-import com.example.keybindhelper.Room.CurrentProject
-import com.example.keybindhelper.Room.DatabaseManager
-import com.example.keybindhelper.Room.Project
-import com.example.keybindhelper.ui.keybind.KeybindFragment
+import com.example.keybindhelper.Adapters.ProjectAdapter
+import com.example.keybindhelper.dao.CurrentProjectManager
+import com.example.keybindhelper.dao.DatabaseManager
+import com.example.keybindhelper.dto.Project
 import com.google.android.material.textfield.TextInputEditText
 
 //import com.example.keybindhelperv3.databinding.FragmentSlideshowBinding
@@ -36,19 +28,15 @@ class ProjectsFragment : Fragment() {
 
     private lateinit var root: View;
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-   // private val binding get() = _binding!!
-    private var selectedProject: Project?=null;
+    //private var selectedProject: Project?=null;
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val slideshowViewModel =
-            ViewModelProvider(this).get(ProjectsViewModel::class.java)
-            root =LayoutInflater.from(this.context).inflate(R.layout.fragment_projects, container, false)
-      //_binding = LayoutInflater.inflate(inflater, container, false)
+
+        root =LayoutInflater.from(this.context).inflate(R.layout.fragment_projects, container, false)
 
 
         val mainActivity=activity as MainActivity;
@@ -61,10 +49,10 @@ class ProjectsFragment : Fragment() {
                 ValidatorResponse(DatabaseManager.isProjectNameAvailable(it),"A Project Already Exists By That Name")
             }
             pd.confirmedEvent= PromptDialog.ConfirmedEvent {
-                val p=Project();
+                val p= Project();
                 p.name=it
-                CurrentProject.loadProject(p,false)
-                DatabaseManager.db.insert(p)
+                CurrentProjectManager.loadProject(p,false)
+                p.id=DatabaseManager.db.insert(p)
                 openKeybindFragment();
             }
             pd.ShowDialog()
@@ -99,7 +87,6 @@ class ProjectsFragment : Fragment() {
 
     }
     fun openKeybindFragment(){
-        
         NavHostFragment.findNavController(this).navigate(R.id.nav_keybind)
     }
     fun RefreshProjectList():List<Project>{
@@ -120,8 +107,5 @@ class ProjectsFragment : Fragment() {
     }
 
 
-    override fun onDestroyView() {
-        super.onDestroyView()
 
-    }
 }

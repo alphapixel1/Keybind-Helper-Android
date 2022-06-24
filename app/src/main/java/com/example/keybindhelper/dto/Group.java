@@ -1,4 +1,4 @@
-package com.example.keybindhelper.Room;
+package com.example.keybindhelper.dto;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -6,7 +6,9 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.example.keybindhelper.Room.Adapters.GroupAdapter;
+import com.example.keybindhelper.Adapters.GroupAdapter;
+import com.example.keybindhelper.dao.CurrentProjectManager;
+import com.example.keybindhelper.dao.DatabaseManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,9 +38,27 @@ public class Group {
     @Ignore
     public GroupAdapter currentAdapter;
 
+    /**
+     * Blank For Room
+     */
+    public Group(){}
+
+    /**
+     * Initializes the group with a name and projectID
+     * @param name
+     * @param projectID
+     */
+    public Group(String name, long projectID){
+        this.name=name;
+        this.projectID=projectID;
+    }
+
+    /**
+     * Creates a new keybind, adds it to the group and inserts it into the database
+     */
     public void AddKeybind() {
         Keybind kb=new Keybind();
-        kb.name= CurrentProject.getFirstKeybindUnnamed();
+        kb.name= CurrentProjectManager.getFirstKeybindUnnamed();
         keybinds.add(kb);
         kb.index=keybinds.size()-1;
         kb.group=this;
@@ -46,11 +66,13 @@ public class Group {
         DatabaseManager.db.insert(kb);
     }
 
+    /**
+     * Fetches keybinds from room database
+     */
     public void getKeybinds() {
 
         this.keybinds=new ArrayList<>();
         List<Keybind> kb=DatabaseManager.db.getGroupKeybinds(id);
-        //System.out.println("GROUP.GETKEYBINDS: "+kb.size());
         Collections.sort(kb,(a,b)->a.index-b.index);
         keybinds=kb;
         for (Keybind k:keybinds) {
@@ -58,11 +80,19 @@ public class Group {
         }
     }
 
+    /**
+     * Removes the keybind from the groups keybind list and deletes the keybind from the database
+     * @param k
+     */
     public void deleteKeybind(Keybind k) {
         DatabaseManager.db.delete(k);
         keybinds.remove(k);
         UpdateKeybindIndexes();
     }
+
+    /**
+     * Sets the keybinds index's to its current position in the groups keybind list
+     */
     public void UpdateKeybindIndexes(){
         for (Keybind k: keybinds) {
             k.index=keybinds.indexOf(k);
@@ -70,6 +100,11 @@ public class Group {
         }
     }
 
+    /**
+     * Adds the keybind to this group and removes attachments to old group
+     * @param kb Keybind
+     * @param insertToDB whether to insert it into database or update the database
+     */
     public void AddKeybind(Keybind kb,boolean insertToDB) {
         if(kb.group!=null && kb.group.keybinds.contains(kb)){
             kb.group.keybinds.remove(kb);
@@ -85,15 +120,17 @@ public class Group {
             kb.updateDB();
         }
     }
+
+    /**
+     * Clones the group and inserts it into the current project
+     * @return the new group
+     */
     public Group Clone() {
-        Group ret = new Group();
-        ret.name = CurrentProject.getFirstGroupUnnamed(name);
-        CurrentProject.Groups.add(ret);
-        ret.projectID = projectID;
-        ret.index = CurrentProject.Groups.size() - 1;
+        Group ret = new Group(CurrentProjectManager.getFirstGroupUnnamed(name),projectID);
+        CurrentProjectManager.Groups.add(ret);
+        ret.index = CurrentProjectManager.Groups.size() - 1;
         ret.id = DatabaseManager.db.insert(ret);
         if (keybinds != null) {
-
             ret.keybinds = new ArrayList<>();
             for (Keybind k : keybinds) {
                 ret.AddKeybind(k.Clone(true), true);
@@ -113,6 +150,10 @@ public class Group {
                 '}';
     }
 
+    /**
+     * Removes group adapter that has been attched to the class
+     * as well as all the keybinds adapters
+     */
     public void unloadStoredViews() {
         currentAdapter=null;
         if(keybinds==null)
@@ -120,6 +161,11 @@ public class Group {
                 k.viewHolder=null;
     }
 
+    /**
+     * Move the keybind in the group
+     * @param k Keybind that is being moved
+     * @param Direction 1 for down, -1 for up
+     */
     public void moveKeybindUpDown(Keybind k, int Direction){
         int index=keybinds.indexOf(k);
         keybinds.remove(k);

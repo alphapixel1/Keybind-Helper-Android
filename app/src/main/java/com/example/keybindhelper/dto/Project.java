@@ -1,8 +1,10 @@
-package com.example.keybindhelper.Room;
+package com.example.keybindhelper.dto;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
+
+import com.example.keybindhelper.dao.DateConverter;
 
 import java.util.Date;
 

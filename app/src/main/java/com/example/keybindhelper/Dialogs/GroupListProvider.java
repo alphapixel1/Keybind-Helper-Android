@@ -9,7 +9,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 
-import com.example.keybindhelper.Room.Group;
+import com.example.keybindhelper.dto.Group;
 
 import java.util.List;
 

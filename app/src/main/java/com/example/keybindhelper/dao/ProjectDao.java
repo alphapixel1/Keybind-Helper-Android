@@ -1,10 +1,14 @@
-package com.example.keybindhelper.Room;
+package com.example.keybindhelper.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import com.example.keybindhelper.dto.Group;
+import com.example.keybindhelper.dto.Keybind;
+import com.example.keybindhelper.dto.Project;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.keybindhelper.Room;
+package com.example.keybindhelper.dao;
 
 import androidx.room.TypeConverter;
 

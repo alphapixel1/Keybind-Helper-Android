@@ -1,13 +1,17 @@
-package com.example.keybindhelper.Room;
+package com.example.keybindhelper.dao;
 
 
 import androidx.lifecycle.MutableLiveData;
+
+import com.example.keybindhelper.dto.Group;
+import com.example.keybindhelper.dto.Keybind;
+import com.example.keybindhelper.dto.Project;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class CurrentProject {
+public class CurrentProjectManager {
     public static Project CurrentProject;
     public static List<Group> Groups;
     public static MutableLiveData<Boolean> isProjectLoaded=new MutableLiveData<>(false);
@@ -88,7 +92,6 @@ public class CurrentProject {
         int i=1;
         while (!isKeybindNameAvailable(n+" "+i)){
             i++;
-
         }
         return n+" "+i;
     }
@@ -99,6 +102,7 @@ public class CurrentProject {
         g.projectID=CurrentProject.id;
         g.index=Groups.size()-1;
         g.name= getFirstGroupUnnamed("Unnamed Group");
+        System.out.println("CurrentProjectManager.AddGroup CurrentProjectID: "+CurrentProject.id);
         g.id= DatabaseManager.db.insert(g);
         return g;
     }

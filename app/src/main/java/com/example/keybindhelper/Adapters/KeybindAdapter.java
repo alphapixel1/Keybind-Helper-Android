@@ -1,4 +1,4 @@
-package com.example.keybindhelper.Room.Adapters;
+package com.example.keybindhelper.Adapters;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -17,9 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.keybindhelper.Dialogs.ArrowProvider;
 import com.example.keybindhelper.Dialogs.GroupListProvider;
 import com.example.keybindhelper.R;
-import com.example.keybindhelper.Room.CurrentProject;
-import com.example.keybindhelper.Room.Group;
-import com.example.keybindhelper.Room.Keybind;
+import com.example.keybindhelper.dao.CurrentProjectManager;
+import com.example.keybindhelper.dto.Group;
+import com.example.keybindhelper.dto.Keybind;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -189,7 +189,7 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
         d.findViewById(R.id.keybind_sendtogroup).setOnClickListener(v->{
             d.cancel();
             List<Group> gs=new ArrayList<>();
-            for (Group g: com.example.keybindhelper.Room.CurrentProject.Groups) {
+            for (Group g: CurrentProjectManager.Groups) {
                 if(g!=k.group)
                     gs.add(g);
             }

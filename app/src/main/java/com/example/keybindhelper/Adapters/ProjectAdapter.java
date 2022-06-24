@@ -1,4 +1,4 @@
-package com.example.keybindhelper.Room.Adapters;
+package com.example.keybindhelper.Adapters;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -14,11 +14,11 @@ import com.example.keybindhelper.Dialogs.ConfirmDialog;
 import com.example.keybindhelper.Dialogs.PromptDialog;
 import com.example.keybindhelper.Dialogs.ValidatorResponse;
 import com.example.keybindhelper.R;
-import com.example.keybindhelper.Room.CurrentProject;
-import com.example.keybindhelper.Room.DatabaseManager;
-import com.example.keybindhelper.Room.Group;
-import com.example.keybindhelper.Room.Keybind;
-import com.example.keybindhelper.Room.Project;
+import com.example.keybindhelper.dao.CurrentProjectManager;
+import com.example.keybindhelper.dao.DatabaseManager;
+import com.example.keybindhelper.dto.Group;
+import com.example.keybindhelper.dto.Keybind;
+import com.example.keybindhelper.dto.Project;
 import com.example.keybindhelper.ui.Projects.ProjectsFragment;
 
 import java.text.MessageFormat;
@@ -72,8 +72,8 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
                 ConfirmDialog cd=new ConfirmDialog(context,"Are you sure you want to delete "+p.name+"?");
                 cd.onConfirmed= () -> {
                     DatabaseManager.db.delete(p);
-                    if(CurrentProject.CurrentProject.id==p.id) {
-                        CurrentProject.loadFirstProject();
+                    if(CurrentProjectManager.CurrentProject.id==p.id) {
+                        CurrentProjectManager.loadFirstProject();
                     }
                     fragment.RefreshProjectList();
 
@@ -84,7 +84,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
             });
             //open project
             d.findViewById(R.id.project_menu_open_btn).setOnClickListener (z->{
-                CurrentProject.loadProject(p, true);
+                CurrentProjectManager.loadProject(p, true);
                 fragment.openKeybindFragment();
                 d.cancel();
                // openKeybindFragment();
@@ -95,8 +95,8 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
                 PromptDialog pd = new PromptDialog(context, "Rename Project", null, p.name,null);
                 pd.validation = text -> new ValidatorResponse(DatabaseManager.isProjectNameAvailable(text), "A Project Already Exists By That Name");
                 pd.confirmedEvent = text-> {
-                    if(Objects.equals(CurrentProject.CurrentProject.name, p.name))
-                        CurrentProject.CurrentProject.name=text;
+                    if(Objects.equals(CurrentProjectManager.CurrentProject.name, p.name))
+                        CurrentProjectManager.CurrentProject.name=text;
                     p.name = text;
                     p.updateLastAccessed();
                     DatabaseManager.db.update(p);
@@ -110,7 +110,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
             //clone project
             d.findViewById(R.id.project_menu_copy_btn).setOnClickListener(z->{
                 int i = 1;
-                while (!CurrentProject.isProjectNameAvailable(projectList,p.name+" ("+i+")"))
+                while (!CurrentProjectManager.isProjectNameAvailable(projectList,p.name+" ("+i+")"))
                     i++;
                 Project np=new Project();
                 np.name=p.name+" ("+i+")";
@@ -136,8 +136,8 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
                     }
 
                 }
-                CurrentProject.loadProject(np,false);
-                System.out.println("DB COPIED GROUP COUNT: "+CurrentProject.Groups.size());
+                CurrentProjectManager.loadProject(np,false);
+                System.out.println("DB COPIED GROUP COUNT: "+ CurrentProjectManager.Groups.size());
                 fragment.RefreshProjectList();
             });
             d.show();

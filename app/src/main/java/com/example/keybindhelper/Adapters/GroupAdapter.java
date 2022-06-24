@@ -1,4 +1,4 @@
-package com.example.keybindhelper.Room.Adapters;
+package com.example.keybindhelper.Adapters;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -17,10 +17,10 @@ import com.example.keybindhelper.Dialogs.GroupListProvider;
 import com.example.keybindhelper.Dialogs.PromptDialog;
 import com.example.keybindhelper.Dialogs.ValidatorResponse;
 import com.example.keybindhelper.R;
-import com.example.keybindhelper.Room.CurrentProject;
-import com.example.keybindhelper.Room.DatabaseManager;
-import com.example.keybindhelper.Room.Group;
-import com.example.keybindhelper.Room.Keybind;
+import com.example.keybindhelper.dao.CurrentProjectManager;
+import com.example.keybindhelper.dao.DatabaseManager;
+import com.example.keybindhelper.dto.Group;
+import com.example.keybindhelper.dto.Keybind;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
                     null
             );
             pd.validation= text -> new ValidatorResponse(
-                    text.equals(group.name) || CurrentProject.isGroupNameAvailable(text),
+                    text.equals(group.name) || CurrentProjectManager.isGroupNameAvailable(text),
                     "Name Has Already Been Taken");
             pd.confirmedEvent= n->{
                 group.name=n;
@@ -96,8 +96,8 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
                 d.cancel();
             });
             d.findViewById(R.id.group_delete).setOnClickListener(v->{
-                notifyItemRemoved(CurrentProject.Groups.indexOf(group));
-                CurrentProject.Groups.remove(group);
+                notifyItemRemoved(CurrentProjectManager.Groups.indexOf(group));
+                CurrentProjectManager.Groups.remove(group);
                 DatabaseManager.db.deleteGroup(group.id);
 
                 d.cancel();
@@ -113,7 +113,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
             });
             d.findViewById(R.id.group_dissolve).setOnClickListener(v->{
                 List<Group> groups= new ArrayList<>();
-                for (Group g: CurrentProject.Groups) {
+                for (Group g: CurrentProjectManager.Groups) {
                     if(g!=group)
                         groups.add(g);
                 }
@@ -124,8 +124,8 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
                         newGroup.AddKeybind(kb,false);
                     }
                     newGroup.currentAdapter.notifyDataSetChanged();
-                    CurrentProject.Groups.remove(group);
-                    CurrentProject.updateGroupIndexes();
+                    CurrentProjectManager.Groups.remove(group);
+                    CurrentProjectManager.updateGroupIndexes();
                 };
                 glp.Show();
             });
@@ -133,15 +133,15 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
                 d.cancel();
                 ArrowProvider ap=new ArrowProvider(context);
                 ap.directionClicked=isUp -> {
-                    int indx= CurrentProject.Groups.indexOf(group);
+                    int indx= CurrentProjectManager.Groups.indexOf(group);
                     System.out.println(indx);
                     if(isUp){
                         if(indx>0) {
-                            CurrentProject.MoveGroupUpDown(group,-1);
+                            CurrentProjectManager.MoveGroupUpDown(group,-1);
                             notifyItemMoved(indx,indx-1);
                         }
-                    }else if(indx< CurrentProject.Groups.size()-1){
-                            CurrentProject.MoveGroupUpDown(group,1);
+                    }else if(indx< CurrentProjectManager.Groups.size()-1){
+                            CurrentProjectManager.MoveGroupUpDown(group,1);
                             notifyItemMoved(indx,indx+1);
                     }
                 };

@@ -7,8 +7,6 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -17,8 +15,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.keybindhelper.Room.CurrentProject
-import com.example.keybindhelper.Room.DatabaseManager
+import com.example.keybindhelper.dao.CurrentProjectManager
+import com.example.keybindhelper.dao.DatabaseManager
 import com.example.keybindhelper.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 
@@ -60,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         DatabaseManager.init(binding.root.context);
-        CurrentProject.loadFirstProject()
+        CurrentProjectManager.loadFirstProject()
 
 
     }
