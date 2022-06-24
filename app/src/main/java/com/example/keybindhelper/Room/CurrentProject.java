@@ -44,20 +44,6 @@ public class CurrentProject {
         }
         isProjectLoaded.setValue(true);
     }
-  /*  public static void newProject(){
-        List<Project> p= DatabaseManager.db.getProjects();
-        String s="Unnamed Project";
-        if(!isProjectNameAvailable(p,s)){
-            int i = 1;
-            while (!isProjectNameAvailable(p,s+" ("+i+")"))
-                i++;
-            s=s+" ("+i+")";
-        }
-        Project np=new Project();
-        np.name=s;
-        np.id= DatabaseManager.db.insert(np);
-        loadProject(np,);
-    }*/
     public static boolean isProjectNameAvailable(List<Project> projects,String name){
         for (Project p:projects) {
             if(p.name.equals(name))
@@ -116,7 +102,12 @@ public class CurrentProject {
         g.id= DatabaseManager.db.insert(g);
         return g;
     }
-
+    public static void MoveGroupUpDown(Group g, int Direction){
+        int index=Groups.indexOf(g);
+        Groups.remove(g);
+        Groups.add(index +Direction, g);
+        updateGroupIndexes();
+    }
     public static void updateGroupIndexes() {
         for (int i = 0, groupsSize = Groups.size(); i < groupsSize; i++) {
             Group g=Groups.get(i);

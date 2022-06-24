@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.keybindhelper.Dialogs.ArrowProvider;
 import com.example.keybindhelper.Dialogs.GroupListProvider;
 import com.example.keybindhelper.R;
+import com.example.keybindhelper.Room.CurrentProject;
 import com.example.keybindhelper.Room.Group;
 import com.example.keybindhelper.Room.Keybind;
 import com.google.android.material.textfield.TextInputEditText;
@@ -194,9 +195,9 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
             }
             GroupListProvider glp=new GroupListProvider(context,"Send Keybind To",gs);
             glp.groupClick=g->{
-                int indx=keybindList.indexOf(k);
+
                 g.AddKeybind(k,false);
-                notifyItemRemoved(indx);
+                notifyItemRemoved(keybindList.indexOf(k));
                 try {
                     k.group.currentAdapter.notifyDataSetChanged();
                 }catch (Exception e){

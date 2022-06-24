@@ -51,7 +51,6 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
         RecyclerView rv= holder.itemView.findViewById(R.id.keybind_zone);
         rv.setAdapter(new KeybindAdapter(group.keybinds));
         rv.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext()));
-        //LinearLayoutManager llm=new LinearLayoutManager(holder.itemView.getContext());
 
         Button nameBtn=holder.itemView.findViewById(R.id.group_name_button);
         nameBtn.setText(group.name);
@@ -88,9 +87,6 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
             ((TextView)d.findViewById(R.id.group_name)).setText(group.name);
             d.findViewById(R.id.group_clear_keybinds).setOnClickListener(v->{
                 DatabaseManager.db.deleteGroupKeybinds(group.id);
-                /*for (Keybind k:group.keybinds) {
-                    DatabaseManager.Project.delete(k);
-                }*/
                 group.keybinds.clear();
                 try {
                     rv.getAdapter().notifyDataSetChanged();
@@ -141,18 +137,12 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
                     System.out.println(indx);
                     if(isUp){
                         if(indx>0) {
-                            CurrentProject.Groups.remove(group);
-                            CurrentProject.Groups.add(indx - 1, group);
-                            CurrentProject.updateGroupIndexes();
+                            CurrentProject.MoveGroupUpDown(group,-1);
                             notifyItemMoved(indx,indx-1);
                         }
-                    }else{
-                        if(indx< CurrentProject.Groups.size()-1){
-                            CurrentProject.Groups.remove(group);
-                            CurrentProject.Groups.add(indx + 1, group);
-                            CurrentProject.updateGroupIndexes();
+                    }else if(indx< CurrentProject.Groups.size()-1){
+                            CurrentProject.MoveGroupUpDown(group,1);
                             notifyItemMoved(indx,indx+1);
-                        }
                     }
                 };
                 ap.Show();
