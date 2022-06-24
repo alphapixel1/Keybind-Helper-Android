@@ -9,6 +9,9 @@ import com.example.keybindhelper.dto.Project;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Static Database holder so I can access db anywhere in the project
+ */
 public class DatabaseManager {
     public static ProjectDao db;
     public static void init(Context c){
