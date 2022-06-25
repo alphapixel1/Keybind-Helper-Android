@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +15,7 @@ import com.example.keybindhelper.Dialogs.PromptDialog
 import com.example.keybindhelper.Dialogs.ValidatorResponse
 import com.example.keybindhelper.MainActivity
 import com.example.keybindhelper.R
-import com.example.keybindhelper.Adapters.ProjectAdapter
+import com.example.keybindhelper.RecyclerViewAdapters.ProjectAdapter
 import com.example.keybindhelper.dao.CurrentProjectManager
 import com.example.keybindhelper.dao.DatabaseManager
 import com.example.keybindhelper.dto.Project
@@ -44,9 +43,9 @@ class ProjectsFragment : Fragment() {
 
         mainActivity.Menu?.findItem(R.id.action_add)?.setOnMenuItemClickListener {
             val pd=PromptDialog(root.context,"New Project Name","","",null);
+            val projects= DatabaseManager.db.getProjects();
             pd.validation= PromptDialog.Validator {
-
-                ValidatorResponse(DatabaseManager.isProjectNameAvailable(it),"A Project Already Exists By That Name")
+                ValidatorResponse(DatabaseManager.isProjectNameAvailable(projects,it),"A Project Already Exists By That Name")
             }
             pd.confirmedEvent= PromptDialog.ConfirmedEvent {
                 val p= Project();

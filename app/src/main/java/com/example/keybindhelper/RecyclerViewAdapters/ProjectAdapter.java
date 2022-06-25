@@ -1,4 +1,4 @@
-package com.example.keybindhelper.Adapters;
+package com.example.keybindhelper.RecyclerViewAdapters;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -20,11 +20,14 @@ import com.example.keybindhelper.dto.Group;
 import com.example.keybindhelper.dto.Keybind;
 import com.example.keybindhelper.dto.Project;
 import com.example.keybindhelper.ui.Projects.ProjectsFragment;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+
+import kotlin.NotImplementedError;
 
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder> {
     private final List<Project> projectList;
@@ -40,7 +43,10 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.project_view,parent,false);
         return new ProjectViewHolder(v);
     }
-
+    private void showSnackBarMessage(String message){
+        Snackbar.make(fragment.getView(), message, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
     @Override
     public void onBindViewHolder(@NonNull ProjectViewHolder holder, int position) {
         Project p=projectList.get(position);
@@ -66,7 +72,10 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
             Dialog d =new Dialog(context);
             d.setContentView(R.layout.project_more_menu);
             ((TextView)d.findViewById(R.id.project_menu_name)).setText(p.name);
-
+            //Share Project
+            d.findViewById(R.id.project_menu_share_btn).setOnClickListener(z->{
+                showSnackBarMessage("Not implemented yet sweetie");
+            });
             //delete project
             d.findViewById(R.id.project_menu_delete_btn).setOnClickListener (z->{
                 ConfirmDialog cd=new ConfirmDialog(context,"Are you sure you want to delete "+p.name+"?");
@@ -76,7 +85,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
                         CurrentProjectManager.loadFirstProject();
                     }
                     fragment.RefreshProjectList();
-
+                    showSnackBarMessage(p.name+" Deleted!");
                     d.cancel();
                 };
                 cd.Show();
@@ -92,8 +101,9 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
             //rename project
             d.findViewById(R.id.projefct_menu_rename_btn).setOnClickListener (z-> {
                 d.cancel();
+                List<Project> projects=DatabaseManager.db.getProjects();
                 PromptDialog pd = new PromptDialog(context, "Rename Project", null, p.name,null);
-                pd.validation = text -> new ValidatorResponse(DatabaseManager.isProjectNameAvailable(text), "A Project Already Exists By That Name");
+                pd.validation = text -> new ValidatorResponse(DatabaseManager.isProjectNameAvailable(projects,text), "A Project Already Exists By That Name");
                 pd.confirmedEvent = text-> {
                     if(Objects.equals(CurrentProjectManager.CurrentProject.name, p.name))
                         CurrentProjectManager.CurrentProject.name=text;
@@ -101,7 +111,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
                     p.updateLastAccessed();
                     DatabaseManager.db.update(p);
                     notifyItemChanged(position);
-
+                    showSnackBarMessage("Renamed to \'"+text+"\'!");
                     //notifyDataSetChanged();
                     };
                 pd.ShowDialog();
@@ -109,36 +119,27 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
 
             //clone project
             d.findViewById(R.id.project_menu_copy_btn).setOnClickListener(z->{
-                int i = 1;
-                while (!CurrentProjectManager.isProjectNameAvailable(projectList,p.name+" ("+i+")"))
-                    i++;
                 Project np=new Project();
-                np.name=p.name+" ("+i+")";
+                np.name=DatabaseManager.getFirstAvailableProjectName(p.name);//p.name+" ("+i+")";
                 np.updateLastAccessed();
-
                 np.id=DatabaseManager.db.insert(np);
 
                 for (Group g:DatabaseManager.db.getProjectGroups(p.id)){
-                    Group ng= new Group();
-                    ng.name=g.name;
+                    Group ng= new Group(g.name,np.id);
                     ng.index=g.index;
-                    ng.projectID=np.id;
                     ng.id=DatabaseManager.db.insert(ng);
                     for (Keybind k: DatabaseManager.db.getGroupKeybinds(g.id)){
-                        Keybind nk=new Keybind();
-                        nk.groupID=ng.id;
-                        nk.name= k.name;
-                        nk.kb1=k.kb1;
-                        nk.kb2=k.kb2;
-                        nk.kb3=k.kb3;
+                        Keybind nk=new Keybind(ng.id,k.name,k.kb1, k.kb2, k.kb3);
                         nk.index=k.index;
                         DatabaseManager.db.insert(nk);
                     }
 
                 }
+                showSnackBarMessage("Copied as "+np.name+"!");
                 CurrentProjectManager.loadProject(np,false);
-                System.out.println("DB COPIED GROUP COUNT: "+ CurrentProjectManager.Groups.size());
+                //System.out.println("DB COPIED GROUP COUNT: "+ CurrentProjectManager.CurrentProject.Groups.size());
                 fragment.RefreshProjectList();
+                d.cancel();
             });
             d.show();
         });

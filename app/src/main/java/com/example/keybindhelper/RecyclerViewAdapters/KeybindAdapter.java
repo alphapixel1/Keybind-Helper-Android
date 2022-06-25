@@ -1,4 +1,4 @@
-package com.example.keybindhelper.Adapters;
+package com.example.keybindhelper.RecyclerViewAdapters;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -109,6 +110,9 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
         kb1Et.setText(k.kb1);
         kb2Et.setText(k.kb2);
         kb3Et.setText(k.kb3);
+        nameEt.requestFocus();
+        InputMethodManager imm = (InputMethodManager) d.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
         d.findViewById(R.id.edit_keybind_cancel_btn).setOnClickListener(v -> {
             d.cancel();
@@ -137,6 +141,7 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
                     k.kb2 = kb2T;
                     k.kb3 = kb3T;
                 }
+                imm.hideSoftInputFromWindow(nameEt.getWindowToken(), 0);
                 d.cancel();
                 updateView(k, view);
                 k.updateDB();
@@ -149,7 +154,7 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
 
         Context context=view.getContext();
         Dialog d=new Dialog(context);
-        d.setContentView(R.layout.keybind_settings_dialog);
+        d.setContentView(R.layout.keybind_more_dialog);
         ((TextView)d.findViewById(R.id.keybind_settings_name)).setText(k.name);
 
         d.findViewById(R.id.keybind_copy).setOnClickListener(v->{
@@ -189,7 +194,7 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
         d.findViewById(R.id.keybind_sendtogroup).setOnClickListener(v->{
             d.cancel();
             List<Group> gs=new ArrayList<>();
-            for (Group g: CurrentProjectManager.Groups) {
+            for (Group g: CurrentProjectManager.CurrentProject.Groups) {
                 if(g!=k.group)
                     gs.add(g);
             }

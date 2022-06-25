@@ -6,7 +6,7 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.example.keybindhelper.Adapters.GroupAdapter;
+import com.example.keybindhelper.RecyclerViewAdapters.GroupAdapter;
 import com.example.keybindhelper.dao.CurrentProjectManager;
 import com.example.keybindhelper.dao.DatabaseManager;
 
@@ -23,7 +23,7 @@ import java.util.List;
         childColumns = "projectID",
         onDelete = ForeignKey.CASCADE)
 })
-public class Group {
+public class Group{
 
     @PrimaryKey(autoGenerate = true)
     public long id;
@@ -52,6 +52,7 @@ public class Group {
      * @param name
      * @param projectID
      */
+    @Ignore
     public Group(String name, long projectID){
         this.name=name;
         this.projectID=projectID;
@@ -62,7 +63,7 @@ public class Group {
      */
     public void AddKeybind() {
         Keybind kb=new Keybind();
-        kb.name= CurrentProjectManager.getFirstKeybindUnnamed();
+        kb.name= CurrentProjectManager.CurrentProject.getFirstKeybindUnnamed();
         keybinds.add(kb);
         kb.index=keybinds.size()-1;
         kb.group=this;
@@ -130,9 +131,9 @@ public class Group {
      * @return the new group
      */
     public Group Clone() {
-        Group ret = new Group(CurrentProjectManager.getFirstGroupUnnamed(name),projectID);
-        CurrentProjectManager.Groups.add(ret);
-        ret.index = CurrentProjectManager.Groups.size() - 1;
+        Group ret = new Group(CurrentProjectManager.CurrentProject.getFirstGroupUnnamed(name),projectID);
+        CurrentProjectManager.CurrentProject.Groups.add(ret);
+        ret.index = CurrentProjectManager.CurrentProject.Groups.size() - 1;
         ret.id = DatabaseManager.db.insert(ret);
         if (keybinds != null) {
             ret.keybinds = new ArrayList<>();
@@ -193,4 +194,5 @@ public class Group {
         ret.put("keybinds",keybindsJSONArray);
         return ret;
     }
+
 }

@@ -1,4 +1,4 @@
-package com.example.keybindhelper.Adapters;
+package com.example.keybindhelper.RecyclerViewAdapters;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -63,7 +63,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
                     null
             );
             pd.validation= text -> new ValidatorResponse(
-                    text.equals(group.name) || CurrentProjectManager.isGroupNameAvailable(text),
+                    text.equals(group.name) || CurrentProjectManager.CurrentProject.isGroupNameAvailable(text),
                     "Name Has Already Been Taken");
             pd.confirmedEvent= n->{
                 group.name=n;
@@ -96,8 +96,8 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
                 d.cancel();
             });
             d.findViewById(R.id.group_delete).setOnClickListener(v->{
-                notifyItemRemoved(CurrentProjectManager.Groups.indexOf(group));
-                CurrentProjectManager.Groups.remove(group);
+                notifyItemRemoved(CurrentProjectManager.CurrentProject.Groups.indexOf(group));
+                CurrentProjectManager.CurrentProject.Groups.remove(group);
                 DatabaseManager.db.deleteGroup(group.id);
 
                 d.cancel();
@@ -113,7 +113,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
             });
             d.findViewById(R.id.group_dissolve).setOnClickListener(v->{
                 List<Group> groups= new ArrayList<>();
-                for (Group g: CurrentProjectManager.Groups) {
+                for (Group g: CurrentProjectManager.CurrentProject.Groups) {
                     if(g!=group)
                         groups.add(g);
                 }
@@ -124,8 +124,8 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
                         newGroup.AddKeybind(kb,false);
                     }
                     newGroup.currentAdapter.notifyDataSetChanged();
-                    CurrentProjectManager.Groups.remove(group);
-                    CurrentProjectManager.updateGroupIndexes();
+                    CurrentProjectManager.CurrentProject.Groups.remove(group);
+                    CurrentProjectManager.CurrentProject.updateGroupIndexes();
                 };
                 glp.Show();
             });
@@ -133,15 +133,15 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
                 d.cancel();
                 ArrowProvider ap=new ArrowProvider(context);
                 ap.directionClicked=isUp -> {
-                    int indx= CurrentProjectManager.Groups.indexOf(group);
+                    int indx= CurrentProjectManager.CurrentProject.Groups.indexOf(group);
                     System.out.println(indx);
                     if(isUp){
                         if(indx>0) {
-                            CurrentProjectManager.MoveGroupUpDown(group,-1);
+                            CurrentProjectManager.CurrentProject.MoveGroupUpDown(group,-1);
                             notifyItemMoved(indx,indx-1);
                         }
-                    }else if(indx< CurrentProjectManager.Groups.size()-1){
-                            CurrentProjectManager.MoveGroupUpDown(group,1);
+                    }else if(indx< CurrentProjectManager.CurrentProject.Groups.size()-1){
+                            CurrentProjectManager.CurrentProject.MoveGroupUpDown(group,1);
                             notifyItemMoved(indx,indx+1);
                     }
                 };

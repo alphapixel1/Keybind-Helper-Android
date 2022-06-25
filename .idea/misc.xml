@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Nick/AndroidStudioProjects/Keybind-Helper-Android/app/src/main/res/layout/edut_keybind_dialog_2.xml" value="0.6" />
         <entry key="..\:/Users/Nick/AndroidStudioProjects/Keybind-Helper-Android/app/src/main/res/layout/fragment_share.xml" value="0.49592391304347827" />
+        <entry key="..\:/Users/Nick/AndroidStudioProjects/Keybind-Helper-Android/app/src/main/res/layout/keybind_settings_dialog.xml" value="0.31145833333333334" />
+        <entry key="..\:/Users/Nick/AndroidStudioProjects/Keybind-Helper-Android/app/src/main/res/layout/keybind_view.xml" value="0.31145833333333334" />
+        <entry key="..\:/Users/Nick/AndroidStudioProjects/Keybind-Helper-Android/app/src/main/res/layout/project_more_menu.xml" value="0.49592391304347827" />
+        <entry key="..\:/Users/Nick/AndroidStudioProjects/Keybind-Helper-Android/app/src/main/res/menu/activity_main_drawer.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/Nick/AndroidStudioProjects/KeybindHelper/app/src/main/res/drawable-finger/group_view.xml" value="0.316" />
         <entry key="..\:/Users/Nick/AndroidStudioProjects/KeybindHelper/app/src/main/res/drawable/add.xml" value="0.281" />
         <entry key="..\:/Users/Nick/AndroidStudioProjects/KeybindHelper/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.281" />

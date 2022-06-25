@@ -27,6 +27,12 @@
             android:text="Open" />
 
         <Button
+            android:id="@+id/project_menu_share_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Share" />
+
+        <Button
             android:id="@+id/project_menu_copy_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

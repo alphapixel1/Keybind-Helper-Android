@@ -26,12 +26,22 @@ public class DatabaseManager {
         Collections.sort(projects,(a, b)-> b.lastAccessed.compareTo(a.lastAccessed));
         return projects;
     }
-    public static boolean isProjectNameAvailable(String name){
-        for (Project p : db.getProjects()){
+    public static boolean isProjectNameAvailable(List<Project> projects,String name){
+        for (Project p : projects){
             if(p.name.equals(name))
                 return false;
         }
         return true;
+    }
+    public static String getFirstAvailableProjectName(String baseName){
+        List<Project> projects=db.getProjects();
+        if(isProjectNameAvailable(projects,baseName))
+            return baseName;
+        int i=1;
+        while (!isProjectNameAvailable(projects,baseName+" ("+i+")")){
+            i++;
+        }
+        return baseName+" ("+i+")";
     }
     public static List<Group> getOrderedGroups(long projectId){
         List<Group> Groups=db.getProjectGroups(projectId);

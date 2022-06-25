@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     val allActionMenuIds= setOf(R.id.action_add,R.id.action_delete_all_groups,R.id.action_show_hide_keybinds)
     val keybindsFragmentActionMenuIds= setOf(R.id.action_add,R.id.action_delete_all_groups,R.id.action_show_hide_keybinds)
     val projectsFragmentActionMenuIds= setOf(R.id.action_add)
+    val shareFragmentActionMenuIds=setOf<Int>()
 
     var Menu:Menu?=null;
     var onMenuInit:MenuInitialized?=null;
@@ -41,19 +42,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.appBarMain.toolbar)
 
-       /* binding.appBarMain.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }*/
+        setSupportActionBar(binding.appBarMain.toolbar)//todo figure out why it runs but is showing this as an error... and wont run without it? I hate kotlin so fucking much
+
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_keybind, R.id.nav_gallery, R.id.nav_projects), drawerLayout)
+            R.id.nav_keybind, R.id.nav_catalog, R.id.nav_projects), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
