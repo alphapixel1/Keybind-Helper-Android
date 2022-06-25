@@ -4,6 +4,8 @@ import android.content.Context;
 
 import androidx.room.Room;
 
+import com.example.keybindhelper.dto.Group;
+import com.example.keybindhelper.dto.Keybind;
 import com.example.keybindhelper.dto.Project;
 
 import java.util.Collections;
@@ -30,5 +32,16 @@ public class DatabaseManager {
                 return false;
         }
         return true;
+    }
+    public static List<Group> getOrderedGroups(long projectId){
+        List<Group> Groups=db.getProjectGroups(projectId);
+        Collections.sort(Groups,(a,b)->a.index-b.index);
+        return Groups;
+    }
+
+    public static List<Keybind> getOrderedKeybinds(long id) {
+        List<Keybind> keybinds=db.getGroupKeybinds(id);
+        Collections.sort(keybinds,(a,b)->a.index-b.index);
+        return keybinds;
     }
 }

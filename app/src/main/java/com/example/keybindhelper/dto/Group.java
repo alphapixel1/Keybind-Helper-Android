@@ -10,6 +10,10 @@ import com.example.keybindhelper.Adapters.GroupAdapter;
 import com.example.keybindhelper.dao.CurrentProjectManager;
 import com.example.keybindhelper.dao.DatabaseManager;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -171,5 +175,22 @@ public class Group {
         keybinds.remove(k);
         keybinds.add(index+Direction,k);
         UpdateKeybindIndexes();
+    }
+
+    public JSONObject getJSONObject(boolean isCurrentProject) throws JSONException {
+        JSONObject ret =new JSONObject();
+        ret.put("groupName",name);
+        JSONArray keybindsJSONArray=new JSONArray();
+        List<Keybind> kbs;
+        if(isCurrentProject){
+            kbs=keybinds;
+        }else{
+            kbs=DatabaseManager.getOrderedKeybinds(id);
+        }
+        for (Keybind k : kbs){
+            keybindsJSONArray.put(k.getJSONObject());
+        }
+        ret.put("keybinds",keybindsJSONArray);
+        return ret;
     }
 }

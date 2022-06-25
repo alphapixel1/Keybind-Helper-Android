@@ -43,4 +43,14 @@
             android:layout_height="wrap_content"
             android:text="Wednesday" />
     </com.google.android.material.tabs.TabLayout>
+
+    <Button
+        android:id="@+id/jsonButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="106dp"
+        android:layout_marginTop="121dp"
+        android:text="jsonify me"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/keybind_tab_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,9 @@ import com.example.keybindhelper.Adapters.KeybindAdapter;
 import com.example.keybindhelper.dao.CurrentProjectManager;
 import com.example.keybindhelper.dao.DatabaseManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 @Entity(foreignKeys = {@ForeignKey(entity = Group.class,
         parentColumns = "id",
@@ -85,6 +88,15 @@ public class Keybind {
             newName=name + " (" + i + ")";
         }
         Keybind ret=new Keybind(groupID,newName,kb1,kb2,kb3);
+        return ret;
+    }
+
+    public JSONObject getJSONObject() throws JSONException {
+        JSONObject ret=new JSONObject();
+        ret.put("keybindName",name);
+        ret.put("kb1",kb1);
+        ret.put("kb2",kb2);
+        ret.put("kb3",kb3);
         return ret;
     }
 }

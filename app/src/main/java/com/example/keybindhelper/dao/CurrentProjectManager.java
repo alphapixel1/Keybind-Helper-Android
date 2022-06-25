@@ -7,7 +7,6 @@ import com.example.keybindhelper.dto.Group;
 import com.example.keybindhelper.dto.Keybind;
 import com.example.keybindhelper.dto.Project;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -52,8 +51,7 @@ public class CurrentProjectManager {
         project.updateLastAccessed();
         if(updateDb)
             DatabaseManager.db.update(project);
-        Groups= DatabaseManager.db.getProjectGroups(project.id);
-        Collections.sort(Groups,(a,b)->a.index-b.index);
+        Groups= DatabaseManager.getOrderedGroups(project.id);
         System.out.println("How many groups does this project have: "+Groups.size());
         for (Group g : Groups) {
             g.getKeybinds();
