@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.keybindhelper.Dialogs.ConfirmDialog;
@@ -51,7 +52,9 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
     public void onBindViewHolder(@NonNull ProjectViewHolder holder, int position) {
         Project p=projectList.get(position);
 
-        ((TextView)holder.itemView.findViewById(R.id.project_name)).setText(p.name);
+        LifecycleOwner lifecycleOwner=(LifecycleOwner)holder.itemView.getContext();
+        p.name.observe(lifecycleOwner,((TextView)holder.itemView.findViewById(R.id.project_name))::setText);
+        //Formating to month/day/year hour:min(am/pm)
         Calendar cal = Calendar.getInstance();
         cal.setTime(p.lastAccessed);
         int day= cal.get(Calendar.DAY_OF_MONTH);
@@ -71,7 +74,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
             Context context=holder.itemView.getContext();
             Dialog d =new Dialog(context);
             d.setContentView(R.layout.project_more_menu);
-            ((TextView)d.findViewById(R.id.project_menu_name)).setText(p.name);
+          //  ((TextView)d.findViewById(R.id.project_menu_name)).setText(p.name);
             //Share Project
             d.findViewById(R.id.project_menu_share_btn).setOnClickListener(z->{
                 showSnackBarMessage("Not implemented yet sweetie");
@@ -102,12 +105,12 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
             d.findViewById(R.id.projefct_menu_rename_btn).setOnClickListener (z-> {
                 d.cancel();
                 List<Project> projects=DatabaseManager.db.getProjects();
-                PromptDialog pd = new PromptDialog(context, "Rename Project", null, p.name,null);
+                PromptDialog pd = new PromptDialog(context, "Rename Project", null, p.name.getValue(),null);
                 pd.validation = text -> new ValidatorResponse(DatabaseManager.isProjectNameAvailable(projects,text), "A Project Already Exists By That Name");
                 pd.confirmedEvent = text-> {
                     if(Objects.equals(CurrentProjectManager.CurrentProject.name, p.name))
-                        CurrentProjectManager.CurrentProject.name=text;
-                    p.name = text;
+                        CurrentProjectManager.CurrentProject.name.setValue(text);
+                    p.name.setValue(text);
                     p.updateLastAccessed();
                     DatabaseManager.db.update(p);
                     notifyItemChanged(position);
@@ -120,16 +123,16 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
             //clone project
             d.findViewById(R.id.project_menu_copy_btn).setOnClickListener(z->{
                 Project np=new Project();
-                np.name=DatabaseManager.getFirstAvailableProjectName(p.name);//p.name+" ("+i+")";
+                np.name.setValue(DatabaseManager.getFirstAvailableProjectName(p.name.getValue()));
                 np.updateLastAccessed();
                 np.id=DatabaseManager.db.insert(np);
 
                 for (Group g:DatabaseManager.db.getProjectGroups(p.id)){
-                    Group ng= new Group(g.name,np.id);
+                    Group ng= new Group(g.name.getValue(),np.id);
                     ng.index=g.index;
                     ng.id=DatabaseManager.db.insert(ng);
                     for (Keybind k: DatabaseManager.db.getGroupKeybinds(g.id)){
-                        Keybind nk=new Keybind(ng.id,k.name,k.kb1, k.kb2, k.kb3);
+                        Keybind nk=new Keybind(ng.id,k.name.getValue(),k.kb1.getValue(), k.kb2.getValue(), k.kb3.getValue());
                         nk.index=k.index;
                         DatabaseManager.db.insert(nk);
                     }

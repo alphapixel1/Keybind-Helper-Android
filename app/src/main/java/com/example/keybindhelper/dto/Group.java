@@ -1,14 +1,18 @@
 package com.example.keybindhelper.dto;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
 import com.example.keybindhelper.RecyclerViewAdapters.GroupAdapter;
 import com.example.keybindhelper.dao.CurrentProjectManager;
 import com.example.keybindhelper.dao.DatabaseManager;
+import com.example.keybindhelper.dao.StringLiveDataConverter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,8 +32,8 @@ public class Group{
     @PrimaryKey(autoGenerate = true)
     public long id;
 
-    @ColumnInfo
-    public String name;
+    @TypeConverters({StringLiveDataConverter.class})
+    public MutableLiveData<String> name=new MutableLiveData<>("");
 
     @ColumnInfo(name="projectID")
     public long projectID;
@@ -54,7 +58,7 @@ public class Group{
      */
     @Ignore
     public Group(String name, long projectID){
-        this.name=name;
+        this.name.setValue(name);
         this.projectID=projectID;
     }
 
@@ -63,7 +67,7 @@ public class Group{
      */
     public void AddKeybind() {
         Keybind kb=new Keybind();
-        kb.name= CurrentProjectManager.CurrentProject.getFirstKeybindUnnamed();
+        kb.name.setValue(CurrentProjectManager.CurrentProject.getFirstKeybindUnnamed());
         keybinds.add(kb);
         kb.index=keybinds.size()-1;
         kb.group=this;
@@ -131,7 +135,7 @@ public class Group{
      * @return the new group
      */
     public Group Clone() {
-        Group ret = new Group(CurrentProjectManager.CurrentProject.getFirstGroupUnnamed(name),projectID);
+        Group ret = new Group(CurrentProjectManager.CurrentProject.getFirstGroupUnnamed(name.getValue()),projectID);
         CurrentProjectManager.CurrentProject.Groups.add(ret);
         ret.index = CurrentProjectManager.CurrentProject.Groups.size() - 1;
         ret.id = DatabaseManager.db.insert(ret);

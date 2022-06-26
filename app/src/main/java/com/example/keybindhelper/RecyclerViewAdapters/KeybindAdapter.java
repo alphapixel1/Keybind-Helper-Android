@@ -13,14 +13,20 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewTreeLifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.TypeConverters;
 
 import com.example.keybindhelper.Dialogs.ArrowProvider;
 import com.example.keybindhelper.Dialogs.GroupListProvider;
 import com.example.keybindhelper.R;
 import com.example.keybindhelper.dao.CurrentProjectManager;
+import com.example.keybindhelper.dao.DateConverter;
 import com.example.keybindhelper.dto.Group;
 import com.example.keybindhelper.dto.Keybind;
+import com.example.keybindhelper.ui.keybind.KeybindFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -33,9 +39,11 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
 
     private List<Keybind> keybindList;
 
+
     public KeybindAdapter(List<Keybind> keybindList){
 
         this.keybindList = keybindList;
+
     }
 
     @NonNull
@@ -52,7 +60,28 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
         Keybind k=keybindList.get(position);
         k.viewHolder=holder;
         View view=holder.itemView;
-        updateView(k,view);
+        LifecycleOwner lifecycleOwner = (LifecycleOwner) view.getContext();
+
+        k.name.observe(lifecycleOwner,((TextView)view.findViewById(R.id.keybind_name))::setText);
+
+        TextView kb1TV=view.findViewById(R.id.keybind_1_text);
+        k.kb1.observe(lifecycleOwner, s -> {
+            kb1TV.setText(s);
+            view.findViewById(R.id.keybind_1_card).setVisibility(s.length()>0? View.VISIBLE:View.GONE);
+        });
+
+        TextView kb2TV=view.findViewById(R.id.keybind_2_text);
+        k.kb2.observe(lifecycleOwner, s -> {
+            kb2TV.setText(s);
+            view.findViewById(R.id.keybind_2_card).setVisibility(s.length()>0? View.VISIBLE:View.GONE);
+        });
+
+        TextView kb3TV=view.findViewById(R.id.keybind_3_text);
+        k.kb3.observe(lifecycleOwner, s -> {
+            kb3TV.setText(s);
+            view.findViewById(R.id.keybind_3_card).setVisibility(s.length()>0? View.VISIBLE:View.GONE);
+        });
+
         //end updating text
 
         LinearLayout main =view.findViewById(R.id.keybind_main_layout);
@@ -75,7 +104,8 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
      * @param k
      * @param view
      */
-    private void updateView(Keybind k,View view){
+  /*  private void updateView(Keybind k,View view){
+        //((TextView)view.findViewById(R.id.keybind_name)).;
         ((TextView) view.findViewById(R.id.keybind_name)).setText(k.name);
 
         TextView kb1TV=view.findViewById(R.id.keybind_1_text);
@@ -99,7 +129,7 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
                 cvs[i].setVisibility(View.VISIBLE);
             }
         }
-    }
+    }*/
 
     /**
      * Displays a dialog for the keybind that allows you to modify it
@@ -118,10 +148,10 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
         TextInputEditText kb2Et=d.findViewById(R.id.edit_keybind_kb2);
         TextInputEditText kb3Et=d.findViewById(R.id.edit_keybind_kb3);
 
-        nameEt.setText(k.name);
-        kb1Et.setText(k.kb1);
-        kb2Et.setText(k.kb2);
-        kb3Et.setText(k.kb3);
+        nameEt.setText(k.name.getValue());
+        kb1Et.setText(k.kb1.getValue());
+        kb2Et.setText(k.kb2.getValue());
+        kb3Et.setText(k.kb3.getValue());
         nameEt.requestFocus();
         InputMethodManager imm = (InputMethodManager) d.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
@@ -136,26 +166,26 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
                 error.setVisibility(View.VISIBLE);
                 error.setText("Name Cannot Be Empty");
             }else {
-                k.name = n;
+                k.name.setValue(n);
 
                 String kb1T = kb1Et.getText().toString();
                 String kb2T = kb2Et.getText().toString();
                 String kb3T = kb3Et.getText().toString();
 
                 List<String> kbs = Arrays.asList(kb1T, kb2T, kb3T);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    kbs = kbs.stream().filter(z -> z.length() > 0).collect(Collectors.toList());
-                    k.kb1 = (kbs.size() > 0) ? kbs.get(0) : "";
-                    k.kb2 = (kbs.size() > 1) ? kbs.get(1) : "";
-                    k.kb3 = (kbs.size() > 2) ? kbs.get(2) : "";
-                } else {
-                    k.kb1 = kb1T;
-                    k.kb2 = kb2T;
-                    k.kb3 = kb3T;
+                List<String> filteredKB=new ArrayList<>();
+                for (String s : kbs){
+                    if(s.length()>0)
+                        filteredKB.add(s);
                 }
+
+                k.kb1.setValue((filteredKB.size() > 0)? kbs.get(0) : "");
+                k.kb2.setValue((filteredKB.size() > 1)? kbs.get(1) : "");
+                k.kb3.setValue((filteredKB.size() > 2)? kbs.get(2) : "");
+
                 imm.hideSoftInputFromWindow(nameEt.getWindowToken(), 0);
                 d.cancel();
-                updateView(k, view);
+                //updateView(k, view);
                 k.updateDB();
             }
         });
@@ -167,7 +197,7 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
         Context context=view.getContext();
         Dialog d=new Dialog(context);
         d.setContentView(R.layout.keybind_more_dialog);
-        ((TextView)d.findViewById(R.id.keybind_settings_name)).setText(k.name);
+        ((TextView)d.findViewById(R.id.keybind_settings_name)).setText(k.name.getValue());
 
         d.findViewById(R.id.keybind_copy).setOnClickListener(v->{
             k.group.AddKeybind(k.Clone(false),true);
@@ -212,7 +242,6 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
             }
             GroupListProvider glp=new GroupListProvider(context,"Send Keybind To",gs);
             glp.groupClick=g->{
-
                 g.AddKeybind(k,false);
                 notifyItemRemoved(keybindList.indexOf(k));
                 try {

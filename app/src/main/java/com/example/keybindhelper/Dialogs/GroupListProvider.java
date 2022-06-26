@@ -39,7 +39,7 @@ public class GroupListProvider {
         for (Group g:groups) {
             Group cg=g;
             Button b=new Button(c);
-            b.setText(g.name);
+            b.setText(g.name.getValue());
             b.setOnClickListener(v->{
                 groupClick.GroupClicked(cg);
                 d.cancel();

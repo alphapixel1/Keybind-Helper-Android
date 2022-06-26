@@ -1,5 +1,7 @@
 package com.example.keybindhelper.dto;
 
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -9,6 +11,7 @@ import androidx.room.TypeConverters;
 import com.example.keybindhelper.dao.CurrentProjectManager;
 import com.example.keybindhelper.dao.DatabaseManager;
 import com.example.keybindhelper.dao.DateConverter;
+import com.example.keybindhelper.dao.StringLiveDataConverter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,8 +25,9 @@ import java.util.Objects;
 public class Project{
     @PrimaryKey(autoGenerate = true)
     public long id;
-    @ColumnInfo
-    public String name;
+    @TypeConverters({StringLiveDataConverter.class})
+    public MutableLiveData<String> name;
+
     @TypeConverters({DateConverter.class})
     public Date lastAccessed;
     @Ignore
@@ -61,7 +65,7 @@ public class Project{
             if(g.keybinds!=null) {
                 for (Keybind kb : g.keybinds) {
 
-                    if (kb.name!=null && kb.name.equals(name))
+                    if (kb.name.getValue()!=null && kb.name.getValue().equals(name))
                         return false;
                 }
             }
@@ -92,7 +96,7 @@ public class Project{
      */
     public Boolean isGroupNameAvailable(String name){
         for (Group g: Groups) {
-            if(Objects.equals(g.name,name))
+            if(Objects.equals(g.name.getValue(),name))
                 return false;
         }
         return true;
@@ -123,7 +127,7 @@ public class Project{
         Groups.add(g);
         g.projectID=id;
         g.index=Groups.size()-1;
-        g.name= getFirstGroupUnnamed("Unnamed Group");
+        g.name.setValue(getFirstGroupUnnamed("Unnamed Group"));
         System.out.println("CurrentProjectManager.AddGroup CurrentProjectID: "+id);
         g.id= DatabaseManager.db.insert(g);
         return g;

@@ -26,7 +26,7 @@ public class CurrentProjectManager {
         Project p;
         if(projects.isEmpty()){
             p=new Project();
-            p.name="Unnamed Project";
+            p.name.setValue("Unnamed Project");
             p.id= DatabaseManager.db.insert(p);
             System.out.println("NEW PROJECT INSERTED: "+p.id);
         }else{

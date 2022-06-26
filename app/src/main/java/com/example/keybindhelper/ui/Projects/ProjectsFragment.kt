@@ -49,7 +49,7 @@ class ProjectsFragment : Fragment() {
             }
             pd.confirmedEvent= PromptDialog.ConfirmedEvent {
                 val p= Project();
-                p.name=it
+                p.name.value=it;
                 CurrentProjectManager.loadProject(p,false)
                 p.id=DatabaseManager.db.insert(p)
                 openKeybindFragment();
@@ -96,7 +96,7 @@ class ProjectsFragment : Fragment() {
             val filteredP= mutableListOf<Project>();
             val search=searchBox.text.toString().lowercase();
             for (project in projects) {
-                if(project.name.lowercase().contains(search))
+                if(project.name.value!!.lowercase().contains(search))
                 filteredP+=(project);
             }
             rv.adapter=ProjectAdapter(filteredP,this);

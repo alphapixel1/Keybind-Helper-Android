@@ -5,10 +5,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.DefaultLifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,7 +40,6 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
     @Override
     public GroupViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.group_layout,parent,false);
-
         return new GroupViewHolder(v);
     }
 
@@ -53,21 +55,24 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
         rv.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext()));
 
         Button nameBtn=holder.itemView.findViewById(R.id.group_name_button);
-        nameBtn.setText(group.name);
+
+        group.name.observe((LifecycleOwner) context,nameBtn::setText);
+
+        nameBtn.setText(group.name.getValue());
         nameBtn.setOnClickListener(v->{
             PromptDialog pd= new PromptDialog(
                     holder.itemView.getContext(),
                     "Rename Group",
                     "",
-                    group.name,
+                    group.name.getValue(),
                     null
             );
             pd.validation= text -> new ValidatorResponse(
                     text.equals(group.name) || CurrentProjectManager.CurrentProject.isGroupNameAvailable(text),
                     "Name Has Already Been Taken");
             pd.confirmedEvent= n->{
-                group.name=n;
-                nameBtn.setText(n);
+                group.name.setValue(n);
+
                 DatabaseManager.db.update(group);
             };
             pd.ShowDialog();
@@ -84,7 +89,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
         holder.itemView.findViewById(R.id.group_more_button).setOnClickListener(z->{
             Dialog d=new Dialog(context);
             d.setContentView(R.layout.group_menu);
-            ((TextView)d.findViewById(R.id.group_name)).setText(group.name);
+            ((TextView)d.findViewById(R.id.group_name)).setText(group.name.getValue());
             d.findViewById(R.id.group_clear_keybinds).setOnClickListener(v->{
                 DatabaseManager.db.deleteGroupKeybinds(group.id);
                 group.keybinds.clear();

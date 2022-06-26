@@ -53,7 +53,7 @@ class KeybindFragment : Fragment() {
     }
 
     private fun initMenu(mainActivity: MainActivity,view: View) {
-        mainActivity.setAppBarTitle(CurrentProjectManager.CurrentProject.name);
+        mainActivity.setAppBarTitle(CurrentProjectManager.CurrentProject.name.value!!);
         mainActivity.showMenuItems(mainActivity.keybindsFragmentActionMenuIds)
         val rv=view.findViewById<RecyclerView>(R.id.recyclerView);
 

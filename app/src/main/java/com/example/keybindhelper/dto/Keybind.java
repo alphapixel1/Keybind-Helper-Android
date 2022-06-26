@@ -1,14 +1,18 @@
 package com.example.keybindhelper.dto;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import com.example.keybindhelper.RecyclerViewAdapters.KeybindAdapter;
 import com.example.keybindhelper.dao.CurrentProjectManager;
 import com.example.keybindhelper.dao.DatabaseManager;
+import com.example.keybindhelper.dao.DateConverter;
+import com.example.keybindhelper.dao.StringLiveDataConverter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,9 +29,14 @@ public class Keybind{
 
     @ColumnInfo
     public long groupID;
-
-    @ColumnInfo
-    public String name,kb1="",kb2="",kb3="";
+    @TypeConverters({StringLiveDataConverter.class})
+    public MutableLiveData<String>
+            name=new MutableLiveData<>(""),
+            kb1=new MutableLiveData<>(""),
+            kb2=new MutableLiveData<>(""),
+            kb3=new MutableLiveData<>("");
+   /* @ColumnInfo
+    public String name,kb1="",kb2="",kb3="";*/
 
     @ColumnInfo
     public int index;
@@ -47,10 +56,10 @@ public class Keybind{
      */
     public Keybind(long groupID,String name,String kb1,String kb2,String kb3){
         this.groupID=groupID;
-        this.name=name;
-        this.kb1=kb1;
-        this.kb2=kb2;
-        this.kb3=kb3;
+        this.name.setValue(name);
+        this.kb1.setValue(kb1);
+        this.kb2.setValue(kb2);
+        this.kb3.setValue(kb3);
     }
 
 
@@ -72,23 +81,23 @@ public class Keybind{
      */
     public Keybind Clone(boolean sameName) {
 
-        String newName=name;
+        String newName=name.getValue();
         if(!sameName) {
             int i = 1;
-            while (!CurrentProjectManager.CurrentProject.isKeybindNameAvailable(name + " (" + i + ")"))
+            while (!CurrentProjectManager.CurrentProject.isKeybindNameAvailable(name.getValue() + " (" + i + ")"))
                 i++;
-            newName=name + " (" + i + ")";
+            newName=name.getValue() + " (" + i + ")";
         }
-        Keybind ret=new Keybind(groupID,newName,kb1,kb2,kb3);
+        Keybind ret=new Keybind(groupID,newName,kb1.getValue(),kb2.getValue(),kb3.getValue());
         return ret;
     }
 
     public JSONObject getJSONObject() throws JSONException {
         JSONObject ret=new JSONObject();
-        ret.put("keybindName",name);
-        ret.put("kb1",kb1);
-        ret.put("kb2",kb2);
-        ret.put("kb3",kb3);
+        ret.put("keybindName",name.getValue());
+        ret.put("kb1",kb1.getValue());
+        ret.put("kb2",kb2.getValue());
+        ret.put("kb3",kb3.getValue());
         return ret;
     }
 
