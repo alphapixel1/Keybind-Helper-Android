@@ -69,6 +69,12 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
             return true;
         });
     }
+
+    /**
+     * Updates the keybind view
+     * @param k
+     * @param view
+     */
     private void updateView(Keybind k,View view){
         ((TextView) view.findViewById(R.id.keybind_name)).setText(k.name);
 
@@ -94,6 +100,12 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
             }
         }
     }
+
+    /**
+     * Displays a dialog for the keybind that allows you to modify it
+     * @param k
+     * @param view
+     */
     private void showEditDialog(Keybind k, View view){
         Context c=view.getContext();
         Dialog d=new Dialog(c);
@@ -213,6 +225,10 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
         });
         d.show();
     }
+
+    /**
+     * Gives keybinds an alternating background color
+     */
     private void updateKeybindsBackground(){
         for(Keybind k :keybindList.get(0).group.keybinds){
             View main=k.viewHolder.itemView.findViewById(R.id.keybind_main_layout);;
