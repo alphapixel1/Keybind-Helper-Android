@@ -13,7 +13,7 @@ object DatabaseManager {
     var db: ProjectDao? = null
     fun init(c: Context?) {
         val db =
-            Room.databaseBuilder(c!!, AppDatabase::class.java, "ProjectDB").allowMainThreadQueries()
+            Room.databaseBuilder(c!!, KeybindStorage::class.java, "ProjectDB").allowMainThreadQueries()
                 .build()
         DatabaseManager.db = db.projectDao()
     }

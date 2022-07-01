@@ -79,7 +79,7 @@ class KeybindAdapter(private val keybindList: MutableList<Keybind>) :
         val d = Dialog(c)
         d.requestWindowFeature(Window.FEATURE_NO_TITLE)
         d.setCancelable(true)
-        d.setContentView(R.layout.edut_keybind_dialog_2)
+        d.setContentView(R.layout.edit_keybind_dialog_2)
         val nameEt = d.findViewById<TextInputEditText>(R.id.edit_keybind_name)
         val kb1Et = d.findViewById<TextInputEditText>(R.id.edit_keybind_kb1)
         val kb2Et = d.findViewById<TextInputEditText>(R.id.edit_keybind_kb2)
@@ -127,7 +127,7 @@ class KeybindAdapter(private val keybindList: MutableList<Keybind>) :
         d.setContentView(R.layout.keybind_settings_dialog)
         (d.findViewById<View>(R.id.keybind_settings_name) as TextView).text = k.name
         d.findViewById<View>(R.id.keybind_copy).setOnClickListener { v: View? ->
-            k.group!!.AddKeybind(k.Clone(false), true)
+            k.group!!.AddKeybind(k.clone(false), true)
             notifyItemInserted(keybindList.size - 1)
             d.cancel()
         }

@@ -5,7 +5,7 @@ import android.content.Context;
 
 public class ArrowProvider {
     public DirectionClicked directionClicked;
-    private Dialog d;
+    private final Dialog d;
     public ArrowProvider(Context context){
         d=new Dialog(context);
         d.setContentView(R.layout.move_item_dialog);

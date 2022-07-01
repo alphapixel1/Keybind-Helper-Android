@@ -11,11 +11,11 @@ public class KeybindTest{
     KeybindGroup g=new KeybindGroup(context);
     @Test
     public void givenKeybindsExist_whenUserExits_ThenKeybindsAreSaved(){
-        Assert.assertEquals(true,true);
+        Assert.assertTrue(true);
     }
 
     @Test
     public void givenKeybindsExist_whenUserCopies_ThenKeybindsAreCloned(){
-        Assert.assertEquals(true,true);
+        Assert.assertTrue(true);
     }
 }

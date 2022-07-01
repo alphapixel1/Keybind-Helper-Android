@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="edit_keybind_name" type="id" />
+    <item name="edit_keybind_kb1" type="id" />
+    <item name="edit_keybind_kb2" type="id" />
+    <item name="edit_keybind_kb3" type="id" />
+    <item name="edit_keybind_cancel_btn" type="id" />
+    <item name="edit_keybind_done_btn" type="id" />
+    <item name="project_name" type="id" />
+    <item name="project_last_accessed" type="id" />
+    <item name="project_view_btn" type="id" />
+    <item name="project_menu_name" type="id" />
+    <item name="project_menu_delete_btn" type="id" />
+    <item name="project_menu_open_btn" type="id" />
+    <item name="project_menu_rename_btn" type="id" />
+    <item name="project_menu_copy_btn" type="id" />
+    <item name="confirm_dialog_title" type="id" />
+    <item name="confirm_dialog_cancel_btn" type="id" />
+    <item name="confirm_dialog_ok_btn" type="id" />
+    <item name="recyclerView" type="id" />
+    <item name="action_delete_all_groups" type="id" />
+    <item name="action_sub_hide_keybinds" type="id" />
+    <item name="action_sub_show_keybinds" type="id" />
+    <item name="action_add" type="id" />
+</resources>

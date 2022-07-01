@@ -19,47 +19,40 @@ import com.example.keybindhelper.dao.CurrentProjectManager
 class KeybindFragment : Fragment() {
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
 
-        val root: View = LayoutInflater.from(this.context).inflate(R.layout.fragment_keybind,container,false)//binding.root
+        val root: View = LayoutInflater.from(this.context)
+            .inflate(R.layout.fragment_keybind, container, false)//binding.root
 
-        val mainActivity=activity as MainActivity;
-        if(mainActivity.Menu==null)
-            mainActivity.onMenuInit=(object:MainActivity.MenuInitialized{
-                override fun menuHasInitialized() {
-                    initMenu(mainActivity,root);
-                }
-            })
-        else
-            initMenu(mainActivity,root);
+        val mainActivity = activity as MainActivity
+        initMenu(mainActivity, root)
 
-        if(CurrentProjectManager.Groups==null) {
+        if (CurrentProjectManager.Groups == null) {
             CurrentProjectManager.isProjectLoaded.observe(viewLifecycleOwner) {
                 println("LOADED")
-                loadRecycleView(root);
+                loadRecycleView(root)
             }
-        }else{
+        } else {
             println("already loaded")
-            loadRecycleView(root);
+            loadRecycleView(root)
         }
 
 
         return root
     }
 
-    private fun initMenu(mainActivity: MainActivity,view: View) {
-        mainActivity.setAppBarTitle(CurrentProjectManager.CurrentProject!!.name!!);
+    private fun initMenu(mainActivity: MainActivity, view: View) {
+        mainActivity.setAppBarTitle()
         mainActivity.showMenuItems(mainActivity.keybindsFragmentActionMenuIds)
-        val rv=view.findViewById<RecyclerView>(R.id.recyclerView);
+        val rv = view.findViewById<RecyclerView>(R.id.recyclerView)
 
-        mainActivity.Menu!!.findItem(R.id.action_delete_all_groups).setOnMenuItemClickListener {
-            val cd=ConfirmDialog(view.context,"Delete All Groups?")
-            cd.onConfirmed = object : ConfirmDialog.ConfirmedEvent{
+        mainActivity.Menu.findItem(R.id.action_delete_all_groups).setOnMenuItemClickListener {
+            val cd = ConfirmDialog(view.context, "Delete All Groups?")
+            cd.onConfirmed = object : ConfirmDialog.ConfirmedEvent {
                 override fun onConfirmed() {
                     CurrentProjectManager.deleteAllGroups()
                     rv.adapter = GroupAdapter(CurrentProjectManager.Groups)
@@ -67,31 +60,39 @@ class KeybindFragment : Fragment() {
             }
             cd.Show()
 
-            true;
+            true
         }
-        mainActivity.Menu!!.findItem(R.id.action_sub_hide_keybinds).setOnMenuItemClickListener {
-            for(v in rv.children)
-                v.findViewById<RecyclerView>(R.id.keybind_zone).isVisible = false;
-            true;
+        mainActivity.Menu.findItem(R.id.action_sub_hide_keybinds).setOnMenuItemClickListener {
+            for (v in rv.children)
+                v.findViewById<RecyclerView>(R.id.keybind_zone).isVisible = false
+            true
         }
-        mainActivity.Menu!!.findItem(R.id.action_sub_show_keybinds).setOnMenuItemClickListener {
-            for(v in rv.children)
-                v.findViewById<RecyclerView>(R.id.keybind_zone).isVisible=true;
-            true;
+        mainActivity.Menu.findItem(R.id.action_sub_show_keybinds).setOnMenuItemClickListener {
+            for (v in rv.children)
+                v.findViewById<RecyclerView>(R.id.keybind_zone).isVisible = true
+            true
         }
-        mainActivity.Menu!!.findItem(R.id.action_add).setOnMenuItemClickListener {
+        mainActivity.Menu.findItem(R.id.action_add).setOnMenuItemClickListener {
             CurrentProjectManager.AddGroup()
-            System.out.println("MainActivity.floatingactionbutton.click: Groups Size:" + CurrentProjectManager.Groups!!.size)
+            println("MainActivity.floatingactionbutton.click: Groups Size:" + CurrentProjectManager.Groups!!.size)
             rv.adapter!!.notifyItemChanged(CurrentProjectManager.Groups!!.size - 1)
-            true;
+            true
         }
     }
 
     private fun loadRecycleView(root: View) {
-        val rv = root.findViewById<RecyclerView>(R.id.recyclerView);
-        rv!!.adapter = GroupAdapter(CurrentProjectManager.Groups);
-        rv.layoutManager = LinearLayoutManager(root.context);
+        val rv = root.findViewById<RecyclerView>(R.id.recyclerView)
+        rv!!.adapter = GroupAdapter(CurrentProjectManager.Groups)
+        rv.layoutManager = LinearLayoutManager(root.context)
     }
 
+
+}
+
+private fun Any.setOnMenuItemClickListener(function: () -> Boolean) {
+
+}
+
+private fun Any.findItem(actionDeleteAllGroups: Any) {
 
 }

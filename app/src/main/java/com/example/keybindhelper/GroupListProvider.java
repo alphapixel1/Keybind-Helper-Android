@@ -34,11 +34,10 @@ public class GroupListProvider {
         s.addView(scrollLine);
 
         for (KeybindGroup g:groups) {
-            KeybindGroup cg=g;
             Button b=new Button(c);
             b.setText(g.getName());
             b.setOnClickListener(v->{
-                groupClick.GroupClicked(cg);
+                groupClick.GroupClicked(g);
                 d.cancel();
             });
             scrollLine.addView(b);

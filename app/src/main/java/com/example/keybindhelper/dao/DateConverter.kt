@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import com.example.keybindhelper.dao.DatabaseManager
 import com.example.keybindhelper.dao.CurrentProjectManager
-import com.example.keybindhelper.dao.AppDatabase
+import com.example.keybindhelper.dao.KeybindStorage
 import java.util.*
 
 object DateConverter {

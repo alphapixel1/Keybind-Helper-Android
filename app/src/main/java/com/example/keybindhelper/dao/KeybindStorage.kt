@@ -7,6 +7,6 @@ import com.example.keybindhelper.dto.Keybind
 import com.example.keybindhelper.dto.Project
 
 @Database(entities = [Project::class, Group::class, Keybind::class], version = 1)
-abstract class AppDatabase : RoomDatabase() {
+abstract class KeybindStorage : RoomDatabase() {
     abstract fun projectDao(): ProjectDao?
 }

@@ -10,6 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.keybindhelper.databinding.FragmentProjectsBinding
 
 class ProjectsFragment : Fragment() {
+    inner class RefreshProjectList {
+
+    }
 
     private var _binding: FragmentProjectsBinding? = null
 
@@ -38,5 +41,9 @@ class ProjectsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun openKeybindFragment() {
+        TODO("Not yet implemented")
     }
 }
