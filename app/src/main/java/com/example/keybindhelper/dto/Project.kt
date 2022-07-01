@@ -11,6 +11,7 @@ class Project {
     @JvmField
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+
     @JvmField
     var name: String? = null
 

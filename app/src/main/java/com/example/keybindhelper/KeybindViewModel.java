@@ -11,8 +11,8 @@ import androidx.cardview.widget.CardView;
 public class KeybindViewModel {
     public Keybind keybind;
     public View view;
-    private TextView nameTV,kb1TV,kb2TV,kb3TV;
-    private CardView kb1CV,kb2CV,kb3CV;
+    private final TextView nameTV,kb1TV,kb2TV,kb3TV;
+    private final CardView kb1CV,kb2CV,kb3CV;
     public KeybindViewModel(Context context,Keybind keybind){
         this.keybind=keybind;
         view= LayoutInflater.from(context).inflate(R.layout.keybind_view,null);
@@ -27,9 +27,7 @@ public class KeybindViewModel {
         kb3CV=view.findViewById(R.id.keybind_3_card);
 
         LinearLayout main =view.findViewById(R.id.keybind_main_layout);
-        main.setOnClickListener(v -> {
-            keybind.showEditDialog();
-        });
+        main.setOnClickListener(v -> keybind.showEditDialog());
 
         main.setLongClickable(true);  //if keybind is held down, show option menu
         main.setOnLongClickListener(v -> {
@@ -48,7 +46,7 @@ public class KeybindViewModel {
         for (int i=0;i<kbs.length;i++){
             String kb=kbs[i];
             tvs[i].setText(kb);
-           if(kb==""){ //Don't show empty keybind values
+           if(kb.equals("")){ //Don't show empty keybind values
                cvs[i].setVisibility(View.GONE);
            }else{
                cvs[i].setVisibility(View.VISIBLE);

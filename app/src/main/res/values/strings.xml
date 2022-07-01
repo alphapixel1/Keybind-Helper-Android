@@ -30,4 +30,5 @@
     <string name="EditKeybind3">Edit Keybind 3</string>
 
     <string name="ClearButton">X</string>
+    <string name="input_cannot_be_empty" />
 </resources>

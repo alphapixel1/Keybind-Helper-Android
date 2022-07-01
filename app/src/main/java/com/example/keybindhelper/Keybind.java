@@ -41,7 +41,7 @@ public class Keybind {
     @ColumnInfo(name="Index")
     public int GetIndex(){return group.Keybinds.indexOf(this);}
     public KeybindViewModel model;
-    private Context context;
+    private final Context context;
 
     public Keybind(Context context,KeybindGroup group){
         this.context = context;
@@ -79,14 +79,10 @@ public class Keybind {
         //clear button clicks
         for (int i=0;i<4;i++){
             int id=texts[i];
-            (d.findViewById(clears[i])).setOnClickListener(v->{
-                ((TextView)d.findViewById(id)).setText("");
-            });
+            (d.findViewById(clears[i])).setOnClickListener(v-> ((TextView)d.findViewById(id)).setText(""));
         }
         //cancel button
-        d.findViewById(R.id.EditKeybindCancelButton).setOnClickListener(v -> {
-            d.cancel();
-        });
+        d.findViewById(R.id.EditKeybindCancelButton).setOnClickListener(v -> d.cancel());
 
 
         d.findViewById(R.id.EditKeybindCancelButton).setOnLongClickListener(v -> {
@@ -145,22 +141,22 @@ public class Keybind {
             d.cancel();
             ArrowProvider ap=new ArrowProvider(context);
             ap.directionClicked=isUp -> {
-                int indx=group.Keybinds.indexOf(this);
-                System.out.println(indx);
+                int index=group.Keybinds.indexOf(this);
+                System.out.println(index);
                 LinearLayout parent=(LinearLayout) model.view.getParent();
                 if(isUp){
-                    if(indx>0) {
+                    if(index>0) {
                         group.Keybinds.remove(this);
-                        group.Keybinds.add(indx - 1, this);
+                        group.Keybinds.add(index - 1, this);
                         parent.removeView(model.view);
-                        parent.addView(model.view, indx - 1);
+                        parent.addView(model.view, index - 1);
                     }
                 }else{
-                    if(indx<group.Keybinds.size()-1){
+                    if(index<group.Keybinds.size()-1){
                         group.Keybinds.remove(this);
-                        group.Keybinds.add(indx + 1, this);
+                        group.Keybinds.add(index + 1, this);
                         parent.removeView(model.view);
-                        parent.addView(model.view, indx + 1);
+                        parent.addView(model.view, index + 1);
                     }
                 }
             };

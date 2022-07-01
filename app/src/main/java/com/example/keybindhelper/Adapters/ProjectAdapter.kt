@@ -21,7 +21,7 @@ import com.example.keybindhelper.dao.DatabaseManager.isProjectNameAvailable
 import com.example.keybindhelper.dto.Group
 import com.example.keybindhelper.dto.Keybind
 import com.example.keybindhelper.dto.Project
-import com.example.keybindhelper.ui.Projects.ProjectsFragment
+import com.example.keybindhelper.ui.projects.ProjectsFragment
 import java.text.MessageFormat
 import java.util.*
 
@@ -39,7 +39,7 @@ class ProjectAdapter(
         val p = projectList[position]
         (holder.itemView.findViewById<View>(R.id.project_name) as TextView).text = p.name
         val cal = Calendar.getInstance()
-        cal.time = p.lastAccessed
+        cal.time = p.lastAccessed!!
         val day = cal[Calendar.DAY_OF_MONTH]
         val month = cal[Calendar.MONTH]
         val year = cal[Calendar.YEAR] % 100
@@ -78,7 +78,7 @@ class ProjectAdapter(
                 d.cancel()
             }
             //rename project
-            d.findViewById<View>(R.id.projefct_menu_rename_btn).setOnClickListener { z: View? ->
+            d.findViewById<View>(R.id.project_menu_rename_btn).setOnClickListener { z: View? ->
                 d.cancel()
                 val pd = PromptDialog(context, "Rename Project", null, p.name, null)
                 pd.validation = object : PromptDialog.Validator{
@@ -110,14 +110,14 @@ class ProjectAdapter(
                 np.id = DatabaseManager.db!!.insert(np)
                 for (g in DatabaseManager.db!!.getProjectGroups(p.id)!!) {
                     val ng = Group()
-                    ng.name = g!!.name
+                    ng.name = g.name
                     ng.index = g.index
                     ng.projectID = np.id
                     ng.id = DatabaseManager.db!!.insert(ng)
-                    for (k in DatabaseManager.db!!.getGroupKeybinds(g.id)!!) {
+                    for (k in DatabaseManager.db!!.getGroupKeybinds(g.id)) {
                         val nk = Keybind()
                         nk.groupID = ng.id
-                        nk.name = k!!.name
+                        nk.name = k.name
                         nk.kb1 = k.kb1
                         nk.kb2 = k.kb2
                         nk.kb3 = k.kb3

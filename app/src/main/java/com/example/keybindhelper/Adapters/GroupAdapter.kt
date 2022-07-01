@@ -23,7 +23,8 @@ import com.example.keybindhelper.dao.CurrentProjectManager.updateGroupIndexes
 import com.example.keybindhelper.dao.DatabaseManager
 import com.example.keybindhelper.dto.Group
 
-class GroupAdapter(private val groupList: MutableList<Group>?) : RecyclerView.Adapter<GroupViewHolder>() {
+class GroupAdapter(private val groupList: MutableList<Group>?) :
+    RecyclerView.Adapter<GroupViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.group_layout, parent, false)
@@ -35,7 +36,7 @@ class GroupAdapter(private val groupList: MutableList<Group>?) : RecyclerView.Ad
         group.currentAdapter = this
         val context = holder.itemView.context
         val rv = holder.itemView.findViewById<RecyclerView>(R.id.keybind_zone)
-        rv.adapter = KeybindAdapter(group.keybinds!!)
+        rv.adapter = KeybindAdapter(group.keybinds)
         rv.layoutManager = LinearLayoutManager(holder.itemView.context)
         val nameBtn = holder.itemView.findViewById<Button>(R.id.group_name_button)
         nameBtn.text = group.name
@@ -47,13 +48,14 @@ class GroupAdapter(private val groupList: MutableList<Group>?) : RecyclerView.Ad
                 group.name,
                 null
             )
-            pd.validation= object : PromptDialog.Validator{
+            pd.validation = object : PromptDialog.Validator {
                 override fun Validate(text: String?): ValidatorResponse = ValidatorResponse(
-                     text == group.name || isGroupNameAvailable(text),
-                     "Name Has Already Been Taken")
+                    text == group.name || isGroupNameAvailable(text),
+                    "Name Has Already Been Taken"
+                )
             }
-            pd.confirmedEvent = object: PromptDialog.ConfirmedEvent{
-                override fun onConfirmed(text: String?){
+            pd.confirmedEvent = object : PromptDialog.ConfirmedEvent {
+                override fun onConfirmed(text: String?) {
                     group.name = text
                     nameBtn.text = text
                     DatabaseManager.db!!.update(group)
@@ -63,7 +65,7 @@ class GroupAdapter(private val groupList: MutableList<Group>?) : RecyclerView.Ad
         }
         holder.itemView.findViewById<View>(R.id.group_add_button).setOnClickListener { v: View? ->
             group.AddKeybind()
-            rv.adapter!!.notifyItemChanged(group.keybinds!!.size - 1)
+            rv.adapter!!.notifyItemChanged(group.keybinds.size - 1)
             if (rv.visibility != View.VISIBLE) rv.visibility = View.VISIBLE
         }
         holder.itemView.findViewById<View>(R.id.group_more_button).setOnClickListener { z: View? ->
@@ -72,7 +74,7 @@ class GroupAdapter(private val groupList: MutableList<Group>?) : RecyclerView.Ad
             (d.findViewById<View>(R.id.group_name) as TextView).text = group.name
             d.findViewById<View>(R.id.group_clear_keybinds).setOnClickListener { v: View? ->
                 DatabaseManager.db!!.deleteGroupKeybinds(group.id)
-                group.keybinds!!.clear()
+                group.keybinds.clear()
                 try {
                     rv.adapter!!.notifyDataSetChanged()
                 } catch (e: Exception) {
@@ -101,9 +103,9 @@ class GroupAdapter(private val groupList: MutableList<Group>?) : RecyclerView.Ad
                 }
                 val glp = GroupListProvider(context, "Dissolve Group Into", groups)
                 d.cancel()
-                glp.groupClick= object : GroupClick {
-                    override fun GroupClicked(newGroup: Group?){
-                        for (kb in group.keybinds!!.toTypedArray()) {
+                glp.groupClick = object : GroupClick {
+                    override fun GroupClicked(newGroup: Group?) {
+                        for (kb in group.keybinds.toTypedArray()) {
                             newGroup!!.AddKeybind(kb, false)
                         }
                         newGroup!!.currentAdapter!!.notifyDataSetChanged()
@@ -116,7 +118,7 @@ class GroupAdapter(private val groupList: MutableList<Group>?) : RecyclerView.Ad
             d.findViewById<View>(R.id.group_move).setOnClickListener { v: View? ->
                 d.cancel()
                 val ap = ArrowProvider(context)
-                ap.directionClicked= object :DirectionClicked {
+                ap.directionClicked = object : DirectionClicked {
                     override fun Clicked(isUp: Boolean?) {
                         val indx = CurrentProjectManager.Groups!!.indexOf(group)
                         println(indx)
@@ -142,5 +144,6 @@ class GroupAdapter(private val groupList: MutableList<Group>?) : RecyclerView.Ad
     }
 
     inner class GroupViewHolder(itemView: View?) : RecyclerView.ViewHolder(
-        itemView!!)
+        itemView!!
+    )
 }

@@ -6,7 +6,7 @@ import androidx.room.InvalidationTracker;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
-public class AppDatatabase extends RoomDatabase{
+public class KeybindStorage extends RoomDatabase{
     @NonNull
     @Override
     protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration config) {

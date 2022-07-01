@@ -31,7 +31,7 @@ class Group {
     var index = 0
 
     @Ignore
-    var keybinds: MutableList<Keybind> = mutableListOf();
+    var keybinds: MutableList<Keybind> = mutableListOf()
 
 
     @Ignore
@@ -129,11 +129,9 @@ class Group {
         CurrentProjectManager.Groups!!.add(ret)
         ret.index = CurrentProjectManager.Groups!!.size - 1
         ret.id = DatabaseManager.db!!.insert(ret)
-        if (keybinds != null) {
-            ret.keybinds = mutableListOf()
-            for (k in keybinds) {
-                ret.AddKeybind(k.Clone(true), true)
-            }
+        ret.keybinds = mutableListOf()
+        for (k in keybinds) {
+            ret.AddKeybind(k.clone(true), true)
         }
         return ret
     }
@@ -154,7 +152,6 @@ class Group {
      */
     fun unloadStoredViews() {
         currentAdapter = null
-        if (keybinds == null) for (k in keybinds!!) k!!.viewHolder = null
     }
 
     /**
