@@ -32,6 +32,11 @@ public class Project{
     public Date lastAccessed;
     @Ignore
     public List<Group> Groups;
+    /**
+     * to show if it belongs in room db or firebase
+     */
+    @Ignore
+    public boolean isFirebased=false;
 
 
     public void updateLastAccessed(){

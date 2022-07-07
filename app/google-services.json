@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "736787936921",
+    "project_id": "keybind-helper",
+    "storage_bucket": "keybind-helper.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736787936921:android:b5af53179c94608fc96a08",
+        "android_client_info": {
+          "package_name": "com.example.keybindhelper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "736787936921-7fg093rr6r35ptugkk7gn5epnvssgrl0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKqh7KvGiY6ueOv83gAE-p4-uUt_UaRHg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "736787936921-7fg093rr6r35ptugkk7gn5epnvssgrl0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

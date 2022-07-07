@@ -49,5 +49,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Delete" />
+
+        <Button
+            android:id="@+id/project_menu_host_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Host" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

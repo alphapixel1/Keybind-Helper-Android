@@ -130,6 +130,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
                     }
                     newGroup.currentAdapter.notifyDataSetChanged();
                     CurrentProjectManager.CurrentProject.Groups.remove(group);
+                    DatabaseManager.db.deleteGroup(group.id);
                     CurrentProjectManager.CurrentProject.updateGroupIndexes();
                 };
                 glp.Show();

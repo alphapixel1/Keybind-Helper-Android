@@ -74,21 +74,22 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
             Context context=holder.itemView.getContext();
             Dialog d =new Dialog(context);
             d.setContentView(R.layout.project_more_menu);
-          //  ((TextView)d.findViewById(R.id.project_menu_name)).setText(p.name);
+            ((TextView)d.findViewById(R.id.project_menu_name)).setText(p.name.getValue());
+
             //Share Project
             d.findViewById(R.id.project_menu_share_btn).setOnClickListener(z->{
                 showSnackBarMessage("Not implemented yet sweetie");
             });
             //delete project
             d.findViewById(R.id.project_menu_delete_btn).setOnClickListener (z->{
-                ConfirmDialog cd=new ConfirmDialog(context,"Are you sure you want to delete "+p.name+"?");
+                ConfirmDialog cd=new ConfirmDialog(context,"Are you sure you want to delete "+p.name.getValue()+"?");
                 cd.onConfirmed= () -> {
                     DatabaseManager.db.delete(p);
                     if(CurrentProjectManager.CurrentProject.id==p.id) {
                         CurrentProjectManager.loadFirstProject();
                     }
                     fragment.RefreshProjectList();
-                    showSnackBarMessage(p.name+" Deleted!");
+                    showSnackBarMessage(p.name.getValue()+" Deleted!");
                     d.cancel();
                 };
                 cd.Show();
@@ -108,7 +109,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
                 PromptDialog pd = new PromptDialog(context, "Rename Project", null, p.name.getValue(),null);
                 pd.validation = text -> new ValidatorResponse(DatabaseManager.isProjectNameAvailable(projects,text), "A Project Already Exists By That Name");
                 pd.confirmedEvent = text-> {
-                    if(Objects.equals(CurrentProjectManager.CurrentProject.name, p.name))
+                    if(Objects.equals(CurrentProjectManager.CurrentProject.name.getValue(), p.name.getValue()))
                         CurrentProjectManager.CurrentProject.name.setValue(text);
                     p.name.setValue(text);
                     p.updateLastAccessed();
@@ -138,7 +139,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
                     }
 
                 }
-                showSnackBarMessage("Copied as "+np.name+"!");
+                showSnackBarMessage("Copied as "+np.name.getValue()+"!");
                 CurrentProjectManager.loadProject(np,false);
                 //System.out.println("DB COPIED GROUP COUNT: "+ CurrentProjectManager.CurrentProject.Groups.size());
                 fragment.RefreshProjectList();

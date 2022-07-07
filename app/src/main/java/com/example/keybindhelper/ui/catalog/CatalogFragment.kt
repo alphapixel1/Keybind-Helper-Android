@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import com.example.keybindhelper.MainActivity
 import com.example.keybindhelper.R;
 import com.example.keybindhelper.dao.CurrentProjectManager
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 
 class CatalogFragment : Fragment() {
 
@@ -37,11 +39,14 @@ class CatalogFragment : Fragment() {
             })
         else
             initMenu(mainActivity,root!!.rootView);
+
+
+        //mAuth.currentUser
         return root!!
     }
 
     private fun initMenu(mainActivity: MainActivity, view: View) {
-        mainActivity.setAppBarTitle("Share "+CurrentProjectManager.CurrentProject.name);
+        mainActivity.setAppBarTitle("Share "+CurrentProjectManager.CurrentProject.name.value);
         mainActivity.showMenuItems(mainActivity.shareFragmentActionMenuIds)
     }
 
@@ -49,4 +54,6 @@ class CatalogFragment : Fragment() {
         super.onDestroyView()
         root=null;
     }
+    //fuck this firebase bullshit I hate this so much
+
 }
