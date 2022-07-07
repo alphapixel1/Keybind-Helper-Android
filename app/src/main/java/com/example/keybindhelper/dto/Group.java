@@ -184,7 +184,7 @@ public class Group{
 
     public JSONObject getJSONObject(boolean isCurrentProject) throws JSONException {
         JSONObject ret =new JSONObject();
-        ret.put("groupName",name);
+        ret.put("groupName",name.getValue());
         JSONArray keybindsJSONArray=new JSONArray();
         List<Keybind> kbs;
         if(isCurrentProject){

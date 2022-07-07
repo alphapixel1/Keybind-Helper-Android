@@ -165,7 +165,7 @@ public class Project{
     public JSONObject getJSONObject(boolean isCurrentProject){
         JSONObject ret=new JSONObject();
         try {
-            ret.put("projectName",name);
+            ret.put("projectName",name.getValue());
             JSONArray groupsJSONArray=new JSONArray();
             DatabaseManager.db.getProjectGroups(id);
             List<Group> groups;
