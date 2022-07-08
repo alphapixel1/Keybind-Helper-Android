@@ -9,9 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.keybindhelper.MainActivity
 import com.example.keybindhelper.R;
 import com.example.keybindhelper.dao.CurrentProjectManager
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 
 class CatalogFragment : Fragment() {
 
@@ -22,7 +20,7 @@ class CatalogFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        root=inflater.inflate(R.layout.fragment_share,container,false)
+        root=inflater.inflate(R.layout.fragment_settings,container,false)
         //root=LayoutInflater.from(this.context).inflate(R.layout.fragment_share, container)
 
         root!!.findViewById<Button>(R.id.jsonButton).setOnClickListener{
