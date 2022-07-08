@@ -4,11 +4,11 @@
 
 Design Document  
 
- - Nick Bell
- - Eddie Greenlee
- - Maximiliano De Santiago Galan
- - Blake Barr
- - Richard Woessner
+Nick Bell
+Eddie Greenlee
+Maximiliano De Santiago Galan
+Blake Barr
+Richard Woessner
 
 ## Introduction 
 You open a game and can't remember all the keybinds and have to pause midgame to check the controls. This app allows you to
