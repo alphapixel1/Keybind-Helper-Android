@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_keybind">
+
+    <fragment
+        android:id="@+id/nav_keybind"
+        android:name="com.example.keybindhelper.ui.keybind.KeybindFragment"
+        android:label="test"
+        tools:layout="@layout/fragment_keybind" />
+
+    <fragment
+        android:id="@+id/nav_catalog"
+        android:name="com.example.keybindhelper.ui.catalog.CatalogFragment"
+        android:label="@string/menu_catalog"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/nav_projects"
+        android:name="com.example.keybindhelper.ui.Projects.ProjectsFragment"
+        android:label="@string/menu_projects"
+        tools:layout="@layout/fragment_projects" >
+        <action
+            android:id="@+id/action_nav_projects_to_nav_keybind"
+            app:destination="@id/nav_keybind" />
+    </fragment>
+</navigation>
