@@ -26,7 +26,7 @@ public class Project{
     @PrimaryKey(autoGenerate = true)
     public long id;
     @TypeConverters({StringLiveDataConverter.class})
-    public MutableLiveData<String> name;
+    public MutableLiveData<String> name=new MutableLiveData<>();
 
     @TypeConverters({DateConverter.class})
     public Date lastAccessed;
