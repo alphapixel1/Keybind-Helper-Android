@@ -28,8 +28,9 @@ class CatalogFragment : Fragment() {
             Snackbar.make(it, "Check Run Console For JSON String", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+
         val mainActivity=activity as MainActivity;
-        if(mainActivity.Menu==null)
+        if(mainActivity.menu==null)
             mainActivity.onMenuInit=(object:MainActivity.MenuInitialized{
                 override fun menuHasInitialized() {
                     initMenu(mainActivity,root!!.rootView);
@@ -38,13 +39,12 @@ class CatalogFragment : Fragment() {
         else
             initMenu(mainActivity,root!!.rootView);
 
-
         //mAuth.currentUser
         return root!!
     }
 
     private fun initMenu(mainActivity: MainActivity, view: View) {
-        mainActivity.setAppBarTitle("Share "+CurrentProjectManager.CurrentProject.name.value);
+        mainActivity.setAppBarTitle("Share ${CurrentProjectManager.CurrentProject.name.value}");
         mainActivity.showMenuItems(mainActivity.shareFragmentActionMenuIds)
     }
 
@@ -52,6 +52,7 @@ class CatalogFragment : Fragment() {
         super.onDestroyView()
         root=null;
     }
-    //fuck this firebase bullshit I hate this so much
+    //f*** this firebase bullshit I hate this so much
+    // You'll get the hang of it
 
 }
