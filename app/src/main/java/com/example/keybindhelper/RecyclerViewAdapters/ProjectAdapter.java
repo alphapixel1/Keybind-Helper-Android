@@ -28,8 +28,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-import kotlin.NotImplementedError;
-
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder> {
     private final List<Project> projectList;
     private final ProjectsFragment fragment;
@@ -88,7 +86,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
                     if(CurrentProjectManager.CurrentProject.id==p.id) {
                         CurrentProjectManager.loadFirstProject();
                     }
-                    fragment.RefreshProjectList();
+                    fragment.refreshProjectList();
                     showSnackBarMessage(p.name.getValue()+" Deleted!");
                     d.cancel();
                 };
@@ -142,7 +140,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
                 showSnackBarMessage("Copied as "+np.name.getValue()+"!");
                 CurrentProjectManager.loadProject(np,false);
                 //System.out.println("DB COPIED GROUP COUNT: "+ CurrentProjectManager.CurrentProject.Groups.size());
-                fragment.RefreshProjectList();
+                fragment.refreshProjectList();
                 d.cancel();
             });
             d.show();
