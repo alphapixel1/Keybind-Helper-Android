@@ -2,7 +2,6 @@ package com.example.keybindhelper.RecyclerViewAdapters;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,28 +11,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewTreeLifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.TypeConverters;
 
 import com.example.keybindhelper.Dialogs.ArrowProvider;
 import com.example.keybindhelper.Dialogs.GroupListProvider;
 import com.example.keybindhelper.R;
 import com.example.keybindhelper.dao.CurrentProjectManager;
-import com.example.keybindhelper.dao.DateConverter;
 import com.example.keybindhelper.dto.Group;
 import com.example.keybindhelper.dto.Keybind;
-import com.example.keybindhelper.ui.keybind.KeybindFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindViewHolder> {
 
