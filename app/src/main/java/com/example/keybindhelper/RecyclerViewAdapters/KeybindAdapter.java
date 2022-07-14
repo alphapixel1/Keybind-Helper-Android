@@ -2,7 +2,6 @@ package com.example.keybindhelper.RecyclerViewAdapters;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,28 +11,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewTreeLifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.TypeConverters;
 
 import com.example.keybindhelper.Dialogs.ArrowProvider;
 import com.example.keybindhelper.Dialogs.GroupListProvider;
 import com.example.keybindhelper.R;
 import com.example.keybindhelper.dao.CurrentProjectManager;
-import com.example.keybindhelper.dao.DateConverter;
 import com.example.keybindhelper.dto.Group;
 import com.example.keybindhelper.dto.Keybind;
-import com.example.keybindhelper.ui.keybind.KeybindFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindViewHolder> {
 
@@ -215,17 +206,17 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
             d.cancel();
             ArrowProvider ap=new ArrowProvider(context);
             ap.directionClicked=isUp -> {
-                int indx=k.group.keybinds.indexOf(k);
+                int index=k.group.keybinds.indexOf(k);
                 if(isUp){
-                    if(indx>0) {
+                    if(index>0) {
                         k.group.moveKeybindUpDown(k,-1);
-                        notifyItemMoved(indx,indx-1);
+                        notifyItemMoved(index,index-1);
                         updateKeybindsBackground();
                     }
                 }else{
-                    if(indx<k.group.keybinds.size()-1){
+                    if(index<k.group.keybinds.size()-1){
                         k.group.moveKeybindUpDown(k,1);
-                        notifyItemMoved(indx,indx+1);
+                        notifyItemMoved(index,index+1);
                         updateKeybindsBackground();
                     }
                 }
@@ -260,7 +251,7 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
      */
     private void updateKeybindsBackground(){
         for(Keybind k :keybindList.get(0).group.keybinds){
-            View main=k.viewHolder.itemView.findViewById(R.id.keybind_main_layout);;
+            View main=k.viewHolder.itemView.findViewById(R.id.keybind_main_layout);
             if(k.index%2==1)
                 main.setBackgroundResource(R.color.offset_keybind_background);
             else
