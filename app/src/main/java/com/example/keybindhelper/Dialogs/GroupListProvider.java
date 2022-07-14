@@ -47,10 +47,10 @@ public class GroupListProvider {
             scrollLine.addView(b);
         }
         if(groups.size()==0){
-            TextView noitems=new TextView(c);
-            noitems.setText("None");
-            noitems.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            line.addView(noitems);
+            TextView noItems=new TextView(c);
+            noItems.setText("None");
+            noItems.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            line.addView(noItems);
         }
     }
     public void Show(){
