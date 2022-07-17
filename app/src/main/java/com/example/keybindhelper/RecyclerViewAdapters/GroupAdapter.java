@@ -139,16 +139,16 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
                 d.cancel();
                 ArrowProvider ap=new ArrowProvider(context);
                 ap.directionClicked=isUp -> {
-                    int indx= CurrentProjectManager.CurrentProject.Groups.indexOf(group);
-                    System.out.println(indx);
+                    int index= CurrentProjectManager.CurrentProject.Groups.indexOf(group);
+                    System.out.println(index);
                     if(isUp){
-                        if(indx>0) {
+                        if(index>0) {
                             CurrentProjectManager.CurrentProject.MoveGroupUpDown(group,-1);
-                            notifyItemMoved(indx,indx-1);
+                            notifyItemMoved(index,index-1);
                         }
-                    }else if(indx< CurrentProjectManager.CurrentProject.Groups.size()-1){
+                    }else if(index< CurrentProjectManager.CurrentProject.Groups.size()-1){
                             CurrentProjectManager.CurrentProject.MoveGroupUpDown(group,1);
-                            notifyItemMoved(indx,indx+1);
+                            notifyItemMoved(index,index+1);
                     }
                 };
                 ap.Show();

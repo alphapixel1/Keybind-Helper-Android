@@ -215,17 +215,17 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
             d.cancel();
             ArrowProvider ap=new ArrowProvider(context);
             ap.directionClicked=isUp -> {
-                int indx=k.group.keybinds.indexOf(k);
+                int index=k.group.keybinds.indexOf(k);
                 if(isUp){
-                    if(indx>0) {
+                    if(index>0) {
                         k.group.moveKeybindUpDown(k,-1);
-                        notifyItemMoved(indx,indx-1);
+                        notifyItemMoved(index,index-1);
                         updateKeybindsBackground();
                     }
                 }else{
-                    if(indx<k.group.keybinds.size()-1){
+                    if(index<k.group.keybinds.size()-1){
                         k.group.moveKeybindUpDown(k,1);
-                        notifyItemMoved(indx,indx+1);
+                        notifyItemMoved(index,index+1);
                         updateKeybindsBackground();
                     }
                 }

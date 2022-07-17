@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
     fun setAppBarTitle(s:String){
-        supportActionBar!!.title=s;
+        supportActionBar!!.title="KeyBinder"
     }
 
 
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         this.Menu=menu;
-        onMenuInit?.menuHasInitialized();
+        onMenuInit?.menuHasInitialized()
         makeMenuWhite(menu)
 
         //menu.findItem(R.id.action_settings).isVisible = false
@@ -99,6 +99,6 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
     interface MenuInitialized{
-        fun menuHasInitialized();
+        fun menuHasInitialized()
     }
 }
