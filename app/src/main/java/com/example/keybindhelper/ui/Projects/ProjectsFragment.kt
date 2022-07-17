@@ -25,7 +25,7 @@ import com.google.android.material.textfield.TextInputEditText
 
 class ProjectsFragment : Fragment() {
 
-    private lateinit var root: View;
+    private lateinit var root: View
 
     //private var selectedProject: Project?=null;
 
@@ -38,34 +38,34 @@ class ProjectsFragment : Fragment() {
         root =LayoutInflater.from(this.context).inflate(R.layout.fragment_projects, container, false)
 
 
-        val mainActivity=activity as MainActivity;
+        val mainActivity=activity as MainActivity
         mainActivity.showMenuItems(mainActivity.projectsFragmentActionMenuIds)
 
-        mainActivity.Menu?.findItem(R.id.action_add)?.setOnMenuItemClickListener {
-            val pd=PromptDialog(root.context,"New Project Name","","",null);
-            val projects= DatabaseManager.db.getProjects();
+        mainActivity.menu?.findItem(R.id.action_add)?.setOnMenuItemClickListener {
+            val pd=PromptDialog(root.context,"New Project Name","","",null)
+            val projects= DatabaseManager.db.getProjects()
             pd.validation= PromptDialog.Validator {
                 ValidatorResponse(DatabaseManager.isProjectNameAvailable(projects,it),"A Project Already Exists By That Name")
             }
             pd.confirmedEvent= PromptDialog.ConfirmedEvent {
-                val p= Project();
-                p.name.value=it;
+                val p= Project()
+                p.name.value=it
                 CurrentProjectManager.loadProject(p,false)
                 p.id=DatabaseManager.db.insert(p)
-                openKeybindFragment();
+                openKeybindFragment()
             }
             pd.ShowDialog()
-            true;
-        };
+            true
+        }
 
 
 
 
-        val rv= root.findViewById<RecyclerView>(R.id.projects_recycler);
-        RefreshProjectList()
+        val rv= root.findViewById<RecyclerView>(R.id.projects_recycler)
+        refreshProjectList()
         rv.layoutManager=LinearLayoutManager(rv.context)
 
-        val searchEdit=root.findViewById<TextInputEditText>(R.id.projects_search_edit);
+        val searchEdit=root.findViewById<TextInputEditText>(R.id.projects_search_edit)
         searchEdit.addTextChangedListener(object :
             TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -73,7 +73,7 @@ class ProjectsFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                RefreshProjectList();
+                refreshProjectList()
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -82,27 +82,27 @@ class ProjectsFragment : Fragment() {
         }
         )
 
-        return root;
+        return root
 
     }
     fun openKeybindFragment(){
         NavHostFragment.findNavController(this).navigate(R.id.nav_keybind)
     }
-    fun RefreshProjectList():List<Project>{
-        val rv= root.findViewById<RecyclerView>(R.id.projects_recycler);
+    fun refreshProjectList():List<Project>{
+        val rv= root.findViewById<RecyclerView>(R.id.projects_recycler)
         val projects=DatabaseManager.getOrderedProjects()
-        val searchBox=root.findViewById<EditText>(R.id.projects_search_edit);
-        if(searchBox.text.length>0) {
-            val filteredP= mutableListOf<Project>();
-            val search=searchBox.text.toString().lowercase();
+        val searchBox=root.findViewById<EditText>(R.id.projects_search_edit)
+        if(searchBox.text.isNotEmpty()) {
+            val filteredP= mutableListOf<Project>()
+            val search=searchBox.text.toString().lowercase()
             for (project in projects) {
                 if(project.name.value!!.lowercase().contains(search))
-                filteredP+=(project);
+                filteredP.plusAssign(project)
             }
-            rv.adapter=ProjectAdapter(filteredP,this);
+            rv.adapter=ProjectAdapter(filteredP,this)
         }else
-            rv.adapter=ProjectAdapter(projects,this);
-        return projects;
+            rv.adapter=ProjectAdapter(projects,this)
+        return projects
     }
 
 

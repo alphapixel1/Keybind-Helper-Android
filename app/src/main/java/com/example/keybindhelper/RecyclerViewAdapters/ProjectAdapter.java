@@ -77,9 +77,8 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
             ((TextView)d.findViewById(R.id.project_menu_name)).setText(p.name.getValue());
 
             //Share Project
-            d.findViewById(R.id.project_menu_share_btn).setOnClickListener(z->{
-                showSnackBarMessage("Not implemented yet sweetie");
-            });
+            d.findViewById(R.id.project_menu_share_btn).setOnClickListener(z-> showSnackBarMessage("Not implemented yet sweetie"));
+
             //delete project
             d.findViewById(R.id.project_menu_delete_btn).setOnClickListener (z->{
                 ConfirmDialog cd=new ConfirmDialog(context,"Are you sure you want to delete "+p.name.getValue()+"?");
@@ -88,7 +87,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
                     if(CurrentProjectManager.CurrentProject.id==p.id) {
                         CurrentProjectManager.loadFirstProject();
                     }
-                    fragment.RefreshProjectList();
+                    fragment.refreshProjectList();
                     showSnackBarMessage(p.name.getValue()+" Deleted!");
                     d.cancel();
                 };
@@ -115,7 +114,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
                     p.updateLastAccessed();
                     DatabaseManager.db.update(p);
                     notifyItemChanged(position);
-                    showSnackBarMessage("Renamed to \'"+text+"\'!");
+                    showSnackBarMessage("Renamed to "+text+"!");
                     //notifyDataSetChanged();
                     };
                 pd.ShowDialog();
@@ -142,7 +141,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
                 showSnackBarMessage("Copied as "+np.name.getValue()+"!");
                 CurrentProjectManager.loadProject(np,false);
                 //System.out.println("DB COPIED GROUP COUNT: "+ CurrentProjectManager.CurrentProject.Groups.size());
-                fragment.RefreshProjectList();
+                fragment.refreshProjectList();
                 d.cancel();
             });
             d.show();

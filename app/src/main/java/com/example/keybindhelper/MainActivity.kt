@@ -27,13 +27,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    val allActionMenuIds= setOf(R.id.action_add,R.id.action_delete_all_groups,R.id.action_show_hide_keybinds)
+    private val allActionMenuIds= setOf(R.id.action_add,R.id.action_delete_all_groups,R.id.action_show_hide_keybinds)
     val keybindsFragmentActionMenuIds= setOf(R.id.action_add,R.id.action_delete_all_groups,R.id.action_show_hide_keybinds)
     val projectsFragmentActionMenuIds= setOf(R.id.action_add)
     val shareFragmentActionMenuIds=setOf<Int>()
 
-    var Menu:Menu?=null;
-    var onMenuInit:MenuInitialized?=null;
+    var menu:Menu?=null
+    var onMenuInit:MenuInitialized?=null
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        DatabaseManager.init(binding.root.context);
+        DatabaseManager.init(binding.root.context)
         CurrentProjectManager.loadFirstProject()
 
 
@@ -63,11 +63,11 @@ class MainActivity : AppCompatActivity() {
 
     fun showMenuItems(items:Set<Int>){
         allActionMenuIds.forEach{
-            this.Menu?.findItem(it)!!.isVisible = items.contains(it)
+            this.menu?.findItem(it)!!.isVisible = items.contains(it)
         }
     }
     fun setAppBarTitle(s:String){
-        supportActionBar!!.title=s;
+        supportActionBar!!.title=s
     }
 
 
@@ -75,8 +75,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
-        this.Menu=menu;
-        onMenuInit?.menuHasInitialized();
+        this.menu=menu
+        onMenuInit?.menuHasInitialized()
         makeMenuWhite(menu)
 
         //menu.findItem(R.id.action_settings).isVisible = false
@@ -99,6 +99,6 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
     interface MenuInitialized{
-        fun menuHasInitialized();
+        fun menuHasInitialized()
     }
 }

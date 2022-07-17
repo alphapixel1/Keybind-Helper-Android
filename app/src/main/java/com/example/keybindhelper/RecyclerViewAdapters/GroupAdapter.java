@@ -68,7 +68,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
                     null
             );
             pd.validation= text -> new ValidatorResponse(
-                    text.equals(group.name) || CurrentProjectManager.CurrentProject.isGroupNameAvailable(text),
+                    text.equals(group.name.toString()) || CurrentProjectManager.CurrentProject.isGroupNameAvailable(text),
                     "Name Has Already Been Taken");
             pd.confirmedEvent= n->{
                 group.name.setValue(n);

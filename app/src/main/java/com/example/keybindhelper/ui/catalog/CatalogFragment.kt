@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.example.keybindhelper.MainActivity
-import com.example.keybindhelper.R;
+import com.example.keybindhelper.R
 import com.example.keybindhelper.dao.CurrentProjectManager
 import com.google.android.material.snackbar.Snackbar
 
 class CatalogFragment : Fragment() {
 
-    private var root:View?=null;
+    private var root:View?=null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,33 +24,33 @@ class CatalogFragment : Fragment() {
         //root=LayoutInflater.from(this.context).inflate(R.layout.fragment_share, container)
 
         root!!.findViewById<Button>(R.id.jsonButton).setOnClickListener{
-            println(CurrentProjectManager.CurrentProject.getJSONObject(true).toString());
+            println(CurrentProjectManager.CurrentProject.getJSONObject(true).toString())
             Snackbar.make(it, "Check Run Console For JSON String", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-        val mainActivity=activity as MainActivity;
-        if(mainActivity.Menu==null)
+        val mainActivity=activity as MainActivity
+        if(mainActivity.menu==null)
             mainActivity.onMenuInit=(object:MainActivity.MenuInitialized{
                 override fun menuHasInitialized() {
-                    initMenu(mainActivity,root!!.rootView);
+                    initMenu(mainActivity)
                 }
             })
         else
-            initMenu(mainActivity,root!!.rootView);
+            initMenu(mainActivity)
 
 
         //mAuth.currentUser
         return root!!
     }
 
-    private fun initMenu(mainActivity: MainActivity, view: View) {
-        mainActivity.setAppBarTitle("Share "+CurrentProjectManager.CurrentProject.name.value);
+    private fun initMenu(mainActivity: MainActivity) {
+        mainActivity.setAppBarTitle("Share "+CurrentProjectManager.CurrentProject.name.value)
         mainActivity.showMenuItems(mainActivity.shareFragmentActionMenuIds)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        root=null;
+        root=null
     }
     //fuck this firebase bullshit I hate this so much
 

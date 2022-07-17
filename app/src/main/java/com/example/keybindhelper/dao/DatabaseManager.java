@@ -28,7 +28,7 @@ public class DatabaseManager {
     }
     public static boolean isProjectNameAvailable(List<Project> projects,String name){
         for (Project p : projects){
-            if(p.name.equals(name))
+            if(p.name.toString().equals(name))
                 return false;
         }
         return true;

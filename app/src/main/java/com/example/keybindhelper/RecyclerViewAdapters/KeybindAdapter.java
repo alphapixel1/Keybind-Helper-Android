@@ -260,7 +260,7 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
      */
     private void updateKeybindsBackground(){
         for(Keybind k :keybindList.get(0).group.keybinds){
-            View main=k.viewHolder.itemView.findViewById(R.id.keybind_main_layout);;
+            View main=k.viewHolder.itemView.findViewById(R.id.keybind_main_layout);
             if(k.index%2==1)
                 main.setBackgroundResource(R.color.offset_keybind_background);
             else
