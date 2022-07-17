@@ -27,7 +27,7 @@ import java.util.List;
         childColumns = "projectID",
         onDelete = ForeignKey.CASCADE)
 })
-public class Group {
+public class Group{
 
     @PrimaryKey(autoGenerate = true)
     public long id;
