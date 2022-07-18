@@ -2,7 +2,6 @@ package com.example.keybindhelper.dao;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.room.TypeConverter;
-import androidx.room.TypeConverters;
 
 public class StringLiveDataConverter {
     @TypeConverter

@@ -11,7 +11,6 @@ import androidx.room.TypeConverters;
 import com.example.keybindhelper.RecyclerViewAdapters.KeybindAdapter;
 import com.example.keybindhelper.dao.CurrentProjectManager;
 import com.example.keybindhelper.dao.DatabaseManager;
-import com.example.keybindhelper.dao.DateConverter;
 import com.example.keybindhelper.dao.StringLiveDataConverter;
 
 import org.json.JSONException;
@@ -88,8 +87,7 @@ public class Keybind{
                 i++;
             newName=name.getValue() + " (" + i + ")";
         }
-        Keybind ret=new Keybind(groupID,newName,kb1.getValue(),kb2.getValue(),kb3.getValue());
-        return ret;
+        return new Keybind(groupID,newName,kb1.getValue(),kb2.getValue(),kb3.getValue());
     }
 
     public JSONObject getJSONObject() throws JSONException {

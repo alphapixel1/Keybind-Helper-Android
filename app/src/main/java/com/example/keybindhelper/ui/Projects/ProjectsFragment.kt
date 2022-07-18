@@ -41,9 +41,9 @@ class ProjectsFragment : Fragment() {
         val mainActivity=activity as MainActivity;
         mainActivity.showMenuItems(mainActivity.projectsFragmentActionMenuIds)
 
-        mainActivity.Menu?.findItem(R.id.action_add)?.setOnMenuItemClickListener {
+        mainActivity.menu?.findItem(R.id.action_add)?.setOnMenuItemClickListener {
             val pd=PromptDialog(root.context,"New Project Name","","",null);
-            val projects= DatabaseManager.db.getProjects();
+            val projects= DatabaseManager.db.projects;
             pd.validation= PromptDialog.Validator {
                 ValidatorResponse(DatabaseManager.isProjectNameAvailable(projects,it),"A Project Already Exists By That Name")
             }
@@ -62,7 +62,7 @@ class ProjectsFragment : Fragment() {
 
 
         val rv= root.findViewById<RecyclerView>(R.id.projects_recycler);
-        RefreshProjectList()
+        refreshProjectList()
         rv.layoutManager=LinearLayoutManager(rv.context)
 
         val searchEdit=root.findViewById<TextInputEditText>(R.id.projects_search_edit);
@@ -73,7 +73,7 @@ class ProjectsFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                RefreshProjectList();
+                refreshProjectList();
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -88,11 +88,11 @@ class ProjectsFragment : Fragment() {
     fun openKeybindFragment(){
         NavHostFragment.findNavController(this).navigate(R.id.nav_keybind)
     }
-    fun RefreshProjectList():List<Project>{
+    fun refreshProjectList():List<Project>{
         val rv= root.findViewById<RecyclerView>(R.id.projects_recycler);
         val projects=DatabaseManager.getOrderedProjects()
         val searchBox=root.findViewById<EditText>(R.id.projects_search_edit);
-        if(searchBox.text.length>0) {
+        if(searchBox.text.isNotEmpty()) {
             val filteredP= mutableListOf<Project>();
             val search=searchBox.text.toString().lowercase();
             for (project in projects) {
