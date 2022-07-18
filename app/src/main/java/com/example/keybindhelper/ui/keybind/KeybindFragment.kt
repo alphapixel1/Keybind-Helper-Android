@@ -29,7 +29,7 @@ class KeybindFragment : Fragment() {
         val root: View = LayoutInflater.from(this.context).inflate(R.layout.fragment_keybind,container,false)//binding.root
 
         val mainActivity=activity as MainActivity;
-        if(mainActivity.Menu==null)
+        if(mainActivity.menu==null)
             mainActivity.onMenuInit=(object:MainActivity.MenuInitialized{
                 override fun menuHasInitialized() {
                     initMenu(mainActivity,root);
@@ -57,7 +57,7 @@ class KeybindFragment : Fragment() {
         mainActivity.showMenuItems(mainActivity.keybindsFragmentActionMenuIds)
         val rv=view.findViewById<RecyclerView>(R.id.recyclerView);
 
-        mainActivity.Menu!!.findItem(R.id.action_delete_all_groups).setOnMenuItemClickListener {
+        mainActivity.menu!!.findItem(R.id.action_delete_all_groups).setOnMenuItemClickListener {
             val cd=ConfirmDialog(view.context,"Delete All Groups?")
             cd.onConfirmed= ConfirmDialog.ConfirmedEvent {
                 CurrentProjectManager.CurrentProject.deleteAllGroups()
@@ -67,19 +67,19 @@ class KeybindFragment : Fragment() {
 
             true;
         }
-        mainActivity.Menu!!.findItem(R.id.action_sub_hide_keybinds).setOnMenuItemClickListener {
+        mainActivity.menu!!.findItem(R.id.action_sub_hide_keybinds).setOnMenuItemClickListener {
             for(v in rv.children)
                 v.findViewById<RecyclerView>(R.id.keybind_zone).isVisible = false;
             true;
         }
-        mainActivity.Menu!!.findItem(R.id.action_sub_show_keybinds).setOnMenuItemClickListener {
+        mainActivity.menu!!.findItem(R.id.action_sub_show_keybinds).setOnMenuItemClickListener {
             for(v in rv.children)
                 v.findViewById<RecyclerView>(R.id.keybind_zone).isVisible=true;
             true;
         }
-        mainActivity.Menu!!.findItem(R.id.action_add).setOnMenuItemClickListener {
+        mainActivity.menu!!.findItem(R.id.action_add).setOnMenuItemClickListener {
             CurrentProjectManager.CurrentProject.AddGroup()
-            System.out.println("MainActivity.floatingactionbutton.click: Groups Size:" + CurrentProjectManager.CurrentProject.Groups.size)
+            println("MainActivity.floatingactionbutton.click: Groups Size:" + CurrentProjectManager.CurrentProject.Groups.size)
             rv.adapter!!.notifyItemChanged(CurrentProjectManager.CurrentProject.Groups.size - 1)
             true;
         }

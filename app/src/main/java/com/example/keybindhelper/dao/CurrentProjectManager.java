@@ -3,12 +3,9 @@ package com.example.keybindhelper.dao;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.keybindhelper.dto.Group;
-import com.example.keybindhelper.dto.Keybind;
 import com.example.keybindhelper.dto.Project;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Static class to hold current project info and manage operations
