@@ -1,5 +1,6 @@
 package com.example.keybindhelper
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -15,6 +16,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.keybindhelper.cloud.IActivityResult
 import com.example.keybindhelper.dao.CurrentProjectManager
 import com.example.keybindhelper.dao.DatabaseManager
 import com.example.keybindhelper.databinding.ActivityMainBinding
@@ -32,6 +34,14 @@ class MainActivity : AppCompatActivity() {
     val projectsFragmentActionMenuIds= setOf(R.id.action_add)
     val shareFragmentActionMenuIds=setOf<Int>()
 
+
+    /**
+     Google Event Handler for sign in
+     **/
+    var GoogleActivityResult:IActivityResult?=null;
+    /**
+     * Menu Initialization
+     */
     var Menu:Menu?=null;
     var onMenuInit:MenuInitialized?=null;
 
@@ -78,8 +88,6 @@ class MainActivity : AppCompatActivity() {
         this.Menu=menu;
         onMenuInit?.menuHasInitialized();
         makeMenuWhite(menu)
-
-        //menu.findItem(R.id.action_settings).isVisible = false
         return true
     }
 
@@ -100,5 +108,8 @@ class MainActivity : AppCompatActivity() {
     }
     interface MenuInitialized{
         fun menuHasInitialized();
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        GoogleActivityResult?.onResult(requestCode,resultCode,data);
     }
 }

@@ -13,8 +13,8 @@
 
     <fragment
         android:id="@+id/nav_catalog"
-        android:name="com.example.keybindhelper.ui.catalog.CatalogFragment"
-        android:label="@string/menu_catalog"
+        android:name="com.example.keybindhelper.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />
 
     <fragment
