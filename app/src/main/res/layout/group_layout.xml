@@ -34,7 +34,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Unnamed Group" />
+                        android:background="@color/transparent"
+                        android:text="Unnamed Group"
+                        android:textColor="@color/white"
+                        app:strokeColor="@color/transparent" />
 
                     <ImageButton
                         android:id="@+id/group_add_button"
@@ -42,6 +45,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0"
                         android:backgroundTint="@color/transparent"
+                        android:contentDescription="Add Button"
                         app:srcCompat="@drawable/add" />
 
                     <ImageButton
@@ -50,6 +54,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0"
                         android:backgroundTint="@color/transparent"
+                        android:contentDescription="More Button"
                         app:srcCompat="@drawable/menu" />
                 </LinearLayout>
 

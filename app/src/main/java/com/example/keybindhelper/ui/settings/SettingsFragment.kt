@@ -47,16 +47,16 @@ class SettingsFragment : Fragment() {
         root!!.findViewById<SignInButton>(R.id.settings_google_btn).setOnClickListener{
             mainActivity.GoogleActivityResult= object : IActivityResult {
                 override fun onResult(requestCode: Int, resultCode: Int, data: Intent?) {
-                    GoogleActivityResult(requestCode,resultCode,data);
+                    googleActivityResult(requestCode,resultCode,data);
                 }
             }
             FirebaseDAO.displayLogin(context!!);
         }
-        DisplayLogin(FirebaseDAO.instance.currentUser);
+        displayLogin(FirebaseDAO.currentUser);
         //Sign out button
         root!!.findViewById<Button>(R.id.settings_sign_out).setOnClickListener{
             FirebaseDAO.instance.signOut();
-            DisplayLogin(null);
+            displayLogin(null);
         };
 
 
@@ -88,7 +88,7 @@ class SettingsFragment : Fragment() {
         Snackbar.make(root!!, message, Snackbar.LENGTH_LONG)
             .setAction("Action", null).show()
     }
-    fun DisplayLogin(user:FirebaseUser?){
+    private fun displayLogin(user:FirebaseUser?){
         val loggedInItems=root!!.findViewById<LinearLayout>(R.id.settings_logged_in_items);
         val googleSignIn=root!!.findViewById<ConstraintLayout>(R.id.settings_google_layout);
         if(user==null){
@@ -101,7 +101,7 @@ class SettingsFragment : Fragment() {
             loggedInItems.findViewById<TextView>(R.id.settings_username).text=user.email;
         }
     }
-    fun GoogleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    fun googleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val mAuth=FirebaseDAO.instance;
         if (resultCode == AppCompatActivity.RESULT_OK) {
             if (requestCode == FirebaseDAO.REQUEST_CODE_GOOGLE_SIGN_IN) {
@@ -119,9 +119,9 @@ class SettingsFragment : Fragment() {
                             if (task.isSuccessful) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("Settings Fragment", "signInWithCredential:success")
-                                val user = mAuth.currentUser
+
                                 showSnackBarMessage("Sign-in Successful");
-                                DisplayLogin(user);
+                                displayLogin(FirebaseDAO.currentUser);
                             } else {
                                 showSnackBarMessage("Sign-in Failed");
                                 // If sign in fails, display a message to the user.

@@ -8,14 +8,13 @@ import androidx.core.app.ActivityCompat.startIntentSenderForResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.android.gms.auth.api.identity.GetSignInIntentRequest
 import com.google.android.gms.auth.api.identity.Identity
+import com.google.firebase.auth.FirebaseUser
 
 object FirebaseDAO {
     public val REQUEST_CODE_GOOGLE_SIGN_IN = 1 /* unique request id */
-    val instance: FirebaseAuth
-        get() = FirebaseAuth.getInstance()
-    val isUserSignedIn: Boolean
-        get() = instance.currentUser == null
-
+    val instance: FirebaseAuth get() = FirebaseAuth.getInstance()
+    val currentUser:FirebaseUser? get()= instance.currentUser
+    val isUserSignedIn: Boolean  get() = currentUser == null
     fun displayLogin(context: Context) {
         val request = GetSignInIntentRequest.builder()
             .setServerClientId("736787936921-7fg093rr6r35ptugkk7gn5epnvssgrl0.apps.googleusercontent.com")//todo replace with get string

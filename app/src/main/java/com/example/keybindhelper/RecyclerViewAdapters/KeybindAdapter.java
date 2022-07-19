@@ -29,11 +29,14 @@ import com.example.keybindhelper.dto.Keybind;
 import com.example.keybindhelper.ui.keybind.KeybindFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import kotlin.NotImplementedError;
 
 public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindViewHolder> {
 
@@ -178,10 +181,11 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
                     if(s.length()>0)
                         filteredKB.add(s);
                 }
-
-                k.kb1.setValue((filteredKB.size() > 0)? kbs.get(0) : "");
-                k.kb2.setValue((filteredKB.size() > 1)? kbs.get(1) : "");
-                k.kb3.setValue((filteredKB.size() > 2)? kbs.get(2) : "");
+                System.out.println(filteredKB);
+                //throw new NotImplementedError();
+                k.kb1.setValue((filteredKB.size() > 0)? filteredKB.get(0) : "");
+                k.kb2.setValue((filteredKB.size() > 1)? filteredKB.get(1) : "");
+                k.kb3.setValue((filteredKB.size() > 2)? filteredKB.get(2) : "");
 
                 imm.hideSoftInputFromWindow(nameEt.getWindowToken(), 0);
                 d.cancel();
