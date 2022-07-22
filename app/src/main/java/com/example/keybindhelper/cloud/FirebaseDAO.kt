@@ -134,6 +134,7 @@ object FirebaseDAO {
                         val p = Project.fromJSONString(it.result.data!!["Data"].toString());
                         result.onResponse("""Successfully Downloaded as "${p.name.value}"""")
                     }catch (e:Exception){
+
                         result.onResponse("An Error Occurred while downloading: Unable to download.")
                     }
                 }else{

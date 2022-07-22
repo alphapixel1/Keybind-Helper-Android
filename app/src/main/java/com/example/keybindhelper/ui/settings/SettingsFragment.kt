@@ -17,6 +17,7 @@ import com.example.keybindhelper.Theme.ThemeManager
 import com.example.keybindhelper.cloud.FirebaseDAO
 import com.example.keybindhelper.cloud.IActivityResult
 import com.example.keybindhelper.dao.CurrentProjectManager
+import com.example.keybindhelper.dto.Project
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
@@ -103,6 +104,7 @@ class SettingsFragment : Fragment() {
         root!!.findViewById<TextView>(R.id.settings_cloud_storage).setTextColor(iconColor);
         root!!.findViewById<TextView>(R.id.settings_username).setTextColor(iconColor);
         root!!.findViewById<TextView>(R.id.textView2).setTextColor(iconColor);
+
     }
 
     private fun initMenu(mainActivity: MainActivity, view: View) {

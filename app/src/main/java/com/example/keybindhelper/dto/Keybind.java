@@ -96,11 +96,11 @@ public class Keybind{
         JSONObject ret=new JSONObject();
         ret.put("keybindName",name.getValue());
         JSONArray kbs=new JSONArray();
-        if(kb1.getValue()!=null)
+        if(!kb1.getValue().isEmpty())
             kbs.put(kb1.getValue());
-        if(kb2.getValue()!=null)
+        if(!kb2.getValue().isEmpty())
             kbs.put(kb2.getValue());
-        if(kb3.getValue()!=null)
+        if(!kb3.getValue().isEmpty())
             kbs.put(kb3.getValue());
       /*  ret.put("kb1",kb1.getValue());
         ret.put("kb2",kb2.getValue());

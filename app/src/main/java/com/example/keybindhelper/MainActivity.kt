@@ -26,6 +26,7 @@ import com.example.keybindhelper.cloud.IActivityResult
 import com.example.keybindhelper.dao.CurrentProjectManager
 import com.example.keybindhelper.dao.DatabaseManager
 import com.example.keybindhelper.databinding.ActivityMainBinding
+import com.example.keybindhelper.dto.Project
 import com.google.android.material.navigation.NavigationView
 
 
@@ -76,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         ThemeManager.applyTheme();
         CurrentProjectManager.loadFirstProject()
 
-
+        addArma3()
     }
 
     fun showMenuItems(items:Set<Int>){
@@ -122,21 +123,165 @@ class MainActivity : AppCompatActivity() {
     }
     fun applyTheme(){
         val currentTheme=ThemeManager.CurrentTheme!!;
-        /*if(Menu!=null)
-            makeMenuThemeColor(Menu!!)*/
         println("changing theme?");
         val toolbar=findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
 
-  //todo       toolbar.backgroundTintList = ColorStateList.valueOf(resources.getColor(currentTheme.appColor));
+        //todo   changes toolbar color, lets not    toolbar.backgroundTintList = ColorStateList.valueOf(resources.getColor(currentTheme.appColor));
 
         val backgroundColor=ColorStateList.valueOf(getColor(currentTheme.backgroundColor))//resources.getColor(currentTheme.backgroundColor));
         findViewById<ConstraintLayout>(R.id.main_background).backgroundTintList = backgroundColor
-       // val titleID=resources.getIdentifier("action_bar_title", "id", "android");
-
-        //findViewById<TextView>(titleID).setTextColor(getColor(currentTheme.iconColor));
-        //binding.root.findViewById<LinearLayout>(R.id.nav_background).backgroundTintList=backgroundColor;
 
     }
+    //adds ready or not to the projects list
+    fun addReadyOrNot(){
+         Project.fromJSONString("{\n" +
+                "    \"projectName\": \"Ready Or Not\",\n" +
+                "    \"groups\": [\n" +
+                "        {\n" +
+                "            \"groupName\": \"Misc\",\n" +
+                "            \"keybinds\": [\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Tablet\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"End\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Chemlight\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"V\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Secondary Sight\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"P\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Melee\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"B\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"groupName\": \"Teamwork\",\n" +
+                "            \"keybinds\": [\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"AI Command Interface\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"MMB\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Team View Cam\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"T\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Push To Talk\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"Caps Lock\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Cycle Voice Channels\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"L\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Chat\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"J\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Team Chat\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"K\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"groupName\": \"Movement\",\n" +
+                "            \"keybinds\": [\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Hold Crouch\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"Ctrl\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Crouch\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"C\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"groupName\": \"Gun\",\n" +
+                "            \"keybinds\": [\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Fire Select\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"X\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Laser/Flashlight\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"Pause\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Canted Sight\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"O\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}")
+    }
 
-
+    fun addArma3(){
+        Project.fromJSONString("{\"projectName\":\"Arma 3\",\"groups\":[{\"groupName\":\"Movement\",\"keybinds\":[{\"keybindName\":\"Combat Pace Toggle\",\"keybinds\":[\"2xC\"]},{\"keybindName\":\"Walk/Run Toggle\",\"keybinds\":[\"Left Ctrl+C\"]},{\"keybindName\":\"Stance Change\",\"keybinds\":[\"L Ctrl W/A/S/D\"]},{\"keybindName\":\"Crouch\",\"keybinds\":[\"X\"]},{\"keybindName\":\"Prone\",\"keybinds\":[\"Z\"]},{\"keybindName\":\"Swim Up\",\"keybinds\":[\"X\"]},{\"keybindName\":\"Swim Down\",\"keybinds\":[\"Z\"]},{\"keybindName\":\"Step Over\",\"keybinds\":[\"V\"]},{\"keybindName\":\"Salute\",\"keybinds\":[\"\\\\\"]},{\"keybindName\":\"Sit Down\",\"keybinds\":[\"'\"]}]},{\"groupName\":\"View\",\"keybinds\":[{\"keybindName\":\"Toggle View\",\"keybinds\":[\"Tab\"]},{\"keybindName\":\"Zoom In\",\"keybinds\":[\"1\"]},{\"keybindName\":\"Zoom Out\",\"keybinds\":[\"2\"]}]},{\"groupName\":\"Multiplayer\",\"keybinds\":[{\"keybindName\":\"Statistics\",\"keybinds\":[\"P\"]},{\"keybindName\":\"List Of Players\",\"keybinds\":[\"RCtrl + P\"]},{\"keybindName\":\"Next Channel\",\"keybinds\":[\".\"]},{\"keybindName\":\"Previous Channel\",\"keybinds\":[\",\"]},{\"keybindName\":\"Push To Talk\",\"keybinds\":[\"Left Win\"]},{\"keybindName\":\"Tactical Ping\",\"keybinds\":[\"L Shift + T\"]}]},{\"groupName\":\"Common\",\"keybinds\":[{\"keybindName\":\"Task Overview\",\"keybinds\":[\"J\"]},{\"keybindName\":\"GPS Toggle\",\"keybinds\":[\"Ctrl + A\"]},{\"keybindName\":\"Targeting Camera\",\"keybinds\":[\"Ctrl + LMB\"]},{\"keybindName\":\"Compas\",\"keybinds\":[\"K\"]},{\"keybindName\":\"Watch\",\"keybinds\":[\"O\"]}]},{\"groupName\":\"Weapons\",\"keybinds\":[{\"keybindName\":\"Next Fire Mode\",\"keybinds\":[\"F\"]},{\"keybindName\":\"Hold Breath\",\"keybinds\":[\"L Shift\"]},{\"keybindName\":\"Optics\",\"keybinds\":[\"R Alt\"]},{\"keybindName\":\"Cycle Throwable\",\"keybinds\":[\"L Ctrl + G\"]},{\"keybindName\":\"Gun Elevation\",\"keybinds\":[\"PgUp\",\"PgDn\"]},{\"keybindName\":\"Lase Range\",\"keybinds\":[\"T\"]},{\"keybindName\":\"Laser\",\"keybinds\":[\"L\"]}]},{\"groupName\":\"Vehicle\",\"keybinds\":[{\"keybindName\":\"Hand Break\",\"keybinds\":[\"X\"]},{\"keybindName\":\"Turn In\",\"keybinds\":[\"L Ctrl + Q\"]},{\"keybindName\":\"Turn Out\",\"keybinds\":[\"L Ctrl + E\"]}]},{\"groupName\":\"Helicopter\",\"keybinds\":[{\"keybindName\":\"Collective Raise\",\"keybinds\":[\"L Shift\"]},{\"keybindName\":\"Collective Lower\",\"keybinds\":[\"Z\"]},{\"keybindName\":\"Sling Load Assistant\",\"keybinds\":[\"R Ctrl + B\"]},{\"keybindName\":\"Rope Interaction\",\"keybinds\":[\"B\"]}]},{\"groupName\":\"Plane\",\"keybinds\":[{\"keybindName\":\"Increase Thrust\",\"keybinds\":[\"L Shift\"]},{\"keybindName\":\"Decrease Thrust\",\"keybinds\":[\"Z\"]},{\"keybindName\":\"Auto Vectoring\",\"keybinds\":[\"X\"]},{\"keybindName\":\"Flaps\",\"keybinds\":[\"L Ctrl + Scroll\"]}]}]}");
+    }
 }

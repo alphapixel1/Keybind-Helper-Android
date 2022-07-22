@@ -1,0 +1,145 @@
+{
+    "projectName": "Ready Or Not",
+    "groups": [
+        {
+            "groupName": "Misc",
+            "keybinds": [
+                {
+                    "keybindName": "Tablet",
+                    "keybinds": [
+                        "End",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Chemlight",
+                    "keybinds": [
+                        "V",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Secondary Sight",
+                    "keybinds": [
+                        "P",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Melee",
+                    "keybinds": [
+                        "B",
+                        "",
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "groupName": "Teamwork",
+            "keybinds": [
+                {
+                    "keybindName": "AI Command Interface",
+                    "keybinds": [
+                        "MMB",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Team View Cam",
+                    "keybinds": [
+                        "T",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Push To Talk",
+                    "keybinds": [
+                        "Caps Lock",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Cycle Voice Channels",
+                    "keybinds": [
+                        "L",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Chat",
+                    "keybinds": [
+                        "J",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Team Chat",
+                    "keybinds": [
+                        "K",
+                        "",
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "groupName": "Movement",
+            "keybinds": [
+                {
+                    "keybindName": "Hold Crouch",
+                    "keybinds": [
+                        "Ctrl",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Crouch",
+                    "keybinds": [
+                        "C",
+                        "",
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "groupName": "Gun",
+            "keybinds": [
+                {
+                    "keybindName": "Fire Select",
+                    "keybinds": [
+                        "X",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Laser/Flashlight",
+                    "keybinds": [
+                        "Pause",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Canted Sight",
+                    "keybinds": [
+                        "O",
+                        "",
+                        ""
+                    ]
+                }
+            ]
+        }
+    ]
+}
