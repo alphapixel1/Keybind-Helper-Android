@@ -1,6 +1,7 @@
 package com.example.keybindhelper
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -62,12 +63,13 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_keybind, R.id.nav_catalog, R.id.nav_projects), drawerLayout)
+            R.id.nav_keybind, R.id.nav_settings, R.id.nav_projects), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         DatabaseManager.init(binding.root.context);
         ThemeManager.init(this);
+        ThemeManager.applyTheme();
         CurrentProjectManager.loadFirstProject()
 
 
@@ -89,18 +91,18 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main, menu)
         this.Menu=menu;
         onMenuInit?.menuHasInitialized();
-        makeMenuWhite(menu)
+        makeMenuThemeColor(menu)
         return true
     }
 
-    private fun makeMenuWhite(menu:Menu){
+    private fun makeMenuThemeColor(menu:Menu){
         for (i in 0 until menu.size()) {
             val item: MenuItem = menu.getItem(i)
             val spanString = SpannableString(menu.getItem(i).title.toString())
-            spanString.setSpan(ForegroundColorSpan(Color.WHITE),0,spanString.length,0)//fix the color to white
+            spanString.setSpan(ForegroundColorSpan(ThemeManager.CurrentTheme!!.iconColor),0,spanString.length,0)//fix the color to white
             item.title = spanString
             if(item.hasSubMenu())
-                makeMenuWhite(item.subMenu)
+                makeMenuThemeColor(item.subMenu)
         }
     }
 
@@ -115,6 +117,18 @@ class MainActivity : AppCompatActivity() {
         GoogleActivityResult?.onResult(requestCode,resultCode,data);
     }
     fun applyTheme(){
+        //throw Exception("waaa");
+        val currentTheme=ThemeManager.CurrentTheme!!;
+        if(Menu!=null)
+            makeMenuThemeColor(Menu!!)
+        println("changing theme?");
+        val toolbar=binding.root.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+        //toolbar.setBackgroundColor(R.color.white)
+
+        toolbar.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(currentTheme.appColor)));
+
+       // toolbar.background=getDrawable(R.drawable.disabled_cloud_24);
+        //toolbar.visibility= View.GONE;
         //this.appBarConfiguration.
     }
 }

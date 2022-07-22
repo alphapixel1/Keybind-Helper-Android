@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_keybind" />
 
     <fragment
-        android:id="@+id/nav_catalog"
+        android:id="@+id/nav_settings"
         android:name="com.example.keybindhelper.ui.settings.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />

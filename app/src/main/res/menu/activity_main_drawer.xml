@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
@@ -13,8 +14,8 @@
             android:icon="@drawable/folder"
             android:title="@string/menu_projects" />
         <item
-            android:id="@+id/nav_catalog"
-            android:icon="@drawable/catalog"
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/settings"
             android:title="@string/menu_settings" />
     </group>
 </menu>

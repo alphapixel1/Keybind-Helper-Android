@@ -19,8 +19,8 @@ object ThemeManager {
             color.offset_keybind_background//keybind offset color
         ),
         Theme("Demo",
-            color.black,//app color
-            color.white,//icon color
+            color.white,//app color
+            color.black,//icon color
             color.white,//background color
             color.black,//text color
             color.white,//group header color

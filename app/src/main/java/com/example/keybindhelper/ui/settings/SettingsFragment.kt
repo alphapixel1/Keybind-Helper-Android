@@ -37,12 +37,7 @@ class SettingsFragment : Fragment() {
         val mainActivity=activity as MainActivity;
         root=inflater.inflate(R.layout.fragment_settings,container,false)
         //root=LayoutInflater.from(this.context).inflate(R.layout.fragment_share, container)
-        //todo remove this because json is only really needed for sharing projects
-        root!!.findViewById<Button>(R.id.jsonButton).setOnClickListener{
-            println(CurrentProjectManager.CurrentProject.getJSONObject(true).toString());
-            Snackbar.make(it, "Check Run Console For JSON String", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+
         //google sign in button
         root!!.findViewById<SignInButton>(R.id.settings_google_btn).setOnClickListener{
             mainActivity.GoogleActivityResult= object : IActivityResult {

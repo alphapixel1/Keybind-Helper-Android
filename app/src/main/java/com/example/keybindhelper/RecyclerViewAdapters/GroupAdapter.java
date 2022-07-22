@@ -2,11 +2,14 @@ package com.example.keybindhelper.RecyclerViewAdapters;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,10 +23,14 @@ import com.example.keybindhelper.Dialogs.GroupListProvider;
 import com.example.keybindhelper.Dialogs.PromptDialog;
 import com.example.keybindhelper.Dialogs.ValidatorResponse;
 import com.example.keybindhelper.R;
+import com.example.keybindhelper.Theme.Theme;
+import com.example.keybindhelper.Theme.ThemeManager;
 import com.example.keybindhelper.dao.CurrentProjectManager;
 import com.example.keybindhelper.dao.DatabaseManager;
 import com.example.keybindhelper.dto.Group;
 import com.example.keybindhelper.dto.Keybind;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +50,22 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
         return new GroupViewHolder(v);
     }
 
+    private void applyTheme(View view){
+/*
+        Theme theme=ThemeManager.INSTANCE.getCurrentTheme();
+        if(theme!=null) {
+            view.findViewById(R.id.group_background).setBackgroundColor(android.content.res.Resources.getColor(theme.getKeybindBackgroundColor()));
+            view.findViewById(R.id.group_background).setBackgroundColor(theme.getKeybindBackgroundColor());
+            ((TextView) view.findViewById(R.id.group_name_button)).setTextColor(theme.getIconColor());
+            view.findViewById(R.id.group_add_button).setBackgroundColor(theme.getIconColor());
+            view.findViewById(R.id.group_more_button).setBackgroundColor(theme.getIconColor());
+        }*/
+    }
 
     @Override
     public void onBindViewHolder(@NonNull GroupViewHolder holder, int position) {
         Group group=groupList.get(position);
+        applyTheme(holder.itemView);
         group.currentAdapter=this;
         Context context=holder.itemView.getContext();
 
