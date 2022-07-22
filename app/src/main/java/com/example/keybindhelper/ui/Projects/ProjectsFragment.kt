@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +22,7 @@ import com.example.keybindhelper.RecyclerViewAdapters.ProjectAdapter
 import com.example.keybindhelper.cloud.FirebaseDAO
 import com.example.keybindhelper.cloud.FirebaseProject
 import com.example.keybindhelper.ITaskResponse
+import com.example.keybindhelper.Theme.ThemeManager
 import com.example.keybindhelper.dao.CurrentProjectManager
 import com.example.keybindhelper.dao.DatabaseManager
 import com.example.keybindhelper.dto.Project
@@ -142,7 +144,7 @@ class ProjectsFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {}
         }
         )
-
+        applyTheme();
         return root;
 
     }
@@ -171,5 +173,10 @@ class ProjectsFragment : Fragment() {
         return snack
     }
 
-
+    private fun applyTheme(){
+        val cTheme=ThemeManager.CurrentTheme!!;
+        val textColor=resources.getColor(cTheme.iconColor);
+        root.findViewById<TextView>(R.id.textView4).setTextColor(textColor)
+        root.findViewById<TextView>(R.id.textView5).setTextColor(textColor)
+    }
 }

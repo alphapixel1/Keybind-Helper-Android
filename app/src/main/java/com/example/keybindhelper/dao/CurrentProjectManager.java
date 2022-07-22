@@ -28,10 +28,10 @@ public class CurrentProjectManager {
             p=new Project();
             p.name.setValue("Unnamed Project");
             p.id= DatabaseManager.db.insert(p);
-            System.out.println("NEW PROJECT INSERTED: "+p.id);
+            System.out.println("NEW PROJECT INSERTED: projectId"+p.id);
         }else{
             p=projects.get(0);
-            System.out.println("A PROJECT ALREADY EXISTS: "+p.id);
+            System.out.println("A PROJECT ALREADY EXISTS projectId: "+p.id);
         }
         loadProject(p,true);
     }

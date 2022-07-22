@@ -9,8 +9,12 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -99,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         for (i in 0 until menu.size()) {
             val item: MenuItem = menu.getItem(i)
             val spanString = SpannableString(menu.getItem(i).title.toString())
-            spanString.setSpan(ForegroundColorSpan(ThemeManager.CurrentTheme!!.iconColor),0,spanString.length,0)//fix the color to white
+            spanString.setSpan(ForegroundColorSpan(Color.WHITE),0,spanString.length,0)//fix the color to white
             item.title = spanString
             if(item.hasSubMenu())
                 makeMenuThemeColor(item.subMenu)
@@ -117,18 +121,22 @@ class MainActivity : AppCompatActivity() {
         GoogleActivityResult?.onResult(requestCode,resultCode,data);
     }
     fun applyTheme(){
-        //throw Exception("waaa");
         val currentTheme=ThemeManager.CurrentTheme!!;
-        if(Menu!=null)
-            makeMenuThemeColor(Menu!!)
+        /*if(Menu!=null)
+            makeMenuThemeColor(Menu!!)*/
         println("changing theme?");
-        val toolbar=binding.root.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
-        //toolbar.setBackgroundColor(R.color.white)
+        val toolbar=findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
 
-        toolbar.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(currentTheme.appColor)));
+  //todo       toolbar.backgroundTintList = ColorStateList.valueOf(resources.getColor(currentTheme.appColor));
 
-       // toolbar.background=getDrawable(R.drawable.disabled_cloud_24);
-        //toolbar.visibility= View.GONE;
-        //this.appBarConfiguration.
+        val backgroundColor=ColorStateList.valueOf(getColor(currentTheme.backgroundColor))//resources.getColor(currentTheme.backgroundColor));
+        findViewById<ConstraintLayout>(R.id.main_background).backgroundTintList = backgroundColor
+       // val titleID=resources.getIdentifier("action_bar_title", "id", "android");
+
+        //findViewById<TextView>(titleID).setTextColor(getColor(currentTheme.iconColor));
+        //binding.root.findViewById<LinearLayout>(R.id.nav_background).backgroundTintList=backgroundColor;
+
     }
+
+
 }

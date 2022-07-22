@@ -84,6 +84,7 @@ class SettingsFragment : Fragment() {
                 id: Long,
             ) {
                 ThemeManager.CurrentTheme=ThemeManager.Themes[position];
+                applyTheme();
                 ThemeManager.applyTheme();
             }
 
@@ -91,9 +92,17 @@ class SettingsFragment : Fragment() {
                 // your code here
             }
         })
-
+        applyTheme();
         //mAuth.currentUser
         return root!!
+    }
+
+    private fun applyTheme() {
+        val cTheme=ThemeManager.CurrentTheme!!;
+        val iconColor=resources.getColor(cTheme.iconColor);
+        root!!.findViewById<TextView>(R.id.settings_cloud_storage).setTextColor(iconColor);
+        root!!.findViewById<TextView>(R.id.settings_username).setTextColor(iconColor);
+        root!!.findViewById<TextView>(R.id.textView2).setTextColor(iconColor);
     }
 
     private fun initMenu(mainActivity: MainActivity, view: View) {

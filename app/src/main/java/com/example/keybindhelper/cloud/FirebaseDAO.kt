@@ -41,7 +41,7 @@ object FirebaseDAO {
                     val map =hashMapOf(
                     "Projects" to mutableListOf<Any>(),
                     )
-                    usersRef.set(map);
+                    usersRef.set(map)
 
                     //database.collection("users").add(map);
                 }
@@ -51,18 +51,21 @@ object FirebaseDAO {
     fun getUserProjects(result: ITaskResponse<MutableList<FirebaseProject>>){
         if(currentUser!=null) {
             database.collection("users").document(currentUser!!.uid).get().addOnSuccessListener {
-                if(it.data==null)
-                    throw Exception("why data null");
-                val projects=it.data!!["Projects"] as ArrayList<HashMap<String,String>>;
-                var projectsReturn= mutableListOf<FirebaseProject>();
-                for (project in projects){
-                    //println(project::class.java.typeName)
+                if(it.data==null) {
+                    result.onResponse(mutableListOf())
+                    addUserToDB()
+                }else {
+                    val projects = it.data!!["Projects"] as ArrayList<HashMap<String, String>>;
+                    var projectsReturn = mutableListOf<FirebaseProject>();
+                    for (project in projects) {
+                        //println(project::class.java.typeName)
 
-                    projectsReturn.add(
-                        FirebaseProject(project["name"]!!,project["projectID"]!!)
-                    )
+                        projectsReturn.add(
+                            FirebaseProject(project["name"]!!, project["projectID"]!!)
+                        )
+                    }
+                    result.onResponse(projectsReturn);
                 }
-                result.onResponse(projectsReturn);
             }
         }else{
             throw Exception("FirebaseDAO.getUserProjects: User should not be null here");

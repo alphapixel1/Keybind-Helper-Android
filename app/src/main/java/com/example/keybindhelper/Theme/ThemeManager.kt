@@ -1,6 +1,5 @@
 package com.example.keybindhelper.Theme
 
-import android.provider.ContactsContract
 import com.example.keybindhelper.MainActivity
 import com.example.keybindhelper.R.color
 import com.example.keybindhelper.dao.DatabaseManager
@@ -11,21 +10,30 @@ object ThemeManager {
     val Themes:List<Theme> = listOf(
         Theme("Default",
             color.black,//app color
-            color.white,//icon color
-            color.white,//background color
-            color.black,//text color
-            color.white,//group header color
+            color.white,//icon color/text
+            color.dark_gray,//background color
+            color.group_header,//group header color
             color.group_background,//keybind background color
-            color.offset_keybind_background//keybind offset color
+            color.offset_keybind_background,//keybind offset color
+            color.black//keybind card color
         ),
-        Theme("Demo",
+        Theme("Inverted",
             color.white,//app color
-            color.black,//icon color
+            color.black,//icon color/text
             color.white,//background color
-            color.black,//text color
-            color.white,//group header color
-            color.group_background,//keybind background color
-            color.offset_keybind_background//keybind offset color
+            color.light_white,//group header color
+            color.lighter_white,//keybind background color
+            color.light_white,//keybind offset color
+            color.white//keybind card color
+        ),
+        Theme("Tropical",
+            color.white,//app color
+            color.purple,//icon color/text
+            color.lime,//background color
+            color.watermelon_red,//group header color
+            color.mango,//keybind background color
+            color.banana,//keybind offset color
+            color.watermelon_pink//keybind card color
         )
     )
 
@@ -47,8 +55,8 @@ data class Theme(val name:String,
                  val appColor:Int,
                  val iconColor:Int,
                  val backgroundColor:Int,
-                 val textColor:Int,
                  val groupHeaderColor:Int,
                  val keybindBackgroundColor:Int,
                  val offsetKeybindBackgroundColor:Int,
+                 val keybindCardColor:Int
                 )
