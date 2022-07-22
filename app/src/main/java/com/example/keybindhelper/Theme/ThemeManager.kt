@@ -1,8 +1,10 @@
 package com.example.keybindhelper.Theme
 
+import android.provider.ContactsContract
 import com.example.keybindhelper.MainActivity
 import com.example.keybindhelper.R.color
 import com.example.keybindhelper.dao.DatabaseManager
+import com.example.keybindhelper.dto.ThemeDTO
 
 object ThemeManager {
     var CurrentTheme: Theme?=null;
@@ -43,11 +45,27 @@ object ThemeManager {
     fun init(mainActivity:MainActivity){
         assert(DatabaseManager.db!=null)//checking that the database has been initalized
         val dto=DatabaseManager.db.themeDTO
+        if(dto==null){
+            val t=ThemeDTO()
+            DatabaseManager.db.insert(t);
+            CurrentTheme= Themes[0];
+        }else{
+            val savedTheme=Themes.find { it.name==dto.ThemeName }
+            if(savedTheme!=null)
+                CurrentTheme=savedTheme;
+            else
+                CurrentTheme=Themes[0]
+        }
+
+       // println("THEME $dto")
         System.err.println("ThemeManager.init: make sure to make a table for theme settings");
-        CurrentTheme= Themes[0];
+
         this.mainActivity=mainActivity;
     }
     fun applyTheme(){
+        var t=ThemeDTO();
+        t.ThemeName= CurrentTheme!!.name;
+        DatabaseManager.db.update(t)
         mainActivity?.applyTheme();
     }
 }
