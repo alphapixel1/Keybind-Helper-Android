@@ -1,43 +1,34 @@
-package com.example.keybindhelper.dao;
+package com.example.keybindhelper.dao
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
-
-import com.example.keybindhelper.dto.Group;
-import com.example.keybindhelper.dto.Keybind;
-import com.example.keybindhelper.dto.Project;
-import com.example.keybindhelper.dto.ThemeDTO;
-
-import java.util.List;
+import androidx.room.*
+import com.example.keybindhelper.dto.Group
+import com.example.keybindhelper.dto.Project
+import com.example.keybindhelper.dto.Keybind
+import com.example.keybindhelper.dto.ThemeDTO
 
 @Dao
-public interface ProjectDao {
-
+interface ProjectDao {
     //projects
-
     /**
      * Get all projects
      * @return returns all projects
      */
-    @Query("Select * from Project")
-    List<Project> getProjects();
+    @get:Query("Select * from Project")
+    val projects: List<Project?>?
 
     /**
      * Update project
      * @param p
      */
     @Update
-    void update(Project p);
+    fun update(p: Project?)
 
     /**
      * Delete Project
      * @param p id must be set
      */
     @Delete
-    void delete(Project p);
+    fun delete(p: Project?)
 
     /**
      * Insert project into db
@@ -45,73 +36,70 @@ public interface ProjectDao {
      * @return projectID
      */
     @Insert
-    long insert(Project p);
-
-//groups
-
+    fun insert(p: Project?): Long
+    //groups
     /**
      * Get all groups for project
      * @param id projectID
      * @return List of groups in that project
      */
     @Query("Select * from `Group` Where projectID=:id")
-    List<Group> getProjectGroups(long id);
+    fun getProjectGroups(id: Long): List<Group?>?
 
     /**
      * Gets all groups, currently unused
      * @return
      */
-    @Query("Select * from `Group`")
-    List<Group> getGroups();
+    @get:Query("Select * from `Group`")
+    val groups: List<Group?>?
 
     /**
      * Update group
      * @param g
      */
     @Update
-    void update(Group g);
+    fun update(g: Group?)
 
     /**
      * Delete group by ID
      * @param id groupID
      */
     @Query("Delete from `group` where id=:id")
-    void deleteGroup(long id);
+    fun deleteGroup(id: Long)
+
     @Insert
-    long insert(Group g);
+    fun insert(g: Group?): Long
 
     /**
      * Delete Projects Groups
      * @param id projectID
      */
     @Query("delete from `group` where projectID=:id")
-    void deleteAllProjectsGroups(long id);
-
-//keybinds
+    fun deleteAllProjectsGroups(id: Long)
+    //keybinds
     /*@Query("Select * from keybind")
     List<Keybind> getKeybinds();*/
-
     /**
      * Gets all keybinds for a group row
      * @param id group ID
      * @return List of keybinds for group
      */
     @Query("Select * from 'keybind' where groupID=:id")
-    List<Keybind> getGroupKeybinds(long id);
+    fun getGroupKeybinds(id: Long): List<Keybind?>?
 
     /**
      * Updates the keybind in the room db
      * @param k keybind to update
      */
     @Update
-    void update(Keybind k);
+    fun update(k: Keybind?)
 
     /**
      * Deletes keybind from db
      * @param k Keybind to delete
      */
     @Delete
-    void delete(Keybind k);
+    fun delete(k: Keybind?)
 
     /**
      * Inserts keybind into db
@@ -119,32 +107,28 @@ public interface ProjectDao {
      * @return keybind row ID
      */
     @Insert
-    long insert(Keybind k);
+    fun insert(k: Keybind?): Long
 
     /**
      * Deletes all keybinds with group id
      * @param id Group ID
      */
     @Query("delete from keybind where groupID=:id")
-    void deleteGroupKeybinds(long id);
-
+    fun deleteGroupKeybinds(id: Long)
     //Theme
-
     /**
      * Inserts the theme if it does not already exist
      * @param theme
      */
     @Insert
-    void insert(ThemeDTO theme);
+    fun insert(theme: ThemeDTO?)
 
     /**
      * Updates the current theme
      */
     @Update
-    void update(ThemeDTO theme);
+    fun update(theme: ThemeDTO?)
 
-    @Query("select * from ThemeDTO limit 1")
-    ThemeDTO getThemeDTO();
-
-
+    @get:Query("select * from ThemeDTO limit 1")
+    val themeDTO: ThemeDTO?
 }

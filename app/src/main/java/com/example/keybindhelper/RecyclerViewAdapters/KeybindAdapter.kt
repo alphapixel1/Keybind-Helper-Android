@@ -163,12 +163,12 @@ class KeybindAdapter(private val keybindList: List<Keybind>) :
         d.setContentView(R.layout.keybind_more_dialog)
         (d.findViewById<View>(R.id.keybind_settings_name) as TextView).text = k.name.value
         d.findViewById<View>(R.id.keybind_copy).setOnClickListener { v: View? ->
-            k.group.AddKeybind(k.Clone(false), true)
+            k.group!!.AddKeybind(k.Clone(false), true)
             notifyItemInserted(keybindList.size - 1)
             d.cancel()
         }
         d.findViewById<View>(R.id.keybind_delete).setOnClickListener { v: View? ->
-            k.group.deleteKeybind(k)
+            k.group!!.deleteKeybind(k)
             notifyItemRemoved(k.index)
             updateKeybindsBackground()
             d.cancel()
@@ -176,19 +176,21 @@ class KeybindAdapter(private val keybindList: List<Keybind>) :
         d.findViewById<View>(R.id.keybind_move).setOnClickListener { z: View? ->
             d.cancel()
             val ap = ArrowProvider(context)
-            ap.directionClicked = DirectionClicked { isUp: Boolean ->
-                val indx = k.group.keybinds.indexOf(k)
-                if (isUp) {
-                    if (indx > 0) {
-                        k.group.moveKeybindUpDown(k, -1)
-                        notifyItemMoved(indx, indx - 1)
-                        updateKeybindsBackground()
-                    }
-                } else {
-                    if (indx < k.group.keybinds.size - 1) {
-                        k.group.moveKeybindUpDown(k, 1)
-                        notifyItemMoved(indx, indx + 1)
-                        updateKeybindsBackground()
+            ap.directionClicked = object : DirectionClicked {
+                override fun Clicked(isUp: Boolean?) {
+                    val indx = k.group!!.keybinds!!.indexOf(k)
+                    if (isUp!!) {
+                        if (indx > 0) {
+                            k.group!!.moveKeybindUpDown(k, -1)
+                            notifyItemMoved(indx, indx - 1)
+                            updateKeybindsBackground()
+                        }
+                    } else {
+                        if (indx < k.group!!.keybinds!!.size - 1) {
+                            k.group!!.moveKeybindUpDown(k, 1)
+                            notifyItemMoved(indx, indx + 1)
+                            updateKeybindsBackground()
+                        }
                     }
                 }
             }
@@ -197,17 +199,19 @@ class KeybindAdapter(private val keybindList: List<Keybind>) :
         d.findViewById<View>(R.id.keybind_sendtogroup).setOnClickListener { v: View? ->
             d.cancel()
             val gs: MutableList<Group> = ArrayList()
-            for (g in CurrentProjectManager.CurrentProject.Groups) {
+            for (g in CurrentProjectManager.CurrentProject!!.Groups!!) {
                 if (g !== k.group) gs.add(g)
             }
             val glp = GroupListProvider(context, "Send Keybind To", gs)
-            glp.groupClick = GroupClick { g: Group ->
-                g.AddKeybind(k, false)
-                notifyItemRemoved(keybindList.indexOf(k))
-                try {
-                    k.group.currentAdapter.notifyDataSetChanged()
-                } catch (e: Exception) {
-                    System.err.println(e)
+            glp.groupClick = object : GroupClick {
+                override fun GroupClicked(g: Group?) {
+                    g!!.AddKeybind(k, false)
+                    notifyItemRemoved(keybindList.indexOf(k))
+                    try {
+                        k.group!!.currentAdapter!!.notifyDataSetChanged()
+                    } catch (e: Exception) {
+                        System.err.println(e)
+                    }
                 }
             }
             glp.Show()
@@ -220,8 +224,8 @@ class KeybindAdapter(private val keybindList: List<Keybind>) :
      */
     private fun updateKeybindsBackground() {
 
-        for (k in keybindList[0].group.keybinds) {
-            val main = k.viewHolder.itemView.findViewById<View>(R.id.keybind_main_layout)
+        for (k in keybindList[0].group!!.keybinds!!) {
+            val main = k.viewHolder!!.itemView.findViewById<View>(R.id.keybind_main_layout)
             if (k.index % 2 == 1) main.setBackgroundResource(ThemeManager.CurrentTheme!!.offsetKeybindBackgroundColor) else main.setBackgroundResource(//R.color.offset_keybind_background
                 ThemeManager.CurrentTheme!!.keybindBackgroundColor)
         }

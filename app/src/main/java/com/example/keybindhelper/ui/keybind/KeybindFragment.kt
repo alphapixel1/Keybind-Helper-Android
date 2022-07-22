@@ -38,7 +38,7 @@ class KeybindFragment : Fragment() {
         else
             initMenu(mainActivity,root);
 
-        if(CurrentProjectManager.CurrentProject==null || CurrentProjectManager.CurrentProject.Groups==null) {
+        if(CurrentProjectManager.CurrentProject==null || CurrentProjectManager.CurrentProject!!.Groups==null) {
             CurrentProjectManager.isProjectLoaded.observe(viewLifecycleOwner) {
                 println("LOADED")
                 loadRecycleView(root);
@@ -53,15 +53,17 @@ class KeybindFragment : Fragment() {
     }
 
     private fun initMenu(mainActivity: MainActivity,view: View) {
-        mainActivity.setAppBarTitle(CurrentProjectManager.CurrentProject.name.value!!);
+        mainActivity.setAppBarTitle(CurrentProjectManager.CurrentProject!!.name.value!!);
         mainActivity.showMenuItems(mainActivity.keybindsFragmentActionMenuIds)
         val rv=view.findViewById<RecyclerView>(R.id.recyclerView);
 
         mainActivity.Menu!!.findItem(R.id.action_delete_all_groups).setOnMenuItemClickListener {
             val cd=ConfirmDialog(view.context,"Delete All Groups?")
-            cd.onConfirmed= ConfirmDialog.ConfirmedEvent {
-                CurrentProjectManager.CurrentProject.deleteAllGroups()
-                rv.adapter = GroupAdapter(CurrentProjectManager.CurrentProject.Groups)
+            cd.onConfirmed=object: ConfirmDialog.ConfirmedEvent {
+                override fun onConfirmed() {
+                    CurrentProjectManager.CurrentProject!!.deleteAllGroups()
+                    rv.adapter = GroupAdapter(CurrentProjectManager.CurrentProject!!.Groups)
+                }
             }
             cd.Show()
 
@@ -78,16 +80,16 @@ class KeybindFragment : Fragment() {
             true;
         }
         mainActivity.Menu!!.findItem(R.id.action_add).setOnMenuItemClickListener {
-            CurrentProjectManager.CurrentProject.AddGroup()
-            System.out.println("MainActivity.floatingactionbutton.click: Groups Size:" + CurrentProjectManager.CurrentProject.Groups.size)
-            rv.adapter!!.notifyItemChanged(CurrentProjectManager.CurrentProject.Groups.size - 1)
+            CurrentProjectManager.CurrentProject!!.AddGroup()
+            System.out.println("MainActivity.floatingactionbutton.click: Groups Size:" + CurrentProjectManager.CurrentProject!!.Groups!!.size)
+            rv.adapter!!.notifyItemChanged(CurrentProjectManager.CurrentProject!!.Groups!!.size - 1)
             true;
         }
     }
 
     private fun loadRecycleView(root: View) {
         val rv = root.findViewById<RecyclerView>(R.id.recyclerView);
-        rv!!.adapter = GroupAdapter(CurrentProjectManager.CurrentProject.Groups);
+        rv!!.adapter = GroupAdapter(CurrentProjectManager.CurrentProject!!.Groups);
         rv.layoutManager = LinearLayoutManager(root.context);
     }
 

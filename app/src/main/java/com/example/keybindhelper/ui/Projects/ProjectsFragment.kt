@@ -77,14 +77,15 @@ class ProjectsFragment : Fragment() {
                                         }else{
                                             //delete button clicked
                                             val cd=ConfirmDialog(context,"Are you sure you want to delete \"$projectName\"?")
-                                            cd.onConfirmed= ConfirmDialog.ConfirmedEvent {
-                                                FirebaseDAO.delete(projectName,task,object: ITaskResponse<String>{
-                                                    override fun onResponse(result: String) {
-                                                        showSnackBarMessage(result);
-                                                        RefreshProjectList();
-                                                    }
-
-                                                })
+                                            cd.onConfirmed= object: ConfirmDialog.ConfirmedEvent {
+                                                override fun onConfirmed() {
+                                                    FirebaseDAO.delete(projectName,task,object: ITaskResponse<String>{
+                                                        override fun onResponse(result: String) {
+                                                            showSnackBarMessage(result);
+                                                            RefreshProjectList();
+                                                        }
+                                                    })
+                                                }
                                             }
                                             cd.Show()
                                         }
@@ -110,16 +111,20 @@ class ProjectsFragment : Fragment() {
 
         mainActivity.Menu?.findItem(R.id.action_add)?.setOnMenuItemClickListener {
             val pd=PromptDialog(root.context,"New Project Name","","",null);
-            val projects= DatabaseManager.db.projects;
-            pd.validation= PromptDialog.Validator {
-                ValidatorResponse(DatabaseManager.isProjectNameAvailable(projects,it),"A Project Already Exists By That Name")
+            val projects= DatabaseManager.db!!.projects;
+            pd.validation=object: PromptDialog.Validator {
+                override fun Validate(text: String?): ValidatorResponse {
+                    return ValidatorResponse(DatabaseManager.isProjectNameAvailable(projects,text!!),"A Project Already Exists By That Name")
+                }
             }
-            pd.confirmedEvent= PromptDialog.ConfirmedEvent {
-                val p= Project();
-                p.name.value=it;
-                CurrentProjectManager.loadProject(p,false)
-                p.id=DatabaseManager.db.insert(p)
-                openKeybindFragment();
+            pd.confirmedEvent=object: PromptDialog.ConfirmedEvent {
+                override fun onConfirmed(text: String?) {
+                    val p = Project();
+                    p.name.value = text;
+                    CurrentProjectManager.loadProject(p, false)
+                    p.id = DatabaseManager.db!!.insert(p)
+                    openKeybindFragment();
+                }
             }
             pd.ShowDialog()
             true;
@@ -153,7 +158,7 @@ class ProjectsFragment : Fragment() {
     }
     fun RefreshProjectList():List<Project>{
         val rv= root.findViewById<RecyclerView>(R.id.projects_recycler);
-        val projects=DatabaseManager.getOrderedProjects()
+        val projects=DatabaseManager.orderedProjects!!.map{it!!}
         val searchBox=root.findViewById<EditText>(R.id.projects_search_edit);
         if(searchBox.text.length>0) {
             val filteredP= mutableListOf<Project>();

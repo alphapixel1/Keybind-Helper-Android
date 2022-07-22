@@ -44,10 +44,10 @@ object ThemeManager {
      */
     fun init(mainActivity:MainActivity){
         assert(DatabaseManager.db!=null)//checking that the database has been initalized
-        val dto=DatabaseManager.db.themeDTO
+        val dto=DatabaseManager.db!!.themeDTO
         if(dto==null){
             val t=ThemeDTO()
-            DatabaseManager.db.insert(t);
+            DatabaseManager.db!!.insert(t);
             CurrentTheme= Themes[0];
         }else{
             val savedTheme=Themes.find { it.name==dto.ThemeName }
@@ -65,7 +65,7 @@ object ThemeManager {
     fun applyTheme(){
         var t=ThemeDTO();
         t.ThemeName= CurrentTheme!!.name;
-        DatabaseManager.db.update(t)
+        DatabaseManager.db!!.update(t)
         mainActivity?.applyTheme();
     }
 }

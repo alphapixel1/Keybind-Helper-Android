@@ -90,21 +90,21 @@ class ProjectAdapter(
                             }
                             "COPY" -> {
                                 val np = Project()
-                                np.name.setValue(DatabaseManager.getFirstAvailableProjectName(p.name.value))
+                                np.name.setValue(DatabaseManager.getFirstAvailableProjectName(p.name.value!!))
                                 np.updateLastAccessed()
-                                np.id = DatabaseManager.db.insert(np)
-                                for (g in DatabaseManager.db.getProjectGroups(p.id)) {
-                                    val ng = Group(g.name.value, np.id)
-                                    ng.index = g.index
-                                    ng.id = DatabaseManager.db.insert(ng)
-                                    for (k in DatabaseManager.db.getGroupKeybinds(g.id)) {
+                                np.id = DatabaseManager.db!!.insert(np)
+                                for (g in DatabaseManager.db!!.getProjectGroups(p.id)!!) {
+                                    val ng = Group(g!!.name.value!!, np.id)
+                                    ng.index = g!!.index
+                                    ng.id = DatabaseManager.db!!.insert(ng)
+                                    for (k in DatabaseManager.db!!.getGroupKeybinds(g.id)!!) {
                                         val nk = Keybind(ng.id,
-                                            k.name.value,
+                                            k!!.name.value,
                                             k.kb1.value,
                                             k.kb2.value,
                                             k.kb3.value)
                                         nk.index = k.index
-                                        DatabaseManager.db.insert(nk)
+                                        DatabaseManager.db!!.insert(nk)
                                     }
                                 }
                                 showSnackBarMessage("Copied as " + np.name.value + "!")
@@ -113,35 +113,42 @@ class ProjectAdapter(
                                 fragment.RefreshProjectList()
                             }
                             "RENAME" -> {
-                                val projects = DatabaseManager.db.projects
+                                val projects = DatabaseManager.db!!.projects
                                 val pd =
                                     PromptDialog(context, "Rename Project", null, p.name.value, null)
-                                pd.validation = PromptDialog.Validator { text: String? ->
-                                    ValidatorResponse(DatabaseManager.isProjectNameAvailable(projects,
-                                        text),
-                                        "A Project Already Exists By That Name")
+                                pd.validation = object: PromptDialog.Validator {
+                                    override fun Validate(text: String?): ValidatorResponse {
+                                        return ValidatorResponse(DatabaseManager.isProjectNameAvailable(
+                                            projects,
+                                            text!!),
+                                            "A Project Already Exists By That Name")
+                                    }
                                 }
-                                pd.confirmedEvent = PromptDialog.ConfirmedEvent { text: String ->
-                                    if (CurrentProjectManager.CurrentProject.name.value == p.name.value) CurrentProjectManager.CurrentProject.name.setValue(
-                                        text)
-                                    p.name.setValue(text)
-                                    p.updateLastAccessed()
-                                    DatabaseManager.db.update(p)
-                                    notifyItemChanged(position)
-                                    showSnackBarMessage("Renamed to \'$text\'!")
+                                pd.confirmedEvent =object: PromptDialog.ConfirmedEvent {
+                                    override fun onConfirmed(text: String?) {
+                                        if (CurrentProjectManager.CurrentProject!!.name.value == p.name.value) CurrentProjectManager.CurrentProject!!.name.setValue(
+                                            text)
+                                        p.name.setValue(text)
+                                        p.updateLastAccessed()
+                                        DatabaseManager.db!!.update(p)
+                                        notifyItemChanged(position)
+                                        showSnackBarMessage("Renamed to \'$text\'!")
+                                    }
                                 }
                                 pd.ShowDialog()
                             }
                             "DELETE" -> {
                                 val cd = ConfirmDialog(context,
                                     "Are you sure you want to delete " + p.name.value + "?")
-                                cd.onConfirmed = ConfirmDialog.ConfirmedEvent {
-                                    DatabaseManager.db.delete(p)
-                                    if (CurrentProjectManager.CurrentProject.id == p.id) {
-                                        CurrentProjectManager.loadFirstProject()
+                                cd.onConfirmed = object: ConfirmDialog.ConfirmedEvent {
+                                    override fun onConfirmed() {
+                                        DatabaseManager.db!!.delete(p)
+                                        if (CurrentProjectManager.CurrentProject!!.id == p.id) {
+                                            CurrentProjectManager.loadFirstProject()
+                                        }
+                                        fragment.RefreshProjectList()
+                                        showSnackBarMessage(p.name.value.toString() + " Deleted!")
                                     }
-                                    fragment.RefreshProjectList()
-                                    showSnackBarMessage(p.name.value.toString() + " Deleted!")
                                 }
                                 cd.Show()
                             }
