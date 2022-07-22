@@ -77,7 +77,8 @@ class MainActivity : AppCompatActivity() {
         ThemeManager.applyTheme();
         CurrentProjectManager.loadFirstProject()
 
-        addArma3()
+        //addArma3()
+        //addReadyOrNot()
     }
 
     fun showMenuItems(items:Set<Int>){
