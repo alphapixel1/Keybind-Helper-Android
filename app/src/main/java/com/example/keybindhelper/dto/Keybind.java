@@ -14,6 +14,7 @@ import com.example.keybindhelper.dao.DatabaseManager;
 import com.example.keybindhelper.dao.DateConverter;
 import com.example.keybindhelper.dao.StringLiveDataConverter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -91,15 +92,36 @@ public class Keybind{
         Keybind ret=new Keybind(groupID,newName,kb1.getValue(),kb2.getValue(),kb3.getValue());
         return ret;
     }
-
     public JSONObject getJSONObject() throws JSONException {
         JSONObject ret=new JSONObject();
         ret.put("keybindName",name.getValue());
-        ret.put("kb1",kb1.getValue());
+        JSONArray kbs=new JSONArray();
+        if(kb1.getValue()!=null)
+            kbs.put(kb1.getValue());
+        if(kb2.getValue()!=null)
+            kbs.put(kb2.getValue());
+        if(kb3.getValue()!=null)
+            kbs.put(kb3.getValue());
+      /*  ret.put("kb1",kb1.getValue());
         ret.put("kb2",kb2.getValue());
-        ret.put("kb3",kb3.getValue());
+        ret.put("kb3",kb3.getValue());*/
+        ret.put("keybinds",kbs);
         return ret;
     }
-
+    public static Keybind fromJSONObject(JSONObject jKb) throws JSONException {
+        Keybind ret =new Keybind();
+        ret.name.setValue(jKb.getString("keybindName"));
+        JSONArray kbs=jKb.getJSONArray("keybinds");
+        if(kbs.length()>0) {
+            ret.kb1.setValue(kbs.getString(0));
+            if(kbs.length()>1) {
+                ret.kb2.setValue(kbs.getString(1));
+                if(kbs.length()>2) {
+                    ret.kb3.setValue(kbs.getString(2));
+                }
+            }
+        }
+        return ret;
+    }
 
 }

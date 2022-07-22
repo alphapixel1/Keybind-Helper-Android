@@ -7,14 +7,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.example.keybindhelper.MainActivity
 import com.example.keybindhelper.R
+import com.example.keybindhelper.Theme.ThemeManager
 import com.example.keybindhelper.cloud.FirebaseDAO
 import com.example.keybindhelper.cloud.IActivityResult
 import com.example.keybindhelper.dao.CurrentProjectManager
@@ -24,6 +23,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+
 
 class SettingsFragment : Fragment() {
 
@@ -69,6 +69,33 @@ class SettingsFragment : Fragment() {
         else
             initMenu(mainActivity,root!!.rootView);
 
+        /**
+         * Theme spinner
+         */
+        val spinner=root!!.findViewById<Spinner>(R.id.settings_theme_spinner);
+        var items= mutableListOf<String>();
+        for (theme in ThemeManager.Themes){
+            items.add(theme.name);
+        }
+        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(context!!, android.R.layout.simple_spinner_item, items)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+        spinner.setSelection(ThemeManager.Themes.indexOf(ThemeManager.CurrentTheme));
+        spinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parentView: AdapterView<*>?,
+                selectedItemView: View?,
+                position: Int,
+                id: Long,
+            ) {
+                ThemeManager.CurrentTheme=ThemeManager.Themes[position];
+                ThemeManager.applyTheme();
+            }
+
+            override fun onNothingSelected(parentView: AdapterView<*>?) {
+                // your code here
+            }
+        })
 
         //mAuth.currentUser
         return root!!
@@ -76,7 +103,7 @@ class SettingsFragment : Fragment() {
 
     private fun initMenu(mainActivity: MainActivity, view: View) {
         mainActivity.setAppBarTitle("Settings");
-        mainActivity.showMenuItems(mainActivity.shareFragmentActionMenuIds)
+        mainActivity.showMenuItems(mainActivity.settingsFragmentActionMenuIds)
     }
 
     override fun onDestroyView() {
@@ -119,7 +146,7 @@ class SettingsFragment : Fragment() {
                             if (task.isSuccessful) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("Settings Fragment", "signInWithCredential:success")
-
+                                FirebaseDAO.addUserToDB()//todo should this even be here?
                                 showSnackBarMessage("Sign-in Successful");
                                 displayLogin(FirebaseDAO.currentUser);
                             } else {
@@ -131,7 +158,7 @@ class SettingsFragment : Fragment() {
 
                     //updateUI(credential)
                 } catch (e: ApiException) {
-                    showSnackBarMessage("API EXCEPTION (Catalog/Settings)Fragment.GoogleActivityResult")//todo figure out what fires this when u not a sleepy head :)
+                    showSnackBarMessage("API EXCEPTION (Catalog/Settings)Fragment.GoogleActivityResult")//todo figure out what fires this when u not a sleepy head :) if it even happens, maybe no internet connection?
                     // The ApiException status code indicates the detailed failure reason.
                 }
             }

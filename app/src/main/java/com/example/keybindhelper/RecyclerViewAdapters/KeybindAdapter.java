@@ -102,37 +102,6 @@ public class KeybindAdapter extends RecyclerView.Adapter<KeybindAdapter.KeybindV
         });
     }
 
-    /**
-     * Updates the keybind view
-     * @param k
-     * @param view
-     */
-  /*  private void updateView(Keybind k,View view){
-        //((TextView)view.findViewById(R.id.keybind_name)).;
-        ((TextView) view.findViewById(R.id.keybind_name)).setText(k.name);
-
-        TextView kb1TV=view.findViewById(R.id.keybind_1_text);
-        TextView kb2TV=view.findViewById(R.id.keybind_2_text);
-        TextView kb3TV=view.findViewById(R.id.keybind_3_text);
-
-        CardView kb1CV=view.findViewById(R.id.keybind_1_card);
-        CardView kb2CV=view.findViewById(R.id.keybind_2_card);
-        CardView kb3CV=view.findViewById(R.id.keybind_3_card);
-
-        //Updating text
-        String[] kbs=new String[]{k.kb1,k.kb2,k.kb3};
-        TextView[] tvs=new TextView[]{kb1TV,kb2TV,kb3TV};
-        CardView[] cvs=new CardView[]{kb1CV,kb2CV,kb3CV};
-        for (int i=0;i<kbs.length;i++){
-            String kb=kbs[i];
-            tvs[i].setText(kb);
-            if(Objects.equals(kb, "") || kb==null){
-                cvs[i].setVisibility(View.GONE);
-            }else{
-                cvs[i].setVisibility(View.VISIBLE);
-            }
-        }
-    }*/
 
     /**
      * Displays a dialog for the keybind that allows you to modify it

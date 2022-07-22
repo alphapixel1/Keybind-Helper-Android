@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -30,11 +31,6 @@ public class Project{
     public Date lastAccessed;
     @Ignore
     public List<Group> Groups;
-    /**
-     * to show if it belongs in room db or firebase
-     */
-    @Ignore
-    public boolean isFirebased=false;
 
 
     public void updateLastAccessed(){
@@ -187,5 +183,36 @@ public class Project{
             return null;
         }
 
+    }
+    public static Project fromJSONString(String json) throws JSONException {
+        JSONObject p= new JSONObject(json);
+
+        Project ret=new Project();
+        ret.updateLastAccessed();
+
+        String newName=DatabaseManager.getFirstAvailableProjectName(p.getString("projectName"));
+        ret.name.setValue(newName);
+
+        JSONArray groups = p.getJSONArray("groups");
+        ret.Groups=new ArrayList<>();
+        for (int i=0;i< groups.length();i++){
+            ret.Groups.add(Group.fromJSONObject(groups.getJSONObject(i)));
+        }
+        ret.id=DatabaseManager.db.insert(ret);
+
+        for (int gIndex = 0; gIndex < ret.Groups.size(); gIndex++) {
+            Group g = ret.Groups.get(gIndex);
+            g.projectID = ret.id;
+            g.index = gIndex;
+            g.id = DatabaseManager.db.insert(g);
+            for (int kIndex = 0; kIndex < g.keybinds.size(); kIndex++) {
+                Keybind k = g.keybinds.get(kIndex);
+                k.groupID = g.id;
+                k.index = kIndex;
+                k.id=DatabaseManager.db.insert(k);
+            }
+        }
+
+        return ret;
     }
 }

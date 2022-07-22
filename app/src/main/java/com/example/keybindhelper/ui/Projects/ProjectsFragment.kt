@@ -11,14 +11,20 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.keybindhelper.Dialogs.ButtonDialogProvider
+import com.example.keybindhelper.Dialogs.ConfirmDialog
 import com.example.keybindhelper.Dialogs.PromptDialog
 import com.example.keybindhelper.Dialogs.ValidatorResponse
 import com.example.keybindhelper.MainActivity
 import com.example.keybindhelper.R
 import com.example.keybindhelper.RecyclerViewAdapters.ProjectAdapter
+import com.example.keybindhelper.cloud.FirebaseDAO
+import com.example.keybindhelper.cloud.FirebaseProject
+import com.example.keybindhelper.ITaskResponse
 import com.example.keybindhelper.dao.CurrentProjectManager
 import com.example.keybindhelper.dao.DatabaseManager
 import com.example.keybindhelper.dto.Project
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 
 //import com.example.keybindhelperv3.databinding.FragmentSlideshowBinding
@@ -32,7 +38,7 @@ class ProjectsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
 
         root =LayoutInflater.from(this.context).inflate(R.layout.fragment_projects, container, false)
@@ -41,9 +47,68 @@ class ProjectsFragment : Fragment() {
         val mainActivity=activity as MainActivity;
         mainActivity.showMenuItems(mainActivity.projectsFragmentActionMenuIds)
 
+        val cloud=mainActivity.Menu?.findItem(R.id.action_cloud)!!;
+        if(FirebaseDAO.isUserSignedIn){
+            cloud.setIcon(R.drawable.ic_baseline_cloud_24)
+            cloud.setOnMenuItemClickListener {
+                val snackbar=showSnackBarMessage("Loading Hosted Projects...");
+                FirebaseDAO.getUserProjects(object : ITaskResponse<MutableList<FirebaseProject>> {
+                    override fun onResponse(task: MutableList<FirebaseProject>) {
+                        snackbar.dismiss()
+                        if(task.isEmpty()) {
+                            showSnackBarMessage("There are no projects currently being hosted.")
+                            return;
+                        }
+                        val names=task.map { it.name };
+                        val bdp=ButtonDialogProvider(context!!,"Hosted Projects",names,object: ITaskResponse<String>{
+                            //hosted project has been selected now showing download and delete options
+                            override fun onResponse(projectName: String) {
+                                val subBdp=ButtonDialogProvider(context!!,projectName, mutableListOf("Download","Delete") as List<String>,object: ITaskResponse<String>{
+                                    override fun onResponse(result: String) {
+                                        if(result=="Download"){
+                                            FirebaseDAO.download(projectName, task, object: ITaskResponse<String>{
+                                                override fun onResponse(result: String) {
+                                                    showSnackBarMessage(result);
+                                                    RefreshProjectList();
+                                                }
+                                            });
+                                        }else{
+                                            //delete button clicked
+                                            val cd=ConfirmDialog(context,"Are you sure you want to delete \"$projectName\"?")
+                                            cd.onConfirmed= ConfirmDialog.ConfirmedEvent {
+                                                FirebaseDAO.delete(projectName,task,object: ITaskResponse<String>{
+                                                    override fun onResponse(result: String) {
+                                                        showSnackBarMessage(result);
+                                                        RefreshProjectList();
+                                                    }
+
+                                                })
+                                            }
+                                            cd.Show()
+                                        }
+                                    }
+                                });
+                                subBdp.show();
+                            }
+
+                        })
+                        bdp.show()
+                    }
+                })
+                true
+            }
+            //println(Firebase.storage("gs://"+ FirebaseDAO.currentUser!!.email).app.name)
+        }else{
+            cloud.setIcon(R.drawable.disabled_cloud_24)
+            cloud.setOnMenuItemClickListener {
+                showSnackBarMessage("Must be signed in to use cloud features, go to Settings");
+                true
+            }
+        }
+
         mainActivity.Menu?.findItem(R.id.action_add)?.setOnMenuItemClickListener {
             val pd=PromptDialog(root.context,"New Project Name","","",null);
-            val projects= DatabaseManager.db.getProjects();
+            val projects= DatabaseManager.db.projects;
             pd.validation= PromptDialog.Validator {
                 ValidatorResponse(DatabaseManager.isProjectNameAvailable(projects,it),"A Project Already Exists By That Name")
             }
@@ -71,14 +136,10 @@ class ProjectsFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 RefreshProjectList();
             }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
+            override fun afterTextChanged(s: Editable?) {}
         }
         )
 
@@ -104,7 +165,11 @@ class ProjectsFragment : Fragment() {
             rv.adapter=ProjectAdapter(projects,this);
         return projects;
     }
-
+    private fun showSnackBarMessage(message: String): Snackbar{
+        val snack=Snackbar.make(root, message, Snackbar.LENGTH_LONG);
+        snack.setAction("Action", null).show()
+        return snack
+    }
 
 
 }

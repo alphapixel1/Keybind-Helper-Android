@@ -198,5 +198,14 @@ public class Group{
         ret.put("keybinds",keybindsJSONArray);
         return ret;
     }
+    public static Group fromJSONObject(JSONObject jGroup) throws JSONException {
+        Group ret=new Group();
+        ret.name.setValue(jGroup.getString("groupName"));
+        JSONArray kbs=jGroup.getJSONArray("keybinds");
+        for (int i=0;i<kbs.length();i++){
+            ret.keybinds.add(Keybind.fromJSONObject(kbs.getJSONObject(i)));
+        }
+        return ret;
+    }
 
 }

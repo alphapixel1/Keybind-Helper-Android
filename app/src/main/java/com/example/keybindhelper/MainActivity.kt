@@ -16,6 +16,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.keybindhelper.Theme.ThemeManager
 import com.example.keybindhelper.cloud.IActivityResult
 import com.example.keybindhelper.dao.CurrentProjectManager
 import com.example.keybindhelper.dao.DatabaseManager
@@ -29,10 +30,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    val allActionMenuIds= setOf(R.id.action_add,R.id.action_delete_all_groups,R.id.action_show_hide_keybinds)
+    val allActionMenuIds= setOf(R.id.action_add,R.id.action_delete_all_groups,R.id.action_show_hide_keybinds,R.id.action_cloud)
     val keybindsFragmentActionMenuIds= setOf(R.id.action_add,R.id.action_delete_all_groups,R.id.action_show_hide_keybinds)
-    val projectsFragmentActionMenuIds= setOf(R.id.action_add)
-    val shareFragmentActionMenuIds=setOf<Int>()
+    val projectsFragmentActionMenuIds= setOf(R.id.action_add,R.id.action_cloud)
+    val settingsFragmentActionMenuIds=setOf<Int>()
 
 
     /**
@@ -66,6 +67,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         DatabaseManager.init(binding.root.context);
+        ThemeManager.init(this);
         CurrentProjectManager.loadFirstProject()
 
 
@@ -111,5 +113,8 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         GoogleActivityResult?.onResult(requestCode,resultCode,data);
+    }
+    fun applyTheme(){
+        //this.appBarConfiguration.
     }
 }

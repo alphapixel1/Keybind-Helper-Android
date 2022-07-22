@@ -9,6 +9,7 @@ import androidx.room.Update;
 import com.example.keybindhelper.dto.Group;
 import com.example.keybindhelper.dto.Keybind;
 import com.example.keybindhelper.dto.Project;
+import com.example.keybindhelper.dto.ThemeDTO;
 
 import java.util.List;
 
@@ -127,7 +128,23 @@ public interface ProjectDao {
     @Query("delete from keybind where groupID=:id")
     void deleteGroupKeybinds(long id);
 
+    //Theme
 
+    /**
+     * Inserts the theme if it does not already exist
+     * @param theme
+     */
+    @Insert
+    void insert(ThemeDTO theme);
+
+    /**
+     * Updates the current theme
+     */
+    @Update
+    void update(ThemeDTO theme);
+
+    @Query("select * from ThemeDTO limit 1")
+    ThemeDTO getThemeDTO();
 
 
 }
