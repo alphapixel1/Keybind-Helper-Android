@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity() {
 
         //addArma3()
         //addReadyOrNot()
+        addBannerlord()
     }
 
     fun showMenuItems(items:Set<Int>){
@@ -284,5 +285,119 @@ class MainActivity : AppCompatActivity() {
 
     fun addArma3(){
         Project.fromJSONString("{\"projectName\":\"Arma 3\",\"groups\":[{\"groupName\":\"Movement\",\"keybinds\":[{\"keybindName\":\"Combat Pace Toggle\",\"keybinds\":[\"2xC\"]},{\"keybindName\":\"Walk/Run Toggle\",\"keybinds\":[\"Left Ctrl+C\"]},{\"keybindName\":\"Stance Change\",\"keybinds\":[\"L Ctrl W/A/S/D\"]},{\"keybindName\":\"Crouch\",\"keybinds\":[\"X\"]},{\"keybindName\":\"Prone\",\"keybinds\":[\"Z\"]},{\"keybindName\":\"Swim Up\",\"keybinds\":[\"X\"]},{\"keybindName\":\"Swim Down\",\"keybinds\":[\"Z\"]},{\"keybindName\":\"Step Over\",\"keybinds\":[\"V\"]},{\"keybindName\":\"Salute\",\"keybinds\":[\"\\\\\"]},{\"keybindName\":\"Sit Down\",\"keybinds\":[\"'\"]}]},{\"groupName\":\"View\",\"keybinds\":[{\"keybindName\":\"Toggle View\",\"keybinds\":[\"Tab\"]},{\"keybindName\":\"Zoom In\",\"keybinds\":[\"1\"]},{\"keybindName\":\"Zoom Out\",\"keybinds\":[\"2\"]}]},{\"groupName\":\"Multiplayer\",\"keybinds\":[{\"keybindName\":\"Statistics\",\"keybinds\":[\"P\"]},{\"keybindName\":\"List Of Players\",\"keybinds\":[\"RCtrl + P\"]},{\"keybindName\":\"Next Channel\",\"keybinds\":[\".\"]},{\"keybindName\":\"Previous Channel\",\"keybinds\":[\",\"]},{\"keybindName\":\"Push To Talk\",\"keybinds\":[\"Left Win\"]},{\"keybindName\":\"Tactical Ping\",\"keybinds\":[\"L Shift + T\"]}]},{\"groupName\":\"Common\",\"keybinds\":[{\"keybindName\":\"Task Overview\",\"keybinds\":[\"J\"]},{\"keybindName\":\"GPS Toggle\",\"keybinds\":[\"Ctrl + A\"]},{\"keybindName\":\"Targeting Camera\",\"keybinds\":[\"Ctrl + LMB\"]},{\"keybindName\":\"Compas\",\"keybinds\":[\"K\"]},{\"keybindName\":\"Watch\",\"keybinds\":[\"O\"]}]},{\"groupName\":\"Weapons\",\"keybinds\":[{\"keybindName\":\"Next Fire Mode\",\"keybinds\":[\"F\"]},{\"keybindName\":\"Hold Breath\",\"keybinds\":[\"L Shift\"]},{\"keybindName\":\"Optics\",\"keybinds\":[\"R Alt\"]},{\"keybindName\":\"Cycle Throwable\",\"keybinds\":[\"L Ctrl + G\"]},{\"keybindName\":\"Gun Elevation\",\"keybinds\":[\"PgUp\",\"PgDn\"]},{\"keybindName\":\"Lase Range\",\"keybinds\":[\"T\"]},{\"keybindName\":\"Laser\",\"keybinds\":[\"L\"]}]},{\"groupName\":\"Vehicle\",\"keybinds\":[{\"keybindName\":\"Hand Break\",\"keybinds\":[\"X\"]},{\"keybindName\":\"Turn In\",\"keybinds\":[\"L Ctrl + Q\"]},{\"keybindName\":\"Turn Out\",\"keybinds\":[\"L Ctrl + E\"]}]},{\"groupName\":\"Helicopter\",\"keybinds\":[{\"keybindName\":\"Collective Raise\",\"keybinds\":[\"L Shift\"]},{\"keybindName\":\"Collective Lower\",\"keybinds\":[\"Z\"]},{\"keybindName\":\"Sling Load Assistant\",\"keybinds\":[\"R Ctrl + B\"]},{\"keybindName\":\"Rope Interaction\",\"keybinds\":[\"B\"]}]},{\"groupName\":\"Plane\",\"keybinds\":[{\"keybindName\":\"Increase Thrust\",\"keybinds\":[\"L Shift\"]},{\"keybindName\":\"Decrease Thrust\",\"keybinds\":[\"Z\"]},{\"keybindName\":\"Auto Vectoring\",\"keybinds\":[\"X\"]},{\"keybindName\":\"Flaps\",\"keybinds\":[\"L Ctrl + Scroll\"]}]}]}");
+    }
+
+    fun addBannerlord() {
+        Project.fromJSONString("{\n" +
+                "    \"projectName\": \"Mount and Blade II: Bannerlord \",\n" +
+                "    \"groups\": [\n" +
+                "        {\n" +
+                "            \"groupName\": \"World View\",\n" +
+                "            \"keybinds\": [\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Character\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"C\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Customize\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"V\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Banner Editor\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"B\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Encyclopedia\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"N\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Quests\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"J\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Party\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"P\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"groupName\": \"Combat\",\n" +
+                "            \"keybinds\": [\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Drop Weapon\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"G\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Combat Log\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"T\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Combat Stats\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"Tab\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Command All Troops\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"0\",\n" +
+                "                        \"\",\n" +
+                "                        \"\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Infantry Form Shield Wall\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"1\",\n" +
+                "                        \"F2\",\n" +
+                "                        \"F2\"\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"keybindName\": \"Everyone Charge\",\n" +
+                "                    \"keybinds\": [\n" +
+                "                        \"0\",\n" +
+                "                        \"F1\",\n" +
+                "                        \"F3\"\n" +
+                "                    ]\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}")
     }
 }

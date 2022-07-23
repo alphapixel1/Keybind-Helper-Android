@@ -1,0 +1,111 @@
+{
+    "projectName": "Mount and Blade II: Bannerlord ",
+    "groups": [
+        {
+            "groupName": "World View",
+            "keybinds": [
+                {
+                    "keybindName": "Character",
+                    "keybinds": [
+                        "C",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Customize",
+                    "keybinds": [
+                        "V",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Banner Editor",
+                    "keybinds": [
+                        "B",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Encyclopedia",
+                    "keybinds": [
+                        "N",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Quests",
+                    "keybinds": [
+                        "J",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Party",
+                    "keybinds": [
+                        "P",
+                        "",
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "groupName": "Combat",
+            "keybinds": [
+                {
+                    "keybindName": "Drop Weapon",
+                    "keybinds": [
+                        "G",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Combat Log",
+                    "keybinds": [
+                        "T",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Combat Stats",
+                    "keybinds": [
+                        "Tab",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Command All Troops",
+                    "keybinds": [
+                        "0",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "keybindName": "Infantry Form Shield Wall",
+                    "keybinds": [
+                        "1",
+                        "F2",
+                        "F2"
+                    ]
+                },
+                {
+                    "keybindName": "Everyone Charge",
+                    "keybinds": [
+                        "0",
+                        "F1",
+                        "F3"
+                    ]
+                }
+            ]
+        }
+    ]
+}
