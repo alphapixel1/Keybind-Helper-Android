@@ -1,0 +1,140 @@
+{
+  "projectName": "The Cycle: Frontier",
+  "groups": [
+    {
+      "groupName": "Movement",
+      "keybinds": [
+        {
+          "keybindName": "Move Forwards",
+          "keybinds": [
+            "W",
+            "",
+            ""
+          ]
+        },
+        {
+          "keybindName": "Move Left",
+          "keybinds": [
+            "A",
+            "",
+            ""
+          ]
+        },
+        {
+          "keybindName": "Move Backwards",
+          "keybinds": [
+            "S",
+            "",
+            ""
+          ]
+        },
+        {
+          "keybindName": "Move Right",
+          "keybinds": [
+            "D",
+            "",
+            ""
+          ]
+        },
+        {
+          "keybindName": "Run",
+          "keybinds": [
+            "Shift",
+            "",
+            ""
+          ]
+        },
+        {
+          "keybindName": "Crouch",
+          "keybinds": [
+            "C",
+            "Ctrl",
+            ""
+          ]
+        },
+        {
+          "keybindName": "Jump/Vault",
+          "keybinds": [
+            "Spacebar",
+            "",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "groupName": "Combat",
+      "keybinds": [
+        {
+          "keybindName": "Equip Primary Weapon",
+          "keybinds": [
+            "1",
+            "Scroll Wheel",
+            ""
+          ]
+        },
+        {
+          "keybindName": "Equip Secondary Weapon",
+          "keybinds": [
+            "2",
+            "",
+            ""
+          ]
+        },
+        {
+          "keybindName": "Equip Tactical",
+          "keybinds": [
+            "E",
+            "",
+            ""
+          ]
+        },
+        {
+          "keybindName": "Equip Knife",
+          "keybinds": [
+            "V",
+            "",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "groupName": "Misc",
+      "keybinds": [
+        {
+          "keybindName": "Toggle Weapon Light",
+          "keybinds": [
+            "L",
+            "",
+            ""
+          ]
+        },
+        {
+          "keybindName": "Toggle Scope Zoom",
+          "keybinds": [
+            "Z",
+            "",
+            ""
+          ]
+        },
+        {
+          "keybindName": "Equip Utility",
+          "keybinds": [
+            "Q",
+            "",
+            ""
+          ]
+        },
+        {
+          "keybindName": "Emote Wheel",
+          "keybinds": [
+            "F3",
+            "",
+            ""
+          ]
+        }
+      ]
+    }
+  ]
+}
