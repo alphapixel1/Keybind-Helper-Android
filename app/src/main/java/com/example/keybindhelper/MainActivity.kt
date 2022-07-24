@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
         //addArma3()
         //addReadyOrNot()
-        addBannerlord()
+        //addBannerlord()
     }
 
     fun showMenuItems(items:Set<Int>){
