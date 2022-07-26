@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity() {
         //addArma3()
         //addReadyOrNot()
         //addBannerlord()
+        //addTheCycleFrontier()
     }
 
     fun showMenuItems(items:Set<Int>){
@@ -399,5 +400,149 @@ class MainActivity : AppCompatActivity() {
                 "        }\n" +
                 "    ]\n" +
                 "}")
+    }
+    fun addTheCycleFrontier() {
+        Project.fromJSONString(
+            "{\n" +
+                    "  \"projectName\": \"The Cycle: Frontier\",\n" +
+                    "  \"groups\": [\n" +
+                    "    {\n" +
+                    "      \"groupName\": \"Movement\",\n" +
+                    "      \"keybinds\": [\n" +
+                    "        {\n" +
+                    "          \"keybindName\": \"Move Forwards\",\n" +
+                    "          \"keybinds\": [\n" +
+                    "            \"W\",\n" +
+                    "            \"\",\n" +
+                    "            \"\"\n" +
+                    "          ]\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"keybindName\": \"Move Left\",\n" +
+                    "          \"keybinds\": [\n" +
+                    "            \"A\",\n" +
+                    "            \"\",\n" +
+                    "            \"\"\n" +
+                    "          ]\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"keybindName\": \"Move Backwards\",\n" +
+                    "          \"keybinds\": [\n" +
+                    "            \"S\",\n" +
+                    "            \"\",\n" +
+                    "            \"\"\n" +
+                    "          ]\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"keybindName\": \"Move Right\",\n" +
+                    "          \"keybinds\": [\n" +
+                    "            \"D\",\n" +
+                    "            \"\",\n" +
+                    "            \"\"\n" +
+                    "          ]\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"keybindName\": \"Run\",\n" +
+                    "          \"keybinds\": [\n" +
+                    "            \"Shift\",\n" +
+                    "            \"\",\n" +
+                    "            \"\"\n" +
+                    "          ]\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"keybindName\": \"Crouch\",\n" +
+                    "          \"keybinds\": [\n" +
+                    "            \"C\",\n" +
+                    "            \"Ctrl\",\n" +
+                    "            \"\"\n" +
+                    "          ]\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"keybindName\": \"Jump/Vault\",\n" +
+                    "          \"keybinds\": [\n" +
+                    "            \"Spacebar\",\n" +
+                    "            \"\",\n" +
+                    "            \"\"\n" +
+                    "          ]\n" +
+                    "        }\n" +
+                    "      ]\n" +
+                    "    },\n" +
+                    "    {\n" +
+                    "      \"groupName\": \"Combat\",\n" +
+                    "      \"keybinds\": [\n" +
+                    "        {\n" +
+                    "          \"keybindName\": \"Equip Primary Weapon\",\n" +
+                    "          \"keybinds\": [\n" +
+                    "            \"1\",\n" +
+                    "            \"Scroll Wheel\",\n" +
+                    "            \"\"\n" +
+                    "          ]\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"keybindName\": \"Equip Secondary Weapon\",\n" +
+                    "          \"keybinds\": [\n" +
+                    "            \"2\",\n" +
+                    "            \"\",\n" +
+                    "            \"\"\n" +
+                    "          ]\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"keybindName\": \"Equip Tactical\",\n" +
+                    "          \"keybinds\": [\n" +
+                    "            \"E\",\n" +
+                    "            \"\",\n" +
+                    "            \"\"\n" +
+                    "          ]\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"keybindName\": \"Equip Knife\",\n" +
+                    "          \"keybinds\": [\n" +
+                    "            \"V\",\n" +
+                    "            \"\",\n" +
+                    "            \"\"\n" +
+                    "          ]\n" +
+                    "        }\n" +
+                    "      ]\n" +
+                    "    },\n" +
+                    "    {\n" +
+                    "      \"groupName\": \"Misc\",\n" +
+                    "      \"keybinds\": [\n" +
+                    "        {\n" +
+                    "          \"keybindName\": \"Toggle Weapon Light\",\n" +
+                    "          \"keybinds\": [\n" +
+                    "            \"L\",\n" +
+                    "            \"\",\n" +
+                    "            \"\"\n" +
+                    "          ]\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"keybindName\": \"Toggle Scope Zoom\",\n" +
+                    "          \"keybinds\": [\n" +
+                    "            \"Z\",\n" +
+                    "            \"\",\n" +
+                    "            \"\"\n" +
+                    "          ]\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"keybindName\": \"Equip Utility\",\n" +
+                    "          \"keybinds\": [\n" +
+                    "            \"Q\",\n" +
+                    "            \"\",\n" +
+                    "            \"\"\n" +
+                    "          ]\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"keybindName\": \"Emote Wheel\",\n" +
+                    "          \"keybinds\": [\n" +
+                    "            \"F3\",\n" +
+                    "            \"\",\n" +
+                    "            \"\"\n" +
+                    "          ]\n" +
+                    "        }\n" +
+                    "      ]\n" +
+                    "    }\n" +
+                    "  ]\n" +
+                    "}"
+        )
     }
 }
