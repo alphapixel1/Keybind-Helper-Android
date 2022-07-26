@@ -5,10 +5,10 @@ import com.example.keybindhelper.dto.Project
 import com.example.keybindhelper.dto.Keybind
 import com.example.keybindhelper.dto.ThemeDTO
 import androidx.room.RoomDatabase
-import com.example.keybindhelper.dao.ProjectDao
+
 import com.example.keybindhelper.dto.Group
 
-@Database(entities = [Project::class, Group::class, Keybind::class, ThemeDTO::class], version = 1)
+@Database(entities = [Project::class, Group::class, Keybind::class, ThemeDTO::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun projectDao(): ProjectDao?
 }
