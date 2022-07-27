@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     val allActionMenuIds= setOf(R.id.action_add,R.id.action_delete_all_groups,R.id.action_show_hide_keybinds,R.id.action_cloud)
-    val keybindsFragmentActionMenuIds= setOf(R.id.action_add,R.id.action_delete_all_groups,R.id.action_show_hide_keybinds)
+    val keybindsFragmentActionMenuIds= setOf(R.id.action_add,R.id.action_delete_all_groups,/*R.id.action_show_hide_keybinds*/)
     val projectsFragmentActionMenuIds= setOf(R.id.action_add,R.id.action_cloud)
     val settingsFragmentActionMenuIds=setOf<Int>()
 

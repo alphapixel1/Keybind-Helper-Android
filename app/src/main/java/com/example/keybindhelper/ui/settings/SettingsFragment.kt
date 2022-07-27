@@ -152,7 +152,7 @@ class SettingsFragment : Fragment() {
                             if (task.isSuccessful) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("Settings Fragment", "signInWithCredential:success")
-                                FirebaseDAO.addUserToDB()//todo should this even be here?
+                                FirebaseDAO.addUserToDB()
                                 showSnackBarMessage("Sign-in Successful");
                                 displayLogin(FirebaseDAO.currentUser);
                             } else {
@@ -164,7 +164,7 @@ class SettingsFragment : Fragment() {
 
                     //updateUI(credential)
                 } catch (e: ApiException) {
-                    showSnackBarMessage("API EXCEPTION (Catalog/Settings)Fragment.GoogleActivityResult")//todo figure out what fires this when u not a sleepy head :) if it even happens, maybe no internet connection?
+                    showSnackBarMessage("API EXCEPTION (Catalog/Settings) Fragment.GoogleActivityResult")
                     // The ApiException status code indicates the detailed failure reason.
                 }
             }

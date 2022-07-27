@@ -69,7 +69,8 @@ class KeybindFragment : Fragment() {
 
             true;
         }
-        mainActivity.Menu!!.findItem(R.id.action_sub_hide_keybinds).setOnMenuItemClickListener {
+        //removed due to recycler view issues
+       /* mainActivity.Menu!!.findItem(R.id.action_sub_hide_keybinds).setOnMenuItemClickListener {
             for(v in rv.children)
                 v.findViewById<RecyclerView>(R.id.keybind_zone).isVisible = false;
             true;
@@ -78,7 +79,7 @@ class KeybindFragment : Fragment() {
             for(v in rv.children)
                 v.findViewById<RecyclerView>(R.id.keybind_zone).isVisible=true;
             true;
-        }
+        }*/
         mainActivity.Menu!!.findItem(R.id.action_add).setOnMenuItemClickListener {
             CurrentProjectManager.CurrentProject!!.AddGroup()
             System.out.println("MainActivity.floatingactionbutton.click: Groups Size:" + CurrentProjectManager.CurrentProject!!.Groups!!.size)

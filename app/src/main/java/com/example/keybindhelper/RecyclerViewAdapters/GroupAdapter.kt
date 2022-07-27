@@ -114,10 +114,10 @@ class GroupAdapter(private val groupList: List<Group>?) : RecyclerView.Adapter<G
                 DatabaseManager.db!!.deleteGroup(group.id)
                 d.cancel()
             }
-            d.findViewById<View>(R.id.group_showhide).setOnClickListener { v: View? ->
+           /* d.findViewById<View>(R.id.group_showhide).setOnClickListener { v: View? ->
                 rv.visibility = if (rv.visibility == View.VISIBLE) View.GONE else View.VISIBLE
                 d.cancel()
-            }
+            }*/
             d.findViewById<View>(R.id.group_copy).setOnClickListener { v: View? ->
                 val g = group.Clone()
                 notifyItemInserted(g.index)
