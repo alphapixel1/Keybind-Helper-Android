@@ -69,10 +69,17 @@
                 android:text="Sign Out" />
 
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/settings_warning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign in only works for SHA-1 approved devices, I mean im not made of money"
+            android:textAlignment="center" />
         <Space
             android:layout_width="match_parent"
             android:layout_height="10dp" />
+
+
 
         <TextView
             android:id="@+id/textView2"

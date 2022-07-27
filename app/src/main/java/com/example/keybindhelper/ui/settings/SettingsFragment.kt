@@ -104,7 +104,7 @@ class SettingsFragment : Fragment() {
         root!!.findViewById<TextView>(R.id.settings_cloud_storage).setTextColor(iconColor);
         root!!.findViewById<TextView>(R.id.settings_username).setTextColor(iconColor);
         root!!.findViewById<TextView>(R.id.textView2).setTextColor(iconColor);
-
+        root!!.findViewById<TextView>(R.id.settings_warning).setTextColor(iconColor)
     }
 
     private fun initMenu(mainActivity: MainActivity, view: View) {
