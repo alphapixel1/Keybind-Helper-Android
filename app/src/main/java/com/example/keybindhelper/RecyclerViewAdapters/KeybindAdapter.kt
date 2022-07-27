@@ -13,10 +13,8 @@ import com.example.keybindhelper.R
 import android.widget.LinearLayout
 import androidx.lifecycle.LifecycleOwner
 import android.widget.TextView
-import android.view.View.OnLongClickListener
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageButton
 import androidx.cardview.widget.CardView
 import androidx.core.view.children
 import com.google.android.material.textfield.TextInputEditText
@@ -44,24 +42,20 @@ class KeybindAdapter(private val keybindList: List<Keybind>) :
         val resources=(view.context as MainActivity).resources;
         val theme= ThemeManager.CurrentTheme!!;
 
-        //view.findViewById<RecyclerView>(R.id.keybind_zone).backgroundTintList= ColorStateList.valueOf(resources.getColor(theme.keybindBackgroundColor))
-
         val iconTint= ColorStateList.valueOf(resources.getColor(theme.iconColor));
         view.findViewById<TextView>(R.id.keybind_name).setTextColor(iconTint)
 
-        val cards= mutableListOf<Int>(R.id.keybind_1_card,R.id.keybind_2_card,R.id.keybind_3_card)
+        val cards= mutableListOf(R.id.keybind_1_card,R.id.keybind_2_card,R.id.keybind_3_card)
+
         val cardColor=ColorStateList.valueOf(resources.getColor(theme.keybindCardColor))
         val cardBorder=ColorStateList.valueOf(resources.getColor(theme.groupHeaderColor))
+
         for (card in cards){
             val c=view.findViewById<CardView>(card);
             c.backgroundTintList=cardBorder;
-            c.children.first().backgroundTintList=cardColor;
+            (c.children.first() as CardView).backgroundTintList=cardColor
             ((c.children.first() as CardView).children.first() as TextView).setTextColor(iconTint)
         }
-        if(position%2==0){
-
-        }
-
     }
     override fun onBindViewHolder(holder: KeybindViewHolder, position: Int) {
         val k = keybindList[position]
@@ -76,19 +70,19 @@ class KeybindAdapter(private val keybindList: List<Keybind>) :
         k.kb1.observe(lifecycleOwner) { s: String ->
             kb1TV.text = s
             view.findViewById<View>(R.id.keybind_1_card).visibility =
-                if (s.length > 0) View.VISIBLE else View.GONE
+                if (s.isNotEmpty()) View.VISIBLE else View.GONE
         }
         val kb2TV = view.findViewById<TextView>(R.id.keybind_2_text)
         k.kb2.observe(lifecycleOwner) { s: String ->
             kb2TV.text = s
             view.findViewById<View>(R.id.keybind_2_card).visibility =
-                if (s.length > 0) View.VISIBLE else View.GONE
+                if (s.isNotEmpty()) View.VISIBLE else View.GONE
         }
         val kb3TV = view.findViewById<TextView>(R.id.keybind_3_text)
         k.kb3.observe(lifecycleOwner) { s: String ->
             kb3TV.text = s
             view.findViewById<View>(R.id.keybind_3_card).visibility =
-                if (s.length > 0) View.VISIBLE else View.GONE
+                if (s.isNotEmpty()) View.VISIBLE else View.GONE
         }
 
         //end updating text
@@ -97,7 +91,7 @@ class KeybindAdapter(private val keybindList: List<Keybind>) :
         if (position == keybindList.size - 1)
             updateKeybindsBackground()
         main.isLongClickable = true
-        main.setOnLongClickListener { v: View? ->
+        main.setOnLongClickListener {
             showContextMenu(k, view)
             true
         }
@@ -126,11 +120,11 @@ class KeybindAdapter(private val keybindList: List<Keybind>) :
         val imm = d.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
         d.findViewById<View>(R.id.edit_keybind_cancel_btn)
-            .setOnClickListener { v: View? -> d.cancel() }
-        d.findViewById<View>(R.id.edit_keybind_done_btn).setOnClickListener { v: View? ->
+            .setOnClickListener { d.cancel() }
+        d.findViewById<View>(R.id.edit_keybind_done_btn).setOnClickListener {
             val n = nameEt.text.toString()
             val error = d.findViewById<TextView>(R.id.keybind_error_text)
-            if (n.length == 0) {
+            if (n.isEmpty()) {
                 error.visibility = View.VISIBLE
                 error.text = "Name Cannot Be Empty"
             } else {
@@ -138,19 +132,18 @@ class KeybindAdapter(private val keybindList: List<Keybind>) :
                 val kb1T = kb1Et.text.toString()
                 val kb2T = kb2Et.text.toString()
                 val kb3T = kb3Et.text.toString()
-                val kbs = Arrays.asList(kb1T, kb2T, kb3T)
+                val kbs = listOf(kb1T, kb2T, kb3T)
                 val filteredKB: MutableList<String> = ArrayList()
                 for (s in kbs) {
-                    if (s.length > 0) filteredKB.add(s)
+                    if (s.isNotEmpty())
+                        filteredKB.add(s)
                 }
                 println(filteredKB)
-                //throw new NotImplementedError();
                 k.kb1.value = if (filteredKB.size > 0) filteredKB[0] else ""
                 k.kb2.value = if (filteredKB.size > 1) filteredKB[1] else ""
                 k.kb3.value = if (filteredKB.size > 2) filteredKB[2] else ""
                 imm.hideSoftInputFromWindow(nameEt.windowToken, 0)
                 d.cancel()
-                //updateView(k, view);
                 k.updateDB()
             }
         }
@@ -162,31 +155,32 @@ class KeybindAdapter(private val keybindList: List<Keybind>) :
         val d = Dialog(context)
         d.setContentView(R.layout.keybind_more_dialog)
         (d.findViewById<View>(R.id.keybind_settings_name) as TextView).text = k.name.value
-        d.findViewById<View>(R.id.keybind_copy).setOnClickListener { v: View? ->
-            k.group!!.AddKeybind(k.Clone(false), true)
+        d.findViewById<View>(R.id.keybind_copy).setOnClickListener {
+            k.group!!.addKeybind(k.Clone(false), true)
             notifyItemInserted(keybindList.size - 1)
             d.cancel()
         }
-        d.findViewById<View>(R.id.keybind_delete).setOnClickListener { v: View? ->
+        d.findViewById<View>(R.id.keybind_delete).setOnClickListener {
             k.group!!.deleteKeybind(k)
             notifyItemRemoved(k.index)
             updateKeybindsBackground()
             d.cancel()
         }
-        d.findViewById<View>(R.id.keybind_move).setOnClickListener { z: View? ->
+        d.findViewById<View>(R.id.keybind_move).setOnClickListener {
             d.cancel()
             val ap = ArrowProvider(context)
             ap.directionClicked = object : DirectionClicked {
                 override fun Clicked(isUp: Boolean?) {
-                    val indx = k.group!!.keybinds!!.indexOf(k)
+                    val indx = k.group!!.keybinds.indexOf(k)
                     if (isUp!!) {
                         if (indx > 0) {
                             k.group!!.moveKeybindUpDown(k, -1)
                             notifyItemMoved(indx, indx - 1)
                             updateKeybindsBackground()
+
                         }
                     } else {
-                        if (indx < k.group!!.keybinds!!.size - 1) {
+                        if (indx < k.group!!.keybinds.size - 1) {
                             k.group!!.moveKeybindUpDown(k, 1)
                             notifyItemMoved(indx, indx + 1)
                             updateKeybindsBackground()
@@ -196,7 +190,7 @@ class KeybindAdapter(private val keybindList: List<Keybind>) :
             }
             ap.Show()
         }
-        d.findViewById<View>(R.id.keybind_sendtogroup).setOnClickListener { v: View? ->
+        d.findViewById<View>(R.id.keybind_sendtogroup).setOnClickListener {
             d.cancel()
             val gs: MutableList<Group> = ArrayList()
             for (g in CurrentProjectManager.CurrentProject!!.Groups!!) {
@@ -205,7 +199,7 @@ class KeybindAdapter(private val keybindList: List<Keybind>) :
             val glp = GroupListProvider(context, "Send Keybind To", gs)
             glp.groupClick = object : GroupClick {
                 override fun GroupClicked(g: Group?) {
-                    g!!.AddKeybind(k, false)
+                    g!!.addKeybind(k, false)
                     notifyItemRemoved(keybindList.indexOf(k))
                     try {
                         k.group!!.currentAdapter!!.notifyDataSetChanged()
@@ -223,11 +217,14 @@ class KeybindAdapter(private val keybindList: List<Keybind>) :
      * Gives keybinds an alternating background color
      */
     private fun updateKeybindsBackground() {
-
-        for (k in keybindList[0].group!!.keybinds!!) {
-            val main = k.viewHolder!!.itemView.findViewById<View>(R.id.keybind_main_layout)
-            if (k.index % 2 == 1) main.setBackgroundResource(ThemeManager.CurrentTheme!!.offsetKeybindBackgroundColor) else main.setBackgroundResource(//R.color.offset_keybind_background
-                ThemeManager.CurrentTheme!!.keybindBackgroundColor)
+        if(keybindList.isNotEmpty()) {
+            keybindList[0].group!!.keybinds.forEach {
+                val main = it.viewHolder!!.itemView.findViewById<View>(R.id.keybind_main_layout)
+                if ((it.index) % 2 == 1)
+                    main.setBackgroundResource(ThemeManager.CurrentTheme!!.offsetKeybindBackgroundColor)
+                else
+                    main.setBackgroundResource(ThemeManager.CurrentTheme!!.keybindBackgroundColor)
+            }
         }
     }
 

@@ -27,7 +27,7 @@ class Project {
     var lastAccessed: Date? = null
 
     @Ignore
-    var Groups: MutableList<Group>? = null
+    var Groups: MutableList<Group> = mutableListOf()
     fun updateLastAccessed() {
         lastAccessed = Date()
     }

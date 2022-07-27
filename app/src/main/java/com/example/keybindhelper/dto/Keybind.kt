@@ -72,7 +72,7 @@ class Keybind {
      * Tells database manager to update the keybind row
      */
     fun updateDB() {
-        DatabaseManager.db!!.update(this)
+        DatabaseManager.db?.update(this)
     }
 
     @Ignore
@@ -102,9 +102,9 @@ class Keybind {
             val ret = JSONObject()
             ret.put("keybindName", name.value)
             val kbs = JSONArray()
-            if (!kb1.value!!.isEmpty()) kbs.put(kb1.value)
-            if (!kb2.value!!.isEmpty()) kbs.put(kb2.value)
-            if (!kb3.value!!.isEmpty()) kbs.put(kb3.value)
+            if (kb1.value!!.isNotEmpty()) kbs.put(kb1.value)
+            if (kb2.value!!.isNotEmpty()) kbs.put(kb2.value)
+            if (kb3.value!!.isNotEmpty()) kbs.put(kb3.value)
             ret.put("keybinds", kbs)
             return ret
         }

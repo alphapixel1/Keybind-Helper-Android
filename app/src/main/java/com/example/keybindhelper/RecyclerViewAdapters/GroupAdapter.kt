@@ -12,7 +12,6 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import com.example.keybindhelper.R
-import com.example.keybindhelper.RecyclerViewAdapters.KeybindAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.LifecycleOwner
 import com.example.keybindhelper.Dialogs.PromptDialog
@@ -23,11 +22,9 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.example.keybindhelper.Dialogs.GroupListProvider
 import com.example.keybindhelper.Dialogs.GroupListProvider.GroupClick
-import com.example.keybindhelper.dto.Keybind
 import com.example.keybindhelper.Dialogs.ArrowProvider
 import com.example.keybindhelper.Dialogs.ArrowProvider.DirectionClicked
 import com.example.keybindhelper.MainActivity
-import com.example.keybindhelper.Theme.Theme
 import com.example.keybindhelper.Theme.ThemeManager
 import com.example.keybindhelper.dto.Group
 import java.lang.Exception
@@ -133,7 +130,7 @@ class GroupAdapter(private val groupList: List<Group>?) : RecyclerView.Adapter<G
                 glp.groupClick = object : GroupClick {
                     override fun GroupClicked(newGroup: Group?) {
                         for (kb in group.keybinds!!.toTypedArray()) {
-                            newGroup!!.AddKeybind(kb, false)
+                            newGroup!!.addKeybind(kb, false)
                         }
                         newGroup!!.currentAdapter!!.notifyDataSetChanged()
                         CurrentProjectManager.CurrentProject!!.Groups!!.remove(group)

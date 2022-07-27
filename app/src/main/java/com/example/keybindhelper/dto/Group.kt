@@ -35,7 +35,7 @@ class Group {
 
     @JvmField
     @Ignore
-    var keybinds: MutableList<Keybind>? = ArrayList()
+    var keybinds: MutableList<Keybind> = ArrayList()
 
     @Ignore
     var currentAdapter: GroupAdapter? = null
@@ -61,12 +61,17 @@ class Group {
      */
     fun AddKeybind() {
         val kb = Keybind()
-        kb.name.value = CurrentProjectManager.CurrentProject!!.firstKeybindUnnamed
-        keybinds!!.add(kb)
-        kb.index = keybinds!!.size - 1
+        if(CurrentProjectManager.CurrentProject!=null){
+            kb.name.value = CurrentProjectManager.CurrentProject!!.firstKeybindUnnamed
+        }else{
+            kb.name.value="Unnamed Keybind";
+        }
+        keybinds.add(kb)
+        kb.index = keybinds.size - 1
         kb.group = this
         kb.groupID = id
-        DatabaseManager.db!!.insert(kb)
+
+        DatabaseManager.db?.insert(kb)
     }
 
     /**
@@ -74,12 +79,11 @@ class Group {
      */
     fun getKeybinds() {
         keybinds = ArrayList()
-        val kb = DatabaseManager.db!!.getGroupKeybinds(id)!!.map { it!! }.sortedBy { it.id }
+        val kb = DatabaseManager.db?.getGroupKeybinds(id)!!.map { it!! }.sortedBy { it.index }
 
-        //Collections.sort(kb) { a: Keybind, b: Keybind -> a.index - b.index } as ((Keybind?, Keybind?) -> Int)?
         keybinds = kb.toMutableList()
-        for (k in keybinds!!) {
-            k.group = this
+        keybinds.forEach {
+            it.group=this;
         }
     }
 
@@ -88,19 +92,28 @@ class Group {
      * @param k
      */
     fun deleteKeybind(k: Keybind) {
-        DatabaseManager.db!!.delete(k)
-        keybinds!!.remove(k)
-        UpdateKeybindIndexes()
+
+        keybinds.remove(k)
+        if(DatabaseManager.db!=null) {
+            DatabaseManager.db!!.delete(k)
+            updateKeybinds()
+        }
+
     }
 
     /**
      * Sets the keybinds index's to its current position in the groups keybind list
      */
-    fun UpdateKeybindIndexes() {
-        for (k in keybinds!!) {
-            k.index = keybinds!!.indexOf(k)
-            k.updateDB()
+    private fun updateKeybinds() {
+        for (i in 0 until keybinds.size){
+            keybinds[i].index =i
+            keybinds[i].updateDB()
         }
+
+      /*  for (k in keybinds) {
+            k.index = keybinds.indexOf(k)
+            k.updateDB()
+        }*/
     }
 
     /**
@@ -108,15 +121,15 @@ class Group {
      * @param kb Keybind
      * @param insertToDB whether to insert it into database or update the database
      */
-    fun AddKeybind(kb: Keybind, insertToDB: Boolean) {
-        if (kb.group != null && kb.group!!.keybinds!!.contains(kb)) {
-            kb.group!!.keybinds!!.remove(kb)
-            kb.group!!.UpdateKeybindIndexes()
+    fun addKeybind(kb: Keybind, insertToDB: Boolean) {
+        if (kb.group != null && kb.group!!.keybinds.contains(kb)) {
+            kb.group!!.keybinds.remove(kb)
+            kb.group!!.updateKeybinds()
         }
         kb.group = this
         kb.groupID = id
-        kb.index = keybinds!!.size
-        keybinds!!.add(kb)
+        kb.index = keybinds.size
+        keybinds.add(kb)
         if (insertToDB) {
             kb.id = DatabaseManager.db!!.insert(kb)
         } else {
@@ -134,12 +147,12 @@ class Group {
         CurrentProjectManager.CurrentProject!!.Groups!!.add(ret)
         ret.index = CurrentProjectManager.CurrentProject!!.Groups!!.size - 1
         ret.id = DatabaseManager.db!!.insert(ret)
-        if (keybinds != null) {
+        //if (keybinds != null) {
             ret.keybinds = ArrayList()
-            for (k in keybinds!!) {
-                ret.AddKeybind(k.Clone(true), true)
+            for (k in keybinds) {
+                ret.addKeybind(k.Clone(true), true)
             }
-        }
+        //}
         return ret
     }
 
@@ -149,7 +162,7 @@ class Group {
                 ", name='" + name + '\'' +
                 ", projectID=" + projectID +
                 ", index=" + index +
-                ", keybinds=" + keybinds!!.size +
+                ", keybinds=" + keybinds.size +
                 '}'
     }
 
@@ -159,7 +172,9 @@ class Group {
      */
     fun unloadStoredViews() {
         currentAdapter = null
-        if (keybinds == null) for (k in keybinds!!) k.viewHolder = null
+        keybinds.forEach { it.viewHolder=null }
+        /*if (keybinds == null)
+            for (k in keybinds!!) k.viewHolder = null*/
     }
 
     /**
@@ -168,10 +183,10 @@ class Group {
      * @param Direction 1 for down, -1 for up
      */
     fun moveKeybindUpDown(k: Keybind, Direction: Int) {
-        val index = keybinds!!.indexOf(k)
-        keybinds!!.remove(k)
-        keybinds!!.add(index + Direction, k)
-        UpdateKeybindIndexes()
+        val index = keybinds.indexOf(k)
+        keybinds.remove(k)
+        keybinds.add(index + Direction, k)
+        updateKeybinds()
     }
 
     @Throws(JSONException::class)
@@ -185,7 +200,7 @@ class Group {
         } else {
             DatabaseManager.getOrderedKeybinds(id)!!.map { it!! }
         }
-        for (k in kbs!!) {
+        for (k in kbs) {
             keybindsJSONArray.put(k.JSONObject)
         }
         ret.put("keybinds", keybindsJSONArray)
@@ -200,7 +215,7 @@ class Group {
             ret.name.value = jGroup.getString("groupName")
             val kbs = jGroup.getJSONArray("keybinds")
             for (i in 0 until kbs.length()) {
-                ret.keybinds!!.add(Keybind.fromJSONObject(kbs.getJSONObject(i)))
+                ret.keybinds.add(Keybind.fromJSONObject(kbs.getJSONObject(i)))
             }
             return ret
         }
