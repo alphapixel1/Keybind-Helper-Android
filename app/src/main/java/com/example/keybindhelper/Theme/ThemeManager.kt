@@ -11,7 +11,7 @@ object ThemeManager {
     private var mainActivity: MainActivity?=null;
     val Themes:List<Theme> = listOf(
         Theme("Default",
-            color.black,//app color
+          //  color.black,//app color
             color.white,//icon color/text
             color.dark_gray,//background color
             color.group_header,//group header color
@@ -20,7 +20,7 @@ object ThemeManager {
             color.black//keybind card color
         ),
         Theme("Inverted",
-            color.white,//app color
+            //color.white,//app color
             color.black,//icon color/text
             color.white,//background color
             color.light_white,//group header color
@@ -29,7 +29,7 @@ object ThemeManager {
             color.white//keybind card color
         ),
         Theme("Tropical",
-            color.white,//app color
+            //color.white,//app color
             color.purple,//icon color/text
             color.lime,//background color
             color.watermelon_red,//group header color
@@ -70,7 +70,7 @@ object ThemeManager {
     }
 }
 data class Theme(val name:String,
-                 val appColor:Int,
+                 /*val appColor:Int,*/
                  val iconColor:Int,
                  val backgroundColor:Int,
                  val groupHeaderColor:Int,

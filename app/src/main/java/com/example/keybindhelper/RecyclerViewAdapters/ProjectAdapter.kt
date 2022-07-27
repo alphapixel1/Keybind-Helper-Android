@@ -77,7 +77,7 @@ class ProjectAdapter(
             MessageFormat.format("{0}/{1}/{2} {3}:{4}{5}", month, day, year, hour, min, ampm)
         val context = holder.itemView.context
         //view clicked
-        holder.itemView.findViewById<View>(R.id.project_view_btn).setOnClickListener { v: View? ->
+        holder.itemView.findViewById<View>(R.id.project_view_btn).setOnClickListener {
             val bdp = ButtonDialogProvider(context,
                 p.name.value!!,
                 Arrays.asList("OPEN", "COPY", "RENAME", "DELETE", "HOST"),
@@ -90,7 +90,7 @@ class ProjectAdapter(
                             }
                             "COPY" -> {
                                 val np = Project()
-                                np.name.setValue(DatabaseManager.getFirstAvailableProjectName(p.name.value!!))
+                                np.name.value = DatabaseManager.getFirstAvailableProjectName(p.name.value!!)
                                 np.updateLastAccessed()
                                 np.id = DatabaseManager.db!!.insert(np)
                                 for (g in DatabaseManager.db!!.getProjectGroups(p.id)!!) {

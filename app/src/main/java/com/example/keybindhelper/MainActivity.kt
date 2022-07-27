@@ -15,6 +15,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.forEach
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -104,14 +105,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun makeMenuThemeColor(menu:Menu){
-        for (i in 0 until menu.size()) {
+        menu.forEach { item->
+            val spanString = SpannableString(item.title.toString())
+            spanString.setSpan(ForegroundColorSpan(Color.WHITE),0,spanString.length,0)//fix the color to white
+            item.title = spanString
+            if(item.hasSubMenu())
+                makeMenuThemeColor(item.subMenu)
+        }
+        /*for (i in 0 until menu.size()) {
             val item: MenuItem = menu.getItem(i)
             val spanString = SpannableString(menu.getItem(i).title.toString())
             spanString.setSpan(ForegroundColorSpan(Color.WHITE),0,spanString.length,0)//fix the color to white
             item.title = spanString
             if(item.hasSubMenu())
                 makeMenuThemeColor(item.subMenu)
-        }
+        }*/
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -126,15 +134,16 @@ class MainActivity : AppCompatActivity() {
     }
     fun applyTheme(){
         val currentTheme=ThemeManager.CurrentTheme!!;
-        println("changing theme?");
-        val toolbar=findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
-
-        //todo   changes toolbar color, lets not    toolbar.backgroundTintList = ColorStateList.valueOf(resources.getColor(currentTheme.appColor));
-
-        val backgroundColor=ColorStateList.valueOf(getColor(currentTheme.backgroundColor))//resources.getColor(currentTheme.backgroundColor));
+        println("applying theme");
+        //val toolbar=findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+        val backgroundColor=ColorStateList.valueOf(getColor(currentTheme.backgroundColor))
         findViewById<ConstraintLayout>(R.id.main_background).backgroundTintList = backgroundColor
 
     }
+
+    /**
+     * THESE FUNCTIONS ARE FOR EARLY DEVELOPMENT FOR WHEN DATA PERSISTANCE WAS NON EXISTANT
+     */
     //adds ready or not to the projects list
     fun addReadyOrNot(){
          Project.fromJSONString("{\n" +

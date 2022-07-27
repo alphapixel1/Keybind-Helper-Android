@@ -59,11 +59,11 @@ class SettingsFragment : Fragment() {
         if(mainActivity.Menu==null)
             mainActivity.onMenuInit=(object:MainActivity.MenuInitialized{
                 override fun menuHasInitialized() {
-                    initMenu(mainActivity,root!!.rootView);
+                    initMenu(mainActivity);
                 }
             })
         else
-            initMenu(mainActivity,root!!.rootView);
+            initMenu(mainActivity);
 
         /**
          * Theme spinner
@@ -107,7 +107,7 @@ class SettingsFragment : Fragment() {
         root!!.findViewById<TextView>(R.id.settings_warning).setTextColor(iconColor)
     }
 
-    private fun initMenu(mainActivity: MainActivity, view: View) {
+    private fun initMenu(mainActivity: MainActivity) {
         mainActivity.setAppBarTitle("Settings");
         mainActivity.showMenuItems(mainActivity.settingsFragmentActionMenuIds)
     }
