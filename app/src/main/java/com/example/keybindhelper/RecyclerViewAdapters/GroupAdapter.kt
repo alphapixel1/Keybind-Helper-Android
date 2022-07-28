@@ -88,7 +88,7 @@ class GroupAdapter(private val groupList: List<Group>?) : RecyclerView.Adapter<G
             pd.ShowDialog()
         }
         holder.itemView.findViewById<View>(R.id.group_add_button).setOnClickListener { v: View? ->
-            group.AddKeybind()
+            group.addKeybind()
             rv.adapter!!.notifyItemChanged(group.keybinds.size - 1)
             if (rv.visibility != View.VISIBLE) rv.visibility = View.VISIBLE
         }

@@ -10,6 +10,7 @@ import kotlin.Throws
 import org.json.JSONException
 import org.json.JSONObject
 import org.json.JSONArray
+import java.security.Key
 import java.util.*
 
 @Entity(foreignKeys = [ForeignKey(entity = Project::class,
@@ -59,12 +60,10 @@ class Group {
     /**
      * Creates a new keybind, adds it to the group and inserts it into the database
      */
-    fun AddKeybind() {
+    fun addKeybind():Keybind {
         val kb = Keybind()
         if(CurrentProjectManager.CurrentProject!=null){
             kb.name.value = CurrentProjectManager.CurrentProject!!.firstKeybindUnnamed
-        }else{
-            kb.name.value="Unnamed Keybind";
         }
         keybinds.add(kb)
         kb.index = keybinds.size - 1
@@ -72,6 +71,7 @@ class Group {
         kb.groupID = id
 
         DatabaseManager.db?.insert(kb)
+        return kb;
     }
 
     /**
@@ -104,7 +104,7 @@ class Group {
     /**
      * Sets the keybinds index's to its current position in the groups keybind list
      */
-    private fun updateKeybinds() {
+    fun updateKeybinds() {
         for (i in 0 until keybinds.size){
             keybinds[i].index =i
             keybinds[i].updateDB()

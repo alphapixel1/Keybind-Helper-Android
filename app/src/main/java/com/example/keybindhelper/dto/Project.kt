@@ -23,6 +23,7 @@ class Project {
     @TypeConverters(StringLiveDataConverter::class)
     var name = MutableLiveData<String>()
 
+
     @JvmField
     @TypeConverters(DateConverter::class)
     var lastAccessed: Date? = null
