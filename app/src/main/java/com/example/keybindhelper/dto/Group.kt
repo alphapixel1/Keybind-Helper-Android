@@ -144,8 +144,8 @@ class Group {
     fun Clone(): Group {
         val ret = Group(
             CurrentProjectManager.CurrentProject!!.getFirstGroupUnnamed(name.value!!), projectID)
-        CurrentProjectManager.CurrentProject!!.Groups!!.add(ret)
-        ret.index = CurrentProjectManager.CurrentProject!!.Groups!!.size - 1
+        CurrentProjectManager.CurrentProject!!.Groups.add(ret)
+        ret.index = CurrentProjectManager.CurrentProject!!.Groups.size - 1
         ret.id = DatabaseManager.db!!.insert(ret)
         //if (keybinds != null) {
             ret.keybinds = ArrayList()

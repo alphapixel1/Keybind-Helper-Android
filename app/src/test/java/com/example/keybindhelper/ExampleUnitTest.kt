@@ -1,6 +1,7 @@
 package com.example.keybindhelper
 
 import com.example.keybindhelper.dto.Group
+import com.example.keybindhelper.dto.Project
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -11,17 +12,25 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
-    @Test
+ /*   @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
+    }*/
+    @Test
+    fun group_Constructor_Test(){
+        val g=Group()
+        assertEquals(g.keybinds.size,0);
     }
     @Test
-    fun Group_Test(){
-        val g=Group()
-        for (i in 0..5){
-            g.AddKeybind()
-        }
-        println("keybind count: "+g.keybinds.size)
-        assertEquals(g.keybinds.size,6);
+    fun project_Constructor_Test(){
+        val p=Project();
+        assertEquals(p.Groups.size,0);
+    }
+    @Test
+    fun project_add_group(){
+        val p=Project();
+        for(i in 0..5)
+            p.AddGroup()
+        assertEquals(p.Groups.size,6 )
     }
 }

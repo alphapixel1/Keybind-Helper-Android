@@ -89,6 +89,12 @@
             android:textColor="@color/error_text"
             android:visibility="gone" />
 
+        <Button
+            android:id="@+id/keybind_more_menu_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="More Menu" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

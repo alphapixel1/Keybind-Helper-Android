@@ -59,7 +59,7 @@ class GroupAdapter(private val groupList: List<Group>?) : RecyclerView.Adapter<G
         group.currentAdapter = this
         val context = holder.itemView.context
         val rv = holder.itemView.findViewById<RecyclerView>(R.id.keybind_zone)
-        rv.adapter = KeybindAdapter(group.keybinds!!)
+        rv.adapter = KeybindAdapter(group.keybinds)
         rv.layoutManager = LinearLayoutManager(holder.itemView.context)
         val nameBtn = holder.itemView.findViewById<Button>(R.id.group_name_button)
         group.name.observe((context as LifecycleOwner)) { text: String? -> nameBtn.text = text }
@@ -89,7 +89,7 @@ class GroupAdapter(private val groupList: List<Group>?) : RecyclerView.Adapter<G
         }
         holder.itemView.findViewById<View>(R.id.group_add_button).setOnClickListener { v: View? ->
             group.AddKeybind()
-            rv.adapter!!.notifyItemChanged(group.keybinds!!.size - 1)
+            rv.adapter!!.notifyItemChanged(group.keybinds.size - 1)
             if (rv.visibility != View.VISIBLE) rv.visibility = View.VISIBLE
         }
         holder.itemView.findViewById<View>(R.id.group_more_button).setOnClickListener { z: View? ->
@@ -98,7 +98,7 @@ class GroupAdapter(private val groupList: List<Group>?) : RecyclerView.Adapter<G
             (d.findViewById<View>(R.id.group_name) as TextView).text = group.name.value
             d.findViewById<View>(R.id.group_clear_keybinds).setOnClickListener { v: View? ->
                 DatabaseManager.db!!.deleteGroupKeybinds(group.id)
-                group.keybinds!!.clear()
+                group.keybinds.clear()
                 try {
                     rv.adapter!!.notifyDataSetChanged()
                 } catch (e: Exception) {
@@ -106,8 +106,8 @@ class GroupAdapter(private val groupList: List<Group>?) : RecyclerView.Adapter<G
                 d.cancel()
             }
             d.findViewById<View>(R.id.group_delete).setOnClickListener { v: View? ->
-                notifyItemRemoved(CurrentProjectManager.CurrentProject!!.Groups!!.indexOf(group))
-                CurrentProjectManager.CurrentProject!!.Groups!!.remove(group)
+                notifyItemRemoved(CurrentProjectManager.CurrentProject!!.Groups.indexOf(group))
+                CurrentProjectManager.CurrentProject!!.Groups.remove(group)
                 DatabaseManager.db!!.deleteGroup(group.id)
                 d.cancel()
             }
@@ -122,18 +122,18 @@ class GroupAdapter(private val groupList: List<Group>?) : RecyclerView.Adapter<G
             }
             d.findViewById<View>(R.id.group_dissolve).setOnClickListener { v: View? ->
                 val groups: MutableList<Group> = ArrayList()
-                for (g in CurrentProjectManager.CurrentProject!!.Groups!!) {
+                for (g in CurrentProjectManager.CurrentProject!!.Groups) {
                     if (g !== group) groups.add(g)
                 }
                 val glp = GroupListProvider(context, "Dissolve Group Into", groups)
                 d.cancel()
                 glp.groupClick = object : GroupClick {
                     override fun GroupClicked(newGroup: Group?) {
-                        for (kb in group.keybinds!!.toTypedArray()) {
+                        for (kb in group.keybinds.toTypedArray()) {
                             newGroup!!.addKeybind(kb, false)
                         }
                         newGroup!!.currentAdapter!!.notifyDataSetChanged()
-                        CurrentProjectManager.CurrentProject!!.Groups!!.remove(group)
+                        CurrentProjectManager.CurrentProject!!.Groups.remove(group)
                         DatabaseManager.db!!.deleteGroup(group.id)
                         CurrentProjectManager.CurrentProject!!.updateGroupIndexes()
                     }
@@ -145,14 +145,14 @@ class GroupAdapter(private val groupList: List<Group>?) : RecyclerView.Adapter<G
                 val ap = ArrowProvider(context)
                 ap.directionClicked = object : DirectionClicked {
                     override fun Clicked(isUp: Boolean?) {
-                        val indx = CurrentProjectManager.CurrentProject!!.Groups!!.indexOf(group)
+                        val indx = CurrentProjectManager.CurrentProject!!.Groups.indexOf(group)
                         println(indx)
                         if (isUp!!) {
                             if (indx > 0) {
                                 CurrentProjectManager.CurrentProject!!.MoveGroupUpDown(group, -1)
                                 notifyItemMoved(indx, indx - 1)
                             }
-                        } else if (indx < CurrentProjectManager.CurrentProject!!.Groups!!.size - 1) {
+                        } else if (indx < CurrentProjectManager.CurrentProject!!.Groups.size - 1) {
                             CurrentProjectManager.CurrentProject!!.MoveGroupUpDown(group, 1)
                             notifyItemMoved(indx, indx + 1)
                         }

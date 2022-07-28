@@ -1,5 +1,6 @@
 package com.example.keybindhelper.RecyclerViewAdapters
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.res.ColorStateList
@@ -118,7 +119,7 @@ class KeybindAdapter(private val keybindList: List<Keybind>) :
         kb3Et.setText(k.kb3.value)
         nameEt.requestFocus()
         val imm = d.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_IMPLICIT_ONLY)
         d.findViewById<View>(R.id.edit_keybind_cancel_btn)
             .setOnClickListener { d.cancel() }
         d.findViewById<View>(R.id.edit_keybind_done_btn).setOnClickListener {
@@ -143,9 +144,18 @@ class KeybindAdapter(private val keybindList: List<Keybind>) :
                 k.kb2.value = if (filteredKB.size > 1) filteredKB[1] else ""
                 k.kb3.value = if (filteredKB.size > 2) filteredKB[2] else ""
                 imm.hideSoftInputFromWindow(nameEt.windowToken, 0)
-                d.cancel()
+                d.dismiss()
                 k.updateDB()
             }
+        }
+        d.setOnCancelListener{
+            val imm2 = d.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm2.hideSoftInputFromWindow(nameEt.windowToken, 0)
+        }
+        d.findViewById<View>(R.id.keybind_more_menu_btn).setOnClickListener {
+            imm.hideSoftInputFromWindow(nameEt.windowToken, 0)
+            d.dismiss()
+            showContextMenu(k,view);
         }
         d.show()
     }
