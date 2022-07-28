@@ -124,7 +124,7 @@ object FirebaseDAO {
     }
 
     fun download(projectName: String,projects: List<FirebaseProject>,result:ITaskResponse<String>) {
-        var pToDownload=projects.firstOrNull{it.name==projectName}
+        val pToDownload=projects.firstOrNull{it.name==projectName}
         if(pToDownload==null){
             result.onResponse("An Error Occurred");
         }else{

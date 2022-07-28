@@ -87,4 +87,13 @@ class ExampleUnitTest {
         g.addKeybind(k,false)
         assertEquals(g.keybinds.size,currentCount+1)
     }
+    @Test
+    fun group_unload_stored_views(){
+        val g=get_Group_With_N_Keybinds(2)
+        g.unloadStoredViews()
+    }
+    @Test
+    fun c(){
+
+    }
 }
