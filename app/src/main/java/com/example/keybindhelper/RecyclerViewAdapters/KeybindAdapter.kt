@@ -160,6 +160,9 @@ class KeybindAdapter(private val keybindList: List<Keybind>) :
         d.show()
     }
 
+    /**
+     * Displays the modify keybind dialog
+     */
     private fun showContextMenu(k: Keybind, view: View) {
         val context = view.context
         val d = Dialog(context)
