@@ -1,6 +1,8 @@
 # Keybind Helper 
 
 ---
+# CircleCI
+https://app.circleci.com/pipelines/github/alphapixel1/Keybind-Helper-Android
 
 Design Document  
 
