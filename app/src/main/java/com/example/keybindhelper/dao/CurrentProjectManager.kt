@@ -44,13 +44,9 @@ object CurrentProjectManager {
         }
         CurrentProject = project
         project.updateLastAccessed()
-        if (updateDb) DatabaseManager.db!!.update(project)
-        // CurrentProject.Groups= DatabaseManager.getOrderedGroups(project.id);
-        //        System.out.println("How many groups does this project have: "+CurrentProject.Groups.size());
+        if (updateDb)
+            DatabaseManager.db!!.update(project)
         CurrentProject!!.initProject()
-        /*for (Group g : CurrentProject.Groups) {
-            g.getKeybinds();
-            System.out.println(g);
-        }*/isProjectLoaded.value = true
+        isProjectLoaded.value = true
     }
 }

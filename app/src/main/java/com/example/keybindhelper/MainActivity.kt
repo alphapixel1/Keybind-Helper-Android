@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    val allActionMenuIds= setOf(R.id.action_add,R.id.action_delete_all_groups,R.id.action_show_hide_keybinds,R.id.action_cloud)
+    private val allActionMenuIds= setOf(R.id.action_add,R.id.action_delete_all_groups,R.id.action_show_hide_keybinds,R.id.action_cloud)
     val keybindsFragmentActionMenuIds= setOf(R.id.action_add,R.id.action_delete_all_groups,/*R.id.action_show_hide_keybinds*/)
     val projectsFragmentActionMenuIds= setOf(R.id.action_add,R.id.action_cloud)
     val settingsFragmentActionMenuIds=setOf<Int>()
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        setSupportActionBar(binding.appBarMain.toolbar)//todo figure out why it runs but is showing this as an error... and wont run without it? I hate kotlin so fucking much
+        setSupportActionBar(binding.appBarMain.toolbar)
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
     fun setAppBarTitle(s:String){
-        supportActionBar!!.title=s;
+        supportActionBar?.title=s;
     }
 
 
@@ -112,14 +112,6 @@ class MainActivity : AppCompatActivity() {
             if(item.hasSubMenu())
                 makeMenuThemeColor(item.subMenu)
         }
-        /*for (i in 0 until menu.size()) {
-            val item: MenuItem = menu.getItem(i)
-            val spanString = SpannableString(menu.getItem(i).title.toString())
-            spanString.setSpan(ForegroundColorSpan(Color.WHITE),0,spanString.length,0)//fix the color to white
-            item.title = spanString
-            if(item.hasSubMenu())
-                makeMenuThemeColor(item.subMenu)
-        }*/
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -296,7 +288,6 @@ class MainActivity : AppCompatActivity() {
     fun addArma3(){
         Project.fromJSONString("{\"projectName\":\"Arma 3\",\"groups\":[{\"groupName\":\"Movement\",\"keybinds\":[{\"keybindName\":\"Combat Pace Toggle\",\"keybinds\":[\"2xC\"]},{\"keybindName\":\"Walk/Run Toggle\",\"keybinds\":[\"Left Ctrl+C\"]},{\"keybindName\":\"Stance Change\",\"keybinds\":[\"L Ctrl W/A/S/D\"]},{\"keybindName\":\"Crouch\",\"keybinds\":[\"X\"]},{\"keybindName\":\"Prone\",\"keybinds\":[\"Z\"]},{\"keybindName\":\"Swim Up\",\"keybinds\":[\"X\"]},{\"keybindName\":\"Swim Down\",\"keybinds\":[\"Z\"]},{\"keybindName\":\"Step Over\",\"keybinds\":[\"V\"]},{\"keybindName\":\"Salute\",\"keybinds\":[\"\\\\\"]},{\"keybindName\":\"Sit Down\",\"keybinds\":[\"'\"]}]},{\"groupName\":\"View\",\"keybinds\":[{\"keybindName\":\"Toggle View\",\"keybinds\":[\"Tab\"]},{\"keybindName\":\"Zoom In\",\"keybinds\":[\"1\"]},{\"keybindName\":\"Zoom Out\",\"keybinds\":[\"2\"]}]},{\"groupName\":\"Multiplayer\",\"keybinds\":[{\"keybindName\":\"Statistics\",\"keybinds\":[\"P\"]},{\"keybindName\":\"List Of Players\",\"keybinds\":[\"RCtrl + P\"]},{\"keybindName\":\"Next Channel\",\"keybinds\":[\".\"]},{\"keybindName\":\"Previous Channel\",\"keybinds\":[\",\"]},{\"keybindName\":\"Push To Talk\",\"keybinds\":[\"Left Win\"]},{\"keybindName\":\"Tactical Ping\",\"keybinds\":[\"L Shift + T\"]}]},{\"groupName\":\"Common\",\"keybinds\":[{\"keybindName\":\"Task Overview\",\"keybinds\":[\"J\"]},{\"keybindName\":\"GPS Toggle\",\"keybinds\":[\"Ctrl + A\"]},{\"keybindName\":\"Targeting Camera\",\"keybinds\":[\"Ctrl + LMB\"]},{\"keybindName\":\"Compas\",\"keybinds\":[\"K\"]},{\"keybindName\":\"Watch\",\"keybinds\":[\"O\"]}]},{\"groupName\":\"Weapons\",\"keybinds\":[{\"keybindName\":\"Next Fire Mode\",\"keybinds\":[\"F\"]},{\"keybindName\":\"Hold Breath\",\"keybinds\":[\"L Shift\"]},{\"keybindName\":\"Optics\",\"keybinds\":[\"R Alt\"]},{\"keybindName\":\"Cycle Throwable\",\"keybinds\":[\"L Ctrl + G\"]},{\"keybindName\":\"Gun Elevation\",\"keybinds\":[\"PgUp\",\"PgDn\"]},{\"keybindName\":\"Lase Range\",\"keybinds\":[\"T\"]},{\"keybindName\":\"Laser\",\"keybinds\":[\"L\"]}]},{\"groupName\":\"Vehicle\",\"keybinds\":[{\"keybindName\":\"Hand Break\",\"keybinds\":[\"X\"]},{\"keybindName\":\"Turn In\",\"keybinds\":[\"L Ctrl + Q\"]},{\"keybindName\":\"Turn Out\",\"keybinds\":[\"L Ctrl + E\"]}]},{\"groupName\":\"Helicopter\",\"keybinds\":[{\"keybindName\":\"Collective Raise\",\"keybinds\":[\"L Shift\"]},{\"keybindName\":\"Collective Lower\",\"keybinds\":[\"Z\"]},{\"keybindName\":\"Sling Load Assistant\",\"keybinds\":[\"R Ctrl + B\"]},{\"keybindName\":\"Rope Interaction\",\"keybinds\":[\"B\"]}]},{\"groupName\":\"Plane\",\"keybinds\":[{\"keybindName\":\"Increase Thrust\",\"keybinds\":[\"L Shift\"]},{\"keybindName\":\"Decrease Thrust\",\"keybinds\":[\"Z\"]},{\"keybindName\":\"Auto Vectoring\",\"keybinds\":[\"X\"]},{\"keybindName\":\"Flaps\",\"keybinds\":[\"L Ctrl + Scroll\"]}]}]}");
     }
-
     fun addBannerlord() {
         Project.fromJSONString("{\n" +
                 "    \"projectName\": \"Mount and Blade II: Bannerlord \",\n" +

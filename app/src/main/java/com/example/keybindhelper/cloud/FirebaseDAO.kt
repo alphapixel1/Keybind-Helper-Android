@@ -68,7 +68,7 @@ object FirebaseDAO {
                 }
             }
         }else{
-            throw Exception("FirebaseDAO.getUserProjects: User should not be null here");
+            System.err.println("FirebaseDAO.getUserProjects: User should not be null here");
         }
     }
     fun getUninqueProjectName(name:String,projects:List<FirebaseProject>):String{
@@ -172,12 +172,7 @@ object FirebaseDAO {
             }
 
 
-            /*getUserProjects(object:ITaskResponse<MutableList<FirebaseProject>>{
-                override fun onResponse(result: MutableList<FirebaseProject>) {
 
-                }
-
-            })*/
 
         }else{
             result.onResponse("Failed to delete.");
